@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-let program = require('commander');
-
 function makeTypesFile(componentName) {
     let fileStr =
 `
@@ -82,21 +80,21 @@ args.shift(); // command name
 
 if (args.length === 0) {
     console.log('No Arguments Given');
-    return;
-}
+} else {
 
-let command = args.shift();
+    let command = args.shift();
 
-switch (command) {
-    case "component":
+    switch (command) {
+        case "component":
 
-        break;
+            break;
 
-    case "module":
+        case "module":
 
-        break;
+            break;
 
-    case "project":
+        case "project":
 
-        break;
+            break;
+    }
 }

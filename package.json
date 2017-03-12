@@ -20,7 +20,5 @@
   },
   "author": "Chad Collins",
   "license": "ISC",
-  "dependencies": {
-    "commander": "^2.9.0"
-  }
+  "dependencies": {}
 }
