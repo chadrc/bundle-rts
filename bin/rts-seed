@@ -151,7 +151,28 @@ function cmdComponent(args) {
 }
 
 function cmdModule(args) {
+    let moduleName = args.shift();
+    let noComp = args.indexOf("--no-comp") !== -1;
+    let noStyles = args.indexOf("--no-styles") !== -1;
 
+    if (jsIdentifierRegex.test(moduleName)) {
+        let moduleDetails = makeModuleFile(moduleName, noComp, noStyles);
+        let localDir = `/app/modules/${moduleName}/`;
+        ensureDir(localDir);
+        let basePath = process.cwd() + localDir;
+        let moduleFilePath = `${basePath}/${moduleName}.module.tsx`;
+        if (fs.existsSync(moduleFilePath)) {
+            console.error("Module already exists.");
+            return;
+        }
+        fs.writeFile(moduleFilePath, moduleDetails, {flag: "w"}, writeFailure);
+        if (!noComp) {
+
+        }
+        if (!noStyles) {
+
+        }
+    }
 }
 
 function cmdProject(args) {
@@ -180,11 +201,11 @@ if (args.length === 0) {
             break;
 
         case "module":
-
+            cmdModule(args);
             break;
 
         case "project":
-
+            cmdProject(args);
             break;
     }
 }
