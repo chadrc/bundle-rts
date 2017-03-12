@@ -72,7 +72,7 @@ export class ${componentName} extends React.Component<Props, State> implements D
 
 function makeModuleFile(moduleName, noComp, noStyles) {
     let styleImport = noStyles ? "" : `\n\nimport "./styles.scss";`;
-    let compImport = noComp ? "" : `\nimport {${moduleName}} from "./components/${moduleName}.component";`;
+    let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
     return `\
 import {Module} from "rts-fw"${compImport}${styleImport}
 
@@ -166,7 +166,7 @@ function cmdModule(args) {
         let localDir = `/app/modules/${moduleName}/`;
         ensureDir(localDir);
         let basePath = process.cwd() + localDir;
-        let moduleFilePath = `${basePath}/${moduleName}.module.tsx`;
+        let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
         if (fs.existsSync(moduleFilePath)) {
             console.error("Module already exists.");
             return;
