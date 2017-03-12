@@ -3,23 +3,100 @@
 let program = require('commander');
 
 function makeTypesFile(componentName) {
+    let fileStr =
+`
+import * as RTS from "rts-fw";
 
+export interface Props extends RTS.Props{
+}
+
+export interface State extends RTS.State {
+}
+
+export interface Data extends RTS.Data {
+}
+`;
 }
 
 function makeViewFile(componentName) {
+    let fileStr =
+`
+import * as React from "react";
+import * as RTS from "rts-fw";
+import {Data} from "./${componentName}.types";
 
+export class View implements RTS.View {
+    make(self: Data): JSX.Element {
+        return (
+            <section>
+            </section>
+        );
+    }
+}
+`;
 }
 
 function makeComponentFile(componentName) {
+    let fileStr =
+`
+import * as React from "react";
+import {Data, Props, State} from "./${componentName}.types";
+import {View} from "./${componentName}.view";
 
+import "../styles.scss";
+
+export class ${componentName} extends React.Component<Props, State> implements Data {
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    render() {
+        return new View().make(this);
+    }
+}
+`;
 }
 
 function makeComponentFiles(componentName) {
 
 }
 
-program
-.arguments("<command>")
-.action((command, subCommand) => {
-    console.log("seeding: " + command + " - " + subCommand);
-}).parse(process.argv);
+function cmdComponent(args) {
+
+}
+
+function cmdModule(args) {
+
+}
+
+function cmdProject(args) {
+
+}
+
+let args = process.argv;
+args.shift(); // node executable
+args.shift(); // command name
+
+if (args.length === 0) {
+    console.log('No Arguments Given');
+    return;
+}
+
+let command = args.shift();
+
+switch (command) {
+    case "component":
+
+        break;
+
+    case "module":
+
+        break;
+
+    case "project":
+
+        break;
+}
