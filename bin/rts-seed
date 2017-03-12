@@ -123,28 +123,32 @@ function ensureDir(dir) {
     }
 }
 
+function createComponent(name, path, noTypes, noView) {
+    let details = makeComponentFiles(name, noTypes, noView);
+    let localDir = `/app/modules/${path}`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    let componentFilePath = `${basePath}.component.tsx`;
+    if (fs.existsSync(componentFilePath)) {
+        console.error("Component already exists.");
+        return;
+    }
+    fs.writeFile(componentFilePath, details.component, {flag: "w"}, writeFailure);
+    if (!noView) {
+        fs.writeFile(`${basePath}.view.tsx`, details.view, {flag: "w"}, writeFailure);
+    }
+    if (!noTypes) {
+        fs.writeFile(`${basePath}.types.tsx`, details.types, {flag: "w"}, writeFailure);
+    }
+}
+
 function cmdComponent(args) {
     let componentPath = args.shift();
     let noTypes = args.indexOf("--no-types") !== -1;
     let noView = args.indexOf("--no-view") !== -1;
     let componentName = path.basename(componentPath);
     if (jsIdentifierRegex.test(componentName)) {
-        let details = makeComponentFiles(componentName, noTypes, noView);
-        let localDir = `/app/modules/${componentPath}`;
-        ensureDir(localDir);
-        let basePath = process.cwd() + localDir;
-        let componentFilePath = `${basePath}.component.tsx`;
-        if (fs.existsSync(componentFilePath)) {
-            console.error("Component already exists.");
-            return;
-        }
-        fs.writeFile(componentFilePath, details.component, {flag: "w"}, writeFailure);
-        if (!noView) {
-            fs.writeFile(`${basePath}.view.tsx`, details.view, {flag: "w"}, writeFailure);
-        }
-        if (!noTypes) {
-            fs.writeFile(`${basePath}.types.tsx`, details.types, {flag: "w"}, writeFailure);
-        }
+        createComponent(componentName, componentPath, noTypes, noView);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
@@ -154,6 +158,8 @@ function cmdModule(args) {
     let moduleName = args.shift();
     let noComp = args.indexOf("--no-comp") !== -1;
     let noStyles = args.indexOf("--no-styles") !== -1;
+    let noTypes = args.indexOf("--no-types") !== -1;
+    let noView = args.indexOf("--no-view") !== -1;
 
     if (jsIdentifierRegex.test(moduleName)) {
         let moduleDetails = makeModuleFile(moduleName, noComp, noStyles);
@@ -167,7 +173,7 @@ function cmdModule(args) {
         }
         fs.writeFile(moduleFilePath, moduleDetails, {flag: "w"}, writeFailure);
         if (!noComp) {
-
+            createComponent(moduleName, `${moduleName}/${moduleName}`, noTypes, noView);
         }
         if (!noStyles) {
 
