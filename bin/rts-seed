@@ -40,15 +40,20 @@ export class ${componentName}View implements View {
 `;
 }
 
-function makeComponentFile(componentName, noTypes) {
+function makeComponentFile(componentName, noTypes, noView) {
     let typesImport = noTypes ?
-        `"rts-fw";`
+        `"rts-fw"`
         :
         `"./${componentName}.types"`;
+    let viewImport = noView ? "" : `\nimport {${componentName}View} from "./${componentName}.view";`;
+    let viewComponent = noView ? `(
+            <section>
+            </section>
+        )` : `new ${componentName}View().make(this)`;
+
     return `\
 import * as React from "react";
-import {Data, Props, State} from ${typesImport}
-import {${componentName}View} from "./${componentName}.view";
+import {Data, Props, State} from ${typesImport};${viewImport}
 
 import "../styles.scss";
 
@@ -61,15 +66,15 @@ export class ${componentName} extends React.Component<Props, State> implements D
     }
 
     render() {
-        return new ${componentName}View().make(this);
+        return ${viewComponent};
     }
 }
 `;
 }
 
-function makeComponentFiles(componentName, noTypes) {
+function makeComponentFiles(componentName, noTypes, noView) {
     return {
-        component: makeComponentFile(componentName, noTypes),
+        component: makeComponentFile(componentName, noTypes, noView),
         view: makeViewFile(componentName, noTypes),
         types: makeTypesFile()
     }
@@ -97,9 +102,10 @@ function ensureDir(dir) {
 function cmdComponent(args) {
     let componentPath = args.shift();
     let noTypes = args.indexOf("--no-types") !== -1;
+    let noView = args.indexOf("--no-view") !== -1;
     let componentName = path.basename(componentPath);
     if (jsIdentifierRegisx.test(componentName)) {
-        let details = makeComponentFiles(componentName, noTypes);
+        let details = makeComponentFiles(componentName, noTypes, noView);
         let localDir = `/app/modules/${componentPath}`;
         ensureDir(localDir);
         let basePath = process.cwd() + localDir;
@@ -109,7 +115,9 @@ function cmdComponent(args) {
             return;
         }
         fs.writeFile(componentFilePath, details.component, {flag: "w"}, writeFailure);
-        fs.writeFile(`${basePath}.view.tsx`, details.view, {flag: "w"}, writeFailure);
+        if (!noView) {
+            fs.writeFile(`${basePath}.view.tsx`, details.view, {flag: "w"}, writeFailure);
+        }
         if (!noTypes) {
             fs.writeFile(`${basePath}.types.tsx`, details.types, {flag: "w"}, writeFailure);
         }
