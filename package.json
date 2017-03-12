@@ -1,5 +1,5 @@
 {
-  "name": "bundle-rts",
+  "name": "rts-fw",
   "version": "0.0.1",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
@@ -15,6 +15,12 @@
     "webpack",
     "sass"
   ],
+  "bin": {
+    "rts-seed": "./bin/rts-seed"
+  },
   "author": "Chad Collins",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }

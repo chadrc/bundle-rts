@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+let program = require('commander');
+
+function makeTypesFile(componentName) {
+
+}
+
+function makeViewFile(componentName) {
+
+}
+
+function makeComponentFile(componentName) {
+
+}
+
+function makeComponentFiles(componentName) {
+
+}
+
+program
+.arguments("<command>")
+.action((command, subCommand) => {
+    console.log("seeding: " + command + " - " + subCommand);
+}).parse(process.argv);
