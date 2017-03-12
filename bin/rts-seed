@@ -55,8 +55,6 @@ function makeComponentFile(componentName, noTypes, noView) {
 import * as React from "react";
 import {Data, Props, State} from ${typesImport};${viewImport}
 
-import "../styles.scss";
-
 export class ${componentName} extends React.Component<Props, State> implements Data {
 
     constructor(props: Props) {
@@ -70,6 +68,32 @@ export class ${componentName} extends React.Component<Props, State> implements D
     }
 }
 `;
+}
+
+function makeModuleFile(moduleName, noComp, noStyles) {
+    let styleImport = noStyles ? "" : `\n\nimport "./styles.scss";`;
+    let compImport = noComp ? "" : `\nimport {${moduleName}} from "./components/${moduleName}.component";`;
+    return `\
+import {Module} from "rts-fw"${compImport}${styleImport}
+
+export class ${moduleName}Module implements Module {
+    private _components: {[name:string]: any};
+    constructor() {
+        this._components = {};
+        this._components["${moduleName}"] = ${moduleName};
+    }
+
+    get components(): {[name:string]: any} {
+        return this._components;
+    }
+
+    get name(): string {
+        return "${moduleName}";
+    }
+}
+
+(<any>window).${moduleName} = new ${moduleName}Module();
+    `;
 }
 
 function makeComponentFiles(componentName, noTypes, noView) {
