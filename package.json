@@ -1,7 +1,7 @@
 {
-  "name": "rts",
+  "name": "bundle-rts",
   "version": "0.0.1",
-  "description": "Packaging framework for ReactJs with TypeScript",
+  "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,2 +1,0 @@
-
-process.stdout.write("RTS");
