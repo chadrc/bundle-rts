@@ -73,14 +73,14 @@ export class ${componentName} extends React.Component<Props, State> implements D
 function makeModuleFile(moduleName, noComp, noStyles) {
     let styleImport = noStyles ? "" : `\n\nimport "./styles.scss";`;
     let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
+    let compRegister = noComp ? "" : `\n\t\tthis._components["${moduleName}"] = ${moduleName};`;
     return `\
 import {Module} from "rts-fw"${compImport}${styleImport}
 
 export class ${moduleName}Module implements Module {
     private _components: {[name:string]: any};
     constructor() {
-        this._components = {};
-        this._components["${moduleName}"] = ${moduleName};
+        this._components = {};${compRegister}
     }
 
     get components(): {[name:string]: any} {
