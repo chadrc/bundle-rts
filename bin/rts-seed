@@ -176,7 +176,7 @@ function cmdModule(args) {
             createComponent(moduleName, `${moduleName}/${moduleName}`, noTypes, noView);
         }
         if (!noStyles) {
-
+            fs.writeFile(`${basePath}/styles.scss`, "", {flag: "w"}, writeFailure);
         }
     }
 }
