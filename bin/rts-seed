@@ -122,12 +122,12 @@ function makeIndexHTMLFile(appName) {
         </main>
         
         <!-- Dependencies -->
-        <script src="./node_modules/jquery/dist/jquery.js"></script>
-        <script src="./node_modules/react/dist/react.js"></script>
-        <script src="./node_modules/react-dom/dist/react-dom.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../node_modules/react/dist/react.js"></script>
+        <script src="../node_modules/react-dom/dist/react-dom.js"></script>
         
         <!-- Main -->
-        <script src="./dist/js/app.bundle.js"></script>
+        <script src="../dist/js/app.bundle.js"></script>
     </body>
 </html>
 `;
@@ -142,18 +142,18 @@ function makePackageJSONFile(appName) {
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \\"Error: no test specified\\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/react": "^15.0.16",
-    "@types/react-dom": "^0.14.23",
     "jquery": "^3.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "@types/react": "^15.0.16",
+    "@types/react-dom": "^0.14.23",
     "@types/jquery": "^2.0.41",
     "awesome-typescript-loader": "^3.1.2",
     "css-loader": "^0.27.1",
@@ -169,6 +169,14 @@ function makePackageJSONFile(appName) {
   }
 }  
 `;
+}
+
+function makeProjectFiles(appName) {
+    return {
+        indexTsx: makeIndexTSXFile(appName),
+        indexHtml: makeIndexHTMLFile(appName),
+        pkgJson: makePackageJSONFile(appName)
+    }
 }
 
 function makeComponentFiles(componentName, noTypes, noView) {
@@ -256,8 +264,30 @@ function cmdModule(args) {
     }
 }
 
-function cmdProject(args) {
+function copySeedFilesToCwd(fileNames) {
+    for (let filename of fileNames) {
+        fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
+    }
+}
 
+function cmdProject(args) {
+    let appName = args.shift();
+    if (!appName) {
+        console.error("No app name provided.");
+        return;
+    }
+
+    copySeedFilesToCwd([
+        "webpack.config.js",
+        "tsconfig.json"
+    ]);
+    let details = makeProjectFiles(appName);
+    fs.writeFile(`${process.cwd()}/package.json`, details.pkgJson, {flag: "w"}, writeFailure);
+    let dir = "/app/";
+    ensureDir(dir);
+    let basePath = process.cwd() + dir;
+    fs.writeFile(`${basePath}/index.html`, details.indexHtml, {flag: "w"}, writeFailure);
+    fs.writeFile(`${basePath}/index.tsx`, details.indexTsx, {flag: "w"}, writeFailure);
 }
 
 function writeFailure(error) {
