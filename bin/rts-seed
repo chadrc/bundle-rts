@@ -239,6 +239,25 @@ function cmdComponent(args) {
     }
 }
 
+function createModule(moduleName, noComp, noStyles, noTypes, noView) {
+    let moduleDetails = makeModuleFile(moduleName, noComp, noStyles);
+    let localDir = `/app/modules/${moduleName}/`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
+    if (fs.existsSync(moduleFilePath)) {
+        console.error("Module already exists.");
+        return;
+    }
+    fs.writeFile(moduleFilePath, moduleDetails, {flag: "w"}, writeFailure);
+    if (!noComp) {
+        createComponent(moduleName, `${moduleName}/${moduleName}`, noTypes, noView);
+    }
+    if (!noStyles) {
+        fs.writeFile(`${basePath}/styles.scss`, "", {flag: "w"}, writeFailure);
+    }
+}
+
 function cmdModule(args) {
     let moduleName = args.shift();
     let noComp = args.indexOf("--no-comp") !== -1;
@@ -247,22 +266,7 @@ function cmdModule(args) {
     let noView = args.indexOf("--no-view") !== -1;
 
     if (jsIdentifierRegex.test(moduleName)) {
-        let moduleDetails = makeModuleFile(moduleName, noComp, noStyles);
-        let localDir = `/app/modules/${moduleName}/`;
-        ensureDir(localDir);
-        let basePath = process.cwd() + localDir;
-        let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
-        if (fs.existsSync(moduleFilePath)) {
-            console.error("Module already exists.");
-            return;
-        }
-        fs.writeFile(moduleFilePath, moduleDetails, {flag: "w"}, writeFailure);
-        if (!noComp) {
-            createComponent(moduleName, `${moduleName}/${moduleName}`, noTypes, noView);
-        }
-        if (!noStyles) {
-            fs.writeFile(`${basePath}/styles.scss`, "", {flag: "w"}, writeFailure);
-        }
+        createModule(moduleName, noComp, noStyles, noTypes, noView);
     }
 }
 
@@ -279,6 +283,11 @@ function cmdProject(args) {
         return;
     }
 
+    let noComp = args.indexOf("--no-comp") !== -1;
+    let noStyles = args.indexOf("--no-styles") !== -1;
+    let noTypes = args.indexOf("--no-types") !== -1;
+    let noView = args.indexOf("--no-view") !== -1;
+
     copySeedFilesToCwd([
         "webpack.config.js",
         "tsconfig.json"
@@ -290,6 +299,13 @@ function cmdProject(args) {
     let basePath = process.cwd() + dir;
     fs.writeFile(`${basePath}/index.html`, details.indexHtml, {flag: "w"}, writeFailure);
     fs.writeFile(`${basePath}/index.tsx`, details.indexTsx, {flag: "w"}, writeFailure);
+
+    let moduleName = appName.replace(/ /g, "");
+    if (jsIdentifierRegex.test(moduleName)) {
+        createModule(moduleName, noComp, noStyles, noTypes, noView);
+    } else {
+        console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
+    }
 }
 
 function writeFailure(error) {
