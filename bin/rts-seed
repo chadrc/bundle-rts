@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const settings = require('../package.json');
 
 // Obtained from the following source
 // http://stackoverflow.com/questions/1661197/what-characters-are-valid-for-javascript-variable-names
@@ -161,7 +162,7 @@ function makePackageJSONFile(appName) {
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
-    "rts-fw": "0.0.1-DEV",
+    "rts-fw": "${settings.version}",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",
