@@ -283,6 +283,7 @@ function cmdProject(args) {
         return;
     }
 
+    let noMod = args.indexOf("--no-mod") !== -1;
     let noComp = args.indexOf("--no-comp") !== -1;
     let noStyles = args.indexOf("--no-styles") !== -1;
     let noTypes = args.indexOf("--no-types") !== -1;
@@ -300,11 +301,13 @@ function cmdProject(args) {
     fs.writeFile(`${basePath}/index.html`, details.indexHtml, {flag: "w"}, writeFailure);
     fs.writeFile(`${basePath}/index.tsx`, details.indexTsx, {flag: "w"}, writeFailure);
 
-    let moduleName = appName.replace(/ /g, "");
-    if (jsIdentifierRegex.test(moduleName)) {
-        createModule(moduleName, noComp, noStyles, noTypes, noView);
-    } else {
-        console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
+    if (!noMod) {
+        let moduleName = appName.replace(/ /g, "");
+        if (jsIdentifierRegex.test(moduleName)) {
+            createModule(moduleName, noComp, noStyles, noTypes, noView);
+        } else {
+            console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
+        }
     }
 }
 
