@@ -1,6 +1,6 @@
 {
   "name": "rts-fw",
-  "version": "0.0.1",
+  "version": "0.0.1-DEV",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
