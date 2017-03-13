@@ -142,6 +142,7 @@ function makePackageJSONFile(appName) {
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "./node_modules/.bin/webpack",
     "test": "echo \\"Error: no test specified\\" && exit 1"
   },
   "author": "",

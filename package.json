@@ -18,6 +18,10 @@
   "bin": {
     "rts-seed": "./bin/rts-seed"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chadrc/rts-fw.git"
+  },
   "author": "Chad Collins",
   "license": "ISC",
   "dependencies": {}
