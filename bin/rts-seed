@@ -100,12 +100,31 @@ export class ${moduleName}Module implements Module {
 function makeIndexTSXFile(appName) {
     return `\
 import * as React from "react";
-import {App} from "rts-fw";
 import * as ReactDom from "react-dom";
+import {App} from "rts-fw";
+import Manifest from "./module.manifest";
 
-const ${appName} = new App([
-    // Module Registry
-]); 
+const ${appName} = new App(Manifest); 
+`;
+}
+
+function makeModuleManifestFile(modDetails) {
+    let mods = "";
+    for (let mod of modDetails) {
+        mods += `\
+    {
+        name: "${mod.name}",
+        hasStyles: ${!mod.hasStyles}
+    }`;
+    }
+    return `\
+import {ModuleDetails} from "rts-fw";
+
+let ModuleManifest: ModuleDetails[] = [
+    ${mods}
+];
+
+export default ModuleManifest;  
 `;
 }
 
