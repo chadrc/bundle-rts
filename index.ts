@@ -149,8 +149,13 @@ export function getModule(name: string): Module {
     return (<any>window)[name];
 }
 
+export interface ModuleDetails {
+    name: string,
+    hasStyles: boolean
+}
+
 export class App {
-    constructor(modules: string[]) {
+    constructor(modules: ModuleDetails[]) {
     }
 }
 
