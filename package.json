@@ -1,6 +1,6 @@
 {
   "name": "rts-fw",
-  "version": "0.0.4-DEV",
+  "version": "0.0.5-DEV",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,7 @@
   },
   "author": "Chad Collins",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "glob": "^7.1.1"
+  }
 }

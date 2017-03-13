@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 const settings = require('../package.json');
 
 // Obtained from the following source
@@ -110,18 +111,20 @@ const ${appName} = new App(Manifest);
 
 function makeModuleManifestFile(modDetails) {
     let mods = "";
+    let count = 0;
     for (let mod of modDetails) {
         mods += `\
     {
         name: "${mod.name}",
-        hasStyles: ${!mod.hasStyles}
-    }`;
+        hasStyles: ${mod.hasStyles}
+    }${count !== modDetails.length-1 ? ",\n" : ""}`;
+        count++;
     }
     return `\
 import {ModuleDetails} from "rts-fw";
 
 let ModuleManifest: ModuleDetails[] = [
-    ${mods}
+${mods}
 ];
 
 export default ModuleManifest;  
@@ -190,6 +193,31 @@ function makePackageJSONFile(appName) {
   }
 }  
 `;
+}
+
+function compileModuleManifest() {
+    let pattern = process.cwd() + "/app/modules/**/*.module.ts";
+    let moduleFiles = glob.sync(pattern);
+    let details = [];
+    for (let m of moduleFiles) {
+        let name = path.basename(m).replace(".module.ts", "");
+        let stylePath = path.dirname(m) + "/styles.scss";
+        let hasStyles = fs.existsSync(stylePath);
+        details.push({
+            name: name,
+            hasStyles: hasStyles
+        });
+    }
+    return details;
+}
+
+function writeModuleManifest() {
+    let details = compileModuleManifest();
+    let text = makeModuleManifestFile(details);
+    let dir = "/app/";
+    ensureDir(dir);
+    let basePath = process.cwd() + dir;
+    fs.writeFile(`${basePath}module.manifest.ts`, text, {flag: "w"}, writeFailure);
 }
 
 function makeProjectFiles(appName) {
@@ -357,6 +385,10 @@ if (args.length === 0) {
 
         case "project":
             cmdProject(args);
+            break;
+
+        case "manifest":
+            writeModuleManifest();
             break;
     }
 }
