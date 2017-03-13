@@ -96,6 +96,81 @@ export class ${moduleName}Module implements Module {
     `;
 }
 
+function makeIndexTSXFile(appName) {
+    return `\
+import * as React from "react";
+import {App} from "rts-fw";
+import * as ReactDom from "react-dom";
+
+const ${appName} = new App([
+    // Module Registry
+]); 
+`;
+}
+
+function makeIndexHTMLFile(appName) {
+    return `\
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>${appName}</title>
+        </head>
+    <body>
+        <main id="content">
+            <p>Loading...</p>
+        </main>
+        
+        <!-- Dependencies -->
+        <script src="./node_modules/jquery/dist/jquery.js"></script>
+        <script src="./node_modules/react/dist/react.js"></script>
+        <script src="./node_modules/react-dom/dist/react-dom.js"></script>
+        
+        <!-- Main -->
+        <script src="./dist/js/app.bundle.js"></script>
+    </body>
+</html>
+`;
+}
+
+function makePackageJSONFile(appName) {
+    let name = appName.toLowerCase().replace(" ", "-");
+    return `\
+{
+  "name": "${name}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^15.0.16",
+    "@types/react-dom": "^0.14.23",
+    "jquery": "^3.1.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "@types/jquery": "^2.0.41",
+    "awesome-typescript-loader": "^3.1.2",
+    "css-loader": "^0.27.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "glob": "^7.1.1",
+    "node-sass": "^4.5.0",
+    "rts-fw": "file:rts-fw",
+    "sass-loader": "^6.0.3",
+    "source-map-loader": "^0.2.0",
+    "style-loader": "^0.13.2",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1"
+  }
+}  
+`;
+}
+
 function makeComponentFiles(componentName, noTypes, noView) {
     return {
         component: makeComponentFile(componentName, noTypes, noView),
