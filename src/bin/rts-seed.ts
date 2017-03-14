@@ -3,6 +3,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as glob from 'glob';
+import {Arguments} from "./Arguments";
 const settings = require('../package.json');
 
 // Obtained from the following source
@@ -23,62 +24,6 @@ function cmdProject(args: Arguments) {
 
 function cmdManifest(args: Arguments) {
 
-}
-
-class Arguments {
-    private _noStyles: boolean;
-    private _noModule: boolean;
-    private _noComponent: boolean;
-    private _noView: boolean;
-    private _noTypes: boolean;
-
-    argv: string[];
-
-    constructor(argv: string[]) {
-        this.argv = argv;
-        this._noStyles = this.hasArg("--no-styles");
-        this._noModule = this.hasArg("--no-mod");
-        this._noComponent = this.hasArg("--no-comp");
-        this._noView = this.hasArg("--no-view");
-        this._noTypes = this.hasArg("--no-types");
-    }
-    get noStyles(): boolean {
-        return this._noStyles;
-    }
-
-    get noModule(): boolean {
-        return this._noModule;
-    }
-
-    get noComponent(): boolean {
-        return this._noComponent;
-    }
-
-    get noView(): boolean {
-        return this._noView;
-    }
-
-    get noTypes(): boolean {
-        return this._noTypes;
-    }
-
-    get isEmpty(): boolean {
-        return this.argv.length === 0;
-    }
-
-    next(): string {
-        return this.argv.shift();
-    }
-
-    skip(count: number = 1): void {
-        for (let i: number = 0; i<count; i++) {
-            this.argv.shift();
-        }
-    }
-
-    private hasArg(arg: string): boolean {
-        return this.argv.indexOf(arg.toLocaleLowerCase()) !== -1;
-    }
 }
 
 let args = new Arguments(process.argv);
