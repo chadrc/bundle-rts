@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import {makeComponentFile, makeModuleFile, makeTypesFile, makeViewFile} from "./templates";
 
 // Obtained from the following source
 // http://stackoverflow.com/questions/1661197/what-characters-are-valid-for-javascript-variable-names
@@ -34,5 +35,42 @@ export function isJsIdentifier(identifier: string) {
 function writeFailure(error: NodeJS.ErrnoException) {
     if (error !== null) {
         console.error(error);
+    }
+}
+
+export function createComponent(componentName: string, componentPath: string, noView: boolean, noTypes: boolean) {
+    let componentData = makeComponentFile(componentName, noTypes, noView);
+    let viewData = makeViewFile(componentName, noTypes);
+    let typesData = makeTypesFile(componentName);
+    let localDir = `/app/modules/${componentPath}`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    let componentFilePath = `${basePath}.component.tsx`;
+    if (fs.existsSync(componentFilePath)) {
+        console.error("Component already exists.");
+        return;
+    }
+    writeFile(componentFilePath, componentData);
+    if (!noView) {
+        writeFile(`${basePath}.view.tsx`, viewData);
+    }
+    if (!noTypes) {
+        writeFile(`${basePath}.types.tsx`, typesData);
+    }
+}
+
+export function createModule(moduleName: string, noComp: boolean, noStyles: boolean): void {
+    let moduleDetails = makeModuleFile(moduleName, noComp, noStyles);
+    let localDir = `/app/modules/${moduleName}/`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
+    if (fs.existsSync(moduleFilePath)) {
+        console.error("Module already exists.");
+        return;
+    }
+    fs.writeFile(moduleFilePath, moduleDetails, {flag: "w"}, writeFailure);
+    if (!noStyles) {
+        fs.writeFile(`${basePath}/styles.scss`, "", {flag: "w"}, writeFailure);
     }
 }
