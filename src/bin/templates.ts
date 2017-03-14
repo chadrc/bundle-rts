@@ -1,8 +1,6 @@
-/**
- * Created by chad on 3/14/17.
- */
+import {ModuleDetails} from "../../rts-fw";
 
-export function makeTypesFile(componentName): string {
+export function makeTypesFile(componentName: string): string {
     return `\
 import {Data, Props, State} from "rts-fw";
 
@@ -104,7 +102,7 @@ const ${appName} = new App(Manifest);
 `;
 }
 
-export function makeModuleManifestFile(modDetails): string {
+export function makeModuleManifestFile(modDetails: ModuleDetails[]): string {
     let mods = "";
     let count = 0;
     for (let mod of modDetails) {
