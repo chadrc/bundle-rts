@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "outDir": "../../bin",
+    "sourceMap": true,
+    "noImplicitAny": true
+  },
+  "include": [
+    "./rts-seed.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
