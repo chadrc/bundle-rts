@@ -11,15 +11,15 @@ const jsIdentifierRegex = /^(?!(?:do|if|in|for|let|new|try|var|case|else|enum|ev
 
 function makeTypesFile(componentName) {
     return `\
-import * as RTS from "rts-fw";
+import {Data, Props, State} from "rts-fw";
 
-export interface ${componentName}Props extends RTS.Props{
+export interface ${componentName}Props extends Props{
 }
 
-export interface ${componentName}State extends RTS.State {
+export interface ${componentName}State extends State {
 }
 
-export interface ${componentName}Data extends RTS.Data {
+export interface ${componentName}Data extends Data {
 }
 `;
 }
