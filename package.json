@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/tsc -p src/lib/&./node_modules/.bin/tsc -p src/bin"
+    "build": "./node_modules/.bin/tsc -p src/lib/&./node_modules/.bin/tsc -p src/bin",
+    "watch-bin": "./node_modules/.bin/tsc -p src/bin/ --watch",
+    "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
+    "watch": "npm run watch-bin&npm run watch-lib"
   },
   "keywords": [
     "ReactJs",
@@ -29,6 +32,8 @@
     "glob": "^7.1.1"
   },
   "devDependencies": {
+    "@types/glob": "^5.0.30",
+    "@types/node": "^7.0.8",
     "typescript": "^2.2.1"
   }
 }
