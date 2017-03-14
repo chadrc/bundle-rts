@@ -2,7 +2,7 @@
  * Created by chad on 3/14/17.
  */
 
-export function makeTypesFile(componentName) {
+export function makeTypesFile(componentName): string {
     return `\
 import {Data, Props, State} from "rts-fw";
 
@@ -17,7 +17,7 @@ export interface ${componentName}Data extends Data {
 `;
 }
 
-export function makeViewFile(componentName, noTypes) {
+export function makeViewFile(componentName: string, noTypes: boolean): string {
     let typesBase = noTypes ? "" : componentName;
     let dataName = noTypes ? `Data, ` : "";
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
@@ -36,7 +36,7 @@ export class ${componentName}View implements View {
 `;
 }
 
-export function makeComponentFile(componentName, noTypes, noView) {
+export function makeComponentFile(componentName: string, noTypes: boolean, noView: boolean): string {
     let typesBase = noTypes ? "" : componentName;
     let typesImport = noTypes ?
         `"rts-fw"`
@@ -67,7 +67,7 @@ export class ${componentName} extends React.Component<${typesBase}Props, ${types
 `;
 }
 
-export function makeModuleFile(moduleName, noComp, noStyles) {
+export function makeModuleFile(moduleName: string, noComp: boolean, noStyles: boolean): string {
     let styleImport = noStyles ? "" : `\n\nimport "./styles.scss";`;
     let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
     let compRegister = noComp ? "" : `\n\t\tthis._components["${moduleName}"] = ${moduleName};`;
@@ -93,7 +93,7 @@ export class ${moduleName}Module implements Module {
     `;
 }
 
-export function makeIndexTSXFile(appName) {
+export function makeIndexTSXFile(appName: string): string {
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
@@ -104,7 +104,7 @@ const ${appName} = new App(Manifest);
 `;
 }
 
-export function makeModuleManifestFile(modDetails) {
+export function makeModuleManifestFile(modDetails): string {
     let mods = "";
     let count = 0;
     for (let mod of modDetails) {
@@ -126,7 +126,7 @@ export default ModuleManifest;
 `;
 }
 
-export function makeIndexHTMLFile(appName) {
+export function makeIndexHTMLFile(appName: string): string {
     return `\
 <!DOCTYPE html>
     <html lang="en">
@@ -151,7 +151,7 @@ export function makeIndexHTMLFile(appName) {
 `;
 }
 
-export function makePackageJSONFile(appName, libVersion) {
+export function makePackageJSONFile(appName: string, libVersion: string): string {
     let name = appName.toLowerCase().replace(" ", "-");
     return `\
 {
