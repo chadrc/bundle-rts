@@ -6,7 +6,6 @@ var ComponentCommand_1 = require("./ComponentCommand");
 var ModuleCommand_1 = require("./ModuleCommand");
 var ProjectCommand_1 = require("./ProjectCommand");
 var ManifestCommand_1 = require("./ManifestCommand");
-var settings = require('../package.json');
 var args = new Arguments_1.Arguments(process.argv);
 args.skip(2); // skip node executable and command name
 if (args.isEmpty) {

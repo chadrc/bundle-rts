@@ -1,14 +1,10 @@
 #!/usr/bin/env node
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as glob from 'glob';
 import {Arguments} from "./Arguments";
 import {ComponentCommand} from "./ComponentCommand";
 import {ModuleCommand} from "./ModuleCommand";
 import {ProjectCommand} from "./ProjectCommand";
 import {ManifestCommand} from "./ManifestCommand";
-const settings = require('../package.json');
 
 let args = new Arguments(process.argv);
 args.skip(2); // skip node executable and command name
