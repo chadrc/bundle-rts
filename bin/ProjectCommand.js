@@ -4,12 +4,6 @@ var fs = require("fs");
 var Utils_1 = require("./Utils");
 var templates_1 = require("./templates");
 var settings = require('../package.json');
-function copySeedFilesToCwd(fileNames) {
-    for (var _i = 0, fileNames_1 = fileNames; _i < fileNames_1.length; _i++) {
-        var filename = fileNames_1[_i];
-        fs.createReadStream(__dirname.replace("/bin", "") + "/seed/" + filename).pipe(fs.createWriteStream(process.cwd() + "/" + filename));
-    }
-}
 function ProjectCommand(args) {
     var appName = args.next();
     if (!appName) {
@@ -21,10 +15,14 @@ function ProjectCommand(args) {
     var noStyles = args.noStyles;
     var noTypes = args.noTypes;
     var noView = args.noView;
-    copySeedFilesToCwd([
+    var filesToCopy = [
         "webpack.config.js",
         "tsconfig.json"
-    ]);
+    ];
+    for (var _i = 0, filesToCopy_1 = filesToCopy; _i < filesToCopy_1.length; _i++) {
+        var filename = filesToCopy_1[_i];
+        fs.createReadStream(__dirname.replace("/bin", "") + "/seed/" + filename).pipe(fs.createWriteStream(process.cwd() + "/" + filename));
+    }
     var indexTsxData = templates_1.makeIndexTSXFile(appName);
     var indexHtmlData = templates_1.makeIndexHTMLFile(appName);
     var pkgJsonData = templates_1.makePackageJSONFile(appName, settings.version);

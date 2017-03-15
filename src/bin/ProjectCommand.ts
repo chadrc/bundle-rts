@@ -4,12 +4,6 @@ import {createComponent, createModule, ensureDir, isJsIdentifier, writeFile} fro
 import {makeIndexHTMLFile, makeIndexTSXFile, makePackageJSONFile} from "./templates";
 const settings = require('../package.json');
 
-function copySeedFilesToCwd(fileNames: string[]) {
-    for (let filename of fileNames) {
-        fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
-    }
-}
-
 export function ProjectCommand(args: Arguments): void {
     let appName = args.next();
     if (!appName) {
@@ -23,10 +17,13 @@ export function ProjectCommand(args: Arguments): void {
     let noTypes = args.noTypes;
     let noView = args.noView;
 
-    copySeedFilesToCwd([
+    let filesToCopy: string[] = [
         "webpack.config.js",
         "tsconfig.json"
-    ]);
+    ];
+    for (let filename of filesToCopy) {
+        fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
+    }
 
     let indexTsxData = makeIndexTSXFile(appName);
     let indexHtmlData = makeIndexHTMLFile(appName);
