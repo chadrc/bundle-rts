@@ -1,5 +1,3 @@
-import {ModuleDetails} from "../../rts-fw";
-
 export function makeTypesFile(componentName: string): string {
     return `\
 import {Data, Props, State} from "rts-fw";
@@ -100,6 +98,11 @@ import Manifest from "./module.manifest";
 
 const ${appName} = new App(Manifest); 
 `;
+}
+
+interface ModuleDetails {
+    name: string,
+    hasStyles: boolean
 }
 
 export function makeModuleManifestFile(modDetails: ModuleDetails[]): string {

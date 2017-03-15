@@ -8,7 +8,7 @@
     "build-bin": "./node_modules/.bin/tsc -p src/bin",
     "build-lib": "./node_modules/.bin/tsc -p src/lib/",
     "rename-d-ts": "mv ./rts-fw.d.ts ./index.d.ts",
-    "build": "npm run build-lib&npm build-bin&npm run rename-d-ts",
+    "build": "npm run build-lib&npm run build-bin",
     "watch-bin": "./node_modules/.bin/tsc -p src/bin/ --watch",
     "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
     "watch": "npm run watch-bin&npm run watch-lib"
