@@ -5,7 +5,7 @@ var path = require("path");
 var fs = require("fs");
 var Utils_1 = require("./Utils");
 var templates_1 = require("./templates");
-function compileModuleManifest() {
+function ManifestCommand(args) {
     var pattern = process.cwd() + "/app/modules/**/*.module.ts";
     var moduleFiles = glob.sync(pattern);
     var details = [];
@@ -19,17 +19,10 @@ function compileModuleManifest() {
             hasStyles: hasStyles
         });
     }
-    return details;
-}
-function writeModuleManifest() {
-    var details = compileModuleManifest();
     var text = templates_1.makeModuleManifestFile(details);
     var dir = "/app/";
     Utils_1.ensureDir(dir);
     var basePath = process.cwd() + dir;
     Utils_1.writeFile(basePath + "module.manifest.ts", text);
-}
-function ManifestCommand(args) {
-    writeModuleManifest();
 }
 exports.ManifestCommand = ManifestCommand;

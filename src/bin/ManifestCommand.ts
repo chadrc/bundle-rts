@@ -5,7 +5,7 @@ import {Arguments} from "./Arguments";
 import {ensureDir, writeFile} from "./Utils";
 import {makeModuleManifestFile} from "./templates";
 
-function compileModuleManifest() {
+export function ManifestCommand(args: Arguments): void {
     let pattern = process.cwd() + "/app/modules/**/*.module.ts";
     let moduleFiles = glob.sync(pattern);
     let details = [];
@@ -18,18 +18,9 @@ function compileModuleManifest() {
             hasStyles: hasStyles
         });
     }
-    return details;
-}
-
-function writeModuleManifest() {
-    let details = compileModuleManifest();
     let text = makeModuleManifestFile(details);
     let dir = "/app/";
     ensureDir(dir);
     let basePath = process.cwd() + dir;
     writeFile(`${basePath}module.manifest.ts`, text);
-}
-
-export function ManifestCommand(args: Arguments): void {
-    writeModuleManifest();
 }
