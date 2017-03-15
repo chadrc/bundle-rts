@@ -7,6 +7,9 @@ rts-fw.d.ts
 index.d.ts
 bin/
 
+### Editor files
+.idea/
+
 ### Node template
 # Logs
 logs
