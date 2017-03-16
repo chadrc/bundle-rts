@@ -4,7 +4,7 @@ import * as path from "path";
 import * as fs from "fs";
 import * as glob from "glob";
 import {Arguments} from "./Arguments";
-import {createComponent, createModule, ensureDir, isJsIdentifier, writeFile} from "./Utils";
+import {createComponent, createModule, createProject, ensureDir, isJsIdentifier, writeFile} from "./Utils";
 import {makeIndexHTMLFile, makeIndexTSXFile, makeModuleManifestFile, makePackageJSONFile} from "./templates";
 
 const settings = require('../package.json');
@@ -56,21 +56,7 @@ if (args.isEmpty) {
                 break;
             }
 
-            let filesToCopy: string[] = [
-                "webpack.config.js",
-                "tsconfig.json"
-            ];
-            for (let filename of filesToCopy) {
-                fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
-            }
-
-            let indexTsxData = makeIndexTSXFile(appName);
-            let indexHtmlData = makeIndexHTMLFile(appName);
-            let pkgJsonData = makePackageJSONFile(appName, settings.version);
-
-            writeFile(`${process.cwd()}/package.json`, pkgJsonData);
-            writeFile(`${basePath}/index.html`, indexHtmlData);
-            writeFile(`${basePath}/index.tsx`, indexTsxData);
+            createProject(appName, basePath, settings.version);
 
             if (!noMod) {
                 let moduleName = appName.replace(/ /g, "");

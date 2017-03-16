@@ -1,5 +1,8 @@
 import * as fs from "fs";
-import {makeComponentFile, makeModuleFile, makeTypesFile, makeViewFile} from "./templates";
+import {
+    makeComponentFile, makeIndexHTMLFile, makeIndexTSXFile, makeModuleFile, makePackageJSONFile, makeTypesFile,
+    makeViewFile
+} from "./templates";
 
 // Obtained from the following source
 // http://stackoverflow.com/questions/1661197/what-characters-are-valid-for-javascript-variable-names
@@ -73,4 +76,23 @@ export function createModule(moduleName: string, noComp: boolean, noStyles: bool
     if (!noStyles) {
         fs.writeFile(`${basePath}/styles.scss`, "", {flag: "w"}, writeFailure);
     }
+}
+
+export function createProject(appName: string, basePath: string, version: string): void {
+
+    let filesToCopy: string[] = [
+        "webpack.config.js",
+        "tsconfig.json"
+    ];
+    for (let filename of filesToCopy) {
+        fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
+    }
+
+    let indexTsxData = makeIndexTSXFile(appName);
+    let indexHtmlData = makeIndexHTMLFile(appName);
+    let pkgJsonData = makePackageJSONFile(appName, version);
+
+    writeFile(`${process.cwd()}/package.json`, pkgJsonData);
+    writeFile(`${basePath}/index.html`, indexHtmlData);
+    writeFile(`${basePath}/index.tsx`, indexTsxData);
 }
