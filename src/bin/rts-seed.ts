@@ -1,11 +1,6 @@
 #!/usr/bin/env node
-
-import * as path from "path";
-import * as fs from "fs";
-import * as glob from "glob";
 import {Arguments} from "./Arguments";
-import {createComponent, createModule, createProject, ensureDir, isJsIdentifier, writeFile} from "./Utils";
-import {makeIndexHTMLFile, makeIndexTSXFile, makeModuleManifestFile, makePackageJSONFile} from "./templates";
+import { ensureDir} from "./Utils";
 import {componentCommand, manifestCommand, moduleCommand, projectCommand} from "./commands";
 
 const settings = require('../package.json');
