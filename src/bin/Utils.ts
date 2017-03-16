@@ -1,8 +1,4 @@
 import * as fs from "fs";
-import {
-    makeComponentFile, makeIndexHTMLFile, makeIndexTSXFile, makeModuleFile, makePackageJSONFile, makeTypesFile,
-    makeViewFile
-} from "./templates";
 
 // Obtained from the following source
 // http://stackoverflow.com/questions/1661197/what-characters-are-valid-for-javascript-variable-names
