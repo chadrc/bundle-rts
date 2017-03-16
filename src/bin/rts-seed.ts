@@ -6,6 +6,7 @@ import * as glob from "glob";
 import {Arguments} from "./Arguments";
 import {createComponent, createModule, createProject, ensureDir, isJsIdentifier, writeFile} from "./Utils";
 import {makeIndexHTMLFile, makeIndexTSXFile, makeModuleManifestFile, makePackageJSONFile} from "./templates";
+import {manifestCommand} from "./commands";
 
 const settings = require('../package.json');
 
@@ -72,20 +73,7 @@ if (args.isEmpty) {
             break;
 
         case "manifest":
-            let pattern = process.cwd() + "/app/modules/**/*.module.ts";
-            let moduleFiles = glob.sync(pattern);
-            let details = [];
-            for (let m of moduleFiles) {
-                let name = path.basename(m).replace(".module.ts", "");
-                let stylePath = path.dirname(m) + "/styles.scss";
-                let hasStyles = fs.existsSync(stylePath);
-                details.push({
-                    name: name,
-                    hasStyles: hasStyles
-                });
-            }
-            let text = makeModuleManifestFile(details);
-            writeFile(`${basePath}module.manifest.ts`, text);
+            manifestCommand(basePath);
             break;
     }
 }
