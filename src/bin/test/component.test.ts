@@ -10,7 +10,7 @@ function fileExists(path: string): boolean {
 }
 
 afterEach(() => {
-    //fs.removeSync(process.cwd() + "/app");
+    fs.removeSync(process.cwd() + "/app");
 });
 
 test('creates a component with component, view and types files', () => {
@@ -41,6 +41,28 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 
     render() {
         return new MyComponentView().make(this);
+    }
+}
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('created component with view and without types should have expected content', () => {
+    componentCommand("MyComponent", false, false);
+
+    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
+
+    let expectedComponentText = `\
+import * as React from "react";
+import {View} from "rts-fw";
+import {MyComponentData} from "./MyComponent.types";
+
+export class MyComponentView implements View {
+    make(self: MyComponentData): JSX.Element {
+        return (
+            <section>
+            </section>
+        );
     }
 }
 `;

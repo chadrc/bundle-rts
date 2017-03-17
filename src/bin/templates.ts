@@ -86,7 +86,7 @@ export class ${moduleName}Module implements Module {
 }
 
 (<any>window).${moduleName} = new ${moduleName}Module();
-    `;
+`;
 }
 
 export function makeIndexTSXFile(appName: string): string {
