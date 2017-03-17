@@ -21,6 +21,30 @@ test('creates a component with component, view and types files', () => {
     expect(fileExists("/app/modules/MyComponent.types.ts")).toBeTruthy();
 });
 
+test('creates a component with component and view files', () => {
+    componentCommand("MyComponent", false, true);
+
+    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
+    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeTruthy();
+    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeFalsy();
+});
+
+test('creates a component with component and types files', () => {
+    componentCommand("MyComponent", true, false);
+
+    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
+    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeFalsy();
+    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeTruthy();
+});
+
+test('creates a component with component file only', () => {
+    componentCommand("MyComponent", true, true);
+
+    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
+    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeFalsy();
+    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeFalsy();
+});
+
 test('created component with view and types should have expected output', () => {
     componentCommand("MyComponent", false, false);
     
