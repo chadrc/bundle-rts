@@ -42,3 +42,13 @@ test("creates a module with no component", () => {
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
+
+test("creates a module with no component and no styles", () => {
+    moduleCommand("MyModule", true, true, false, false);
+
+    expect(fileExists(moduleFilePath)).toBeTruthy();
+    expect(fileExists(stylesFilePath)).toBeFalsy();
+    expect(fileExists(componentFilePath)).toBeFalsy();
+    expect(fileExists(viewFilePath)).toBeFalsy();
+    expect(fileExists(typesFilePath)).toBeFalsy();
+});
