@@ -6,6 +6,7 @@ rts-fw.js.map
 rts-fw.d.ts
 index.d.ts
 /bin/
+tmp/
 
 ### Editor files
 .idea/
