@@ -47,7 +47,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
     expect(data).toBe(expectedComponentText);
 });
 
-test('created component with view and without types should have expected content', () => {
+test('created view and without types should have expected content', () => {
     componentCommand("MyComponent", false, false);
 
     let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
