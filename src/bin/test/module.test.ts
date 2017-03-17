@@ -52,3 +52,35 @@ test("creates a module with no component and no styles", () => {
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
+
+test('created module with styles and component should have expected output', () => {
+    moduleCommand("MyModule", false, false, false, false);
+
+    let data = getFileData(moduleFilePath);
+
+    let expectedComponentText = `\
+import {Module} from "rts-fw"
+import {MyModule} from "./MyModule.component";
+
+import "./MyModule.scss";
+
+export class MyModuleModule implements Module {
+    private _components: {[name:string]: any};
+    constructor() {
+        this._components = {};
+        this._components["MyModule"] = MyModule;
+    }
+
+    get components(): {[name:string]: any} {
+        return this._components;
+    }
+
+    get name(): string {
+        return "MyModule";
+    }
+}
+
+(<any>window).MyModule = new MyModuleModule();
+`;
+    expect(data).toBe(expectedComponentText);
+});

@@ -64,9 +64,9 @@ export class ${componentName} extends React.Component<${typesBase}Props, ${types
 }
 
 export function makeModuleFile(moduleName: string, noComp: boolean, noStyles: boolean): string {
-    let styleImport = noStyles ? "" : `\n\nimport "./styles.scss";`;
+    let styleImport = noStyles ? "" : `\n\nimport "./${moduleName}.scss";`;
     let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
-    let compRegister = noComp ? "" : `\n\t\tthis._components["${moduleName}"] = ${moduleName};`;
+    let compRegister = noComp ? "" : `\n        this._components["${moduleName}"] = ${moduleName};`;
     return `\
 import {Module} from "rts-fw"${compImport}${styleImport}
 
