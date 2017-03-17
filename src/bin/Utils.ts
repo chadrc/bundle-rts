@@ -24,7 +24,7 @@ export function ensureDir(dir: string) {
 }
 
 export function writeFile(fileName: string, data: string) {
-    fs.writeFile(fileName, data, {flag: "w"}, writeFailure);
+    fs.writeFileSync(fileName, data, {flag: "w"});
 }
 
 export function isJsIdentifier(identifier: string) {
