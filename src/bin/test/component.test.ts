@@ -9,6 +9,14 @@ function fileExists(path: string): boolean {
     return fs.existsSync(process.cwd() + path);
 }
 
+function getFileData(path: string): string {
+    return fs.readFileSync(process.cwd() + path, "utf-8");
+}
+
+const componentFilePath = "/app/modules/MyComponent.component.ts";
+const viewFilePath = "/app/modules/MyComponent.view.tsx";
+const typesFilePath = "/app/modules/MyComponent.types.ts";
+
 afterEach(() => {
     fs.removeSync(process.cwd() + "/app");
 });
@@ -16,39 +24,39 @@ afterEach(() => {
 test('creates a component with component, view and types files', () => {
     componentCommand("MyComponent", false, false);
 
-    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeTruthy();
+    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(viewFilePath)).toBeTruthy();
+    expect(fileExists(typesFilePath)).toBeTruthy();
 });
 
 test('creates a component with component and view files', () => {
     componentCommand("MyComponent", false, true);
 
-    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeFalsy();
+    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(viewFilePath)).toBeTruthy();
+    expect(fileExists(typesFilePath)).toBeFalsy();
 });
 
 test('creates a component with component and types files', () => {
     componentCommand("MyComponent", true, false);
 
-    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeFalsy();
-    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeTruthy();
+    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(viewFilePath)).toBeFalsy();
+    expect(fileExists(typesFilePath)).toBeTruthy();
 });
 
 test('creates a component with component file only', () => {
     componentCommand("MyComponent", true, true);
 
-    expect(fileExists("/app/modules/MyComponent.component.ts")).toBeTruthy();
-    expect(fileExists("/app/modules/MyComponent.view.tsx")).toBeFalsy();
-    expect(fileExists("/app/modules/MyComponent.types.ts")).toBeFalsy();
+    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(viewFilePath)).toBeFalsy();
+    expect(fileExists(typesFilePath)).toBeFalsy();
 });
 
 test('created component with view and types should have expected output', () => {
     componentCommand("MyComponent", false, false);
     
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
+    let data = getFileData(componentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -74,7 +82,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 test('created component with view and without types should have expected output', () => {
     componentCommand("MyComponent", false, true);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
+    let data = getFileData(componentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -100,7 +108,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 test("created component without view and with types should have expected output", () => {
     componentCommand("MyComponent", true, false);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
+    let data = getFileData(componentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -128,7 +136,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 test("created component without view and without types should have expected output", () => {
     componentCommand("MyComponent", true, true);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
+    let data = getFileData(componentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -156,7 +164,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 test("created component's view with types should have expected output", () => {
     componentCommand("MyComponent", false, false);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
+    let data = getFileData(viewFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -178,7 +186,7 @@ export class MyComponentView implements View {
 test("created component's view without types should have expected output", () => {
     componentCommand("MyComponent", false, true);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
+    let data = getFileData(viewFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -199,7 +207,7 @@ export class MyComponentView implements View {
 test("create component's types should have expected output", () => {
     componentCommand("MyComponent", false, false);
 
-    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.types.ts", "utf-8");
+    let data = getFileData(typesFilePath);
 
     let expectedComponentText = `\
 import {Data, Props, State} from "rts-fw";
