@@ -150,3 +150,24 @@ export class MyComponentView implements View {
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test("created component's view without types should have expected output", () => {
+    componentCommand("MyComponent", false, true);
+
+    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
+
+    let expectedComponentText = `\
+import * as React from "react";
+import {Data, View} from "rts-fw";
+
+export class MyComponentView implements View {
+    make(self: Data): JSX.Element {
+        return (
+            <section>
+            </section>
+        );
+    }
+}
+`;
+    expect(data).toBe(expectedComponentText);
+});
