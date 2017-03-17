@@ -23,7 +23,7 @@ afterEach(() => {
     fs.removeSync(process.cwd() + "/app");
 });
 
-test("creates a module with a component with it's component, view and types files", () => {
+test("creates a module with styles and a component with it's component, view and types files", () => {
     moduleCommand("MyModule", false, false, false, false);
 
     expect(fileExists(moduleFilePath)).toBeTruthy();
@@ -33,7 +33,7 @@ test("creates a module with a component with it's component, view and types file
     expect(fileExists(typesFilePath)).toBeTruthy();
 });
 
-test("creates a module with no component", () => {
+test("creates a module with styles and no component", () => {
     moduleCommand("MyModule", true, false, false, false);
 
     expect(fileExists(moduleFilePath)).toBeTruthy();
