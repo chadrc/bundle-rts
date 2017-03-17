@@ -30,9 +30,3 @@ export function writeFile(fileName: string, data: string) {
 export function isJsIdentifier(identifier: string) {
     return jsIdentifierRegex.test(identifier);
 }
-
-function writeFailure(error: NodeJS.ErrnoException) {
-    if (error !== null) {
-        console.error(error);
-    }
-}
