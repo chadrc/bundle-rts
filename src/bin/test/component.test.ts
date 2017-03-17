@@ -47,7 +47,33 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
     expect(data).toBe(expectedComponentText);
 });
 
-test('created view and without types should have expected content', () => {
+test('created component with view and without types should have expected content', () => {
+    componentCommand("MyComponent", false, true);
+
+    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
+
+    let expectedComponentText = `\
+import * as React from "react";
+import {Data, Props, State} from "rts-fw";
+import {MyComponentView} from "./MyComponent.view";
+
+export class MyComponent extends React.Component<Props, State> implements Data {
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    render() {
+        return new MyComponentView().make(this);
+    }
+}
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test("created component's view with types should have expected content", () => {
     componentCommand("MyComponent", false, false);
 
     let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
