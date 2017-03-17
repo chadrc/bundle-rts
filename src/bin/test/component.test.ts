@@ -21,7 +21,7 @@ test('creates a component with component, view and types files', () => {
     expect(fileExists("/app/modules/MyComponent.types.ts")).toBeTruthy();
 });
 
-test('created component with view and types should have expected contents', () => {
+test('created component with view and types should have expected output', () => {
     componentCommand("MyComponent", false, false);
     
     let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
@@ -47,7 +47,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
     expect(data).toBe(expectedComponentText);
 });
 
-test('created component with view and without types should have expected content', () => {
+test('created component with view and without types should have expected output', () => {
     componentCommand("MyComponent", false, true);
 
     let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.component.ts", "utf-8");
@@ -129,7 +129,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
     expect(data).toBe(expectedComponentText);
 });
 
-test("created component's view with types should have expected content", () => {
+test("created component's view with types should have expected output", () => {
     componentCommand("MyComponent", false, false);
 
     let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.view.tsx", "utf-8");
