@@ -84,3 +84,33 @@ export class MyModuleModule implements Module {
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test('created module with styles and no component should have expected output', () => {
+    moduleCommand("MyModule", true, false, false, false);
+
+    let data = getFileData(moduleFilePath);
+
+    let expectedComponentText = `\
+import {Module} from "rts-fw"
+
+import "./MyModule.scss";
+
+export class MyModuleModule implements Module {
+    private _components: {[name:string]: any};
+    constructor() {
+        this._components = {};
+    }
+
+    get components(): {[name:string]: any} {
+        return this._components;
+    }
+
+    get name(): string {
+        return "MyModule";
+    }
+}
+
+(<any>window).MyModule = new MyModuleModule();
+`;
+    expect(data).toBe(expectedComponentText);
+});
