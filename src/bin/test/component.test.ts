@@ -171,3 +171,23 @@ export class MyComponentView implements View {
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test("create component's types should have expected output", () => {
+    componentCommand("MyComponent", false, false);
+
+    let data = fs.readFileSync(process.cwd() + "/app/modules/MyComponent.types.ts", "utf-8");
+
+    let expectedComponentText = `\
+import {Data, Props, State} from "rts-fw";
+
+export interface MyComponentProps extends Props{
+}
+
+export interface MyComponentState extends State {
+}
+
+export interface MyComponentData extends Data {
+}
+`;
+    expect(data).toBe(expectedComponentText);
+});
