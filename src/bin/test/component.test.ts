@@ -1,25 +1,9 @@
 import {componentCommand} from "../commands";
-import * as fs from "fs-extra";
-
-let workingDir = process.cwd() + "/tmp/rts-seed-tests/";
-fs.mkdirsSync(workingDir);
-process.chdir(workingDir);
-
-function fileExists(path: string): boolean {
-    return fs.existsSync(process.cwd() + path);
-}
-
-function getFileData(path: string): string {
-    return fs.readFileSync(process.cwd() + path, "utf-8");
-}
+import {fileExists, getFileData} from "./setup";
 
 const componentFilePath = "/app/modules/MyComponent.component.ts";
 const viewFilePath = "/app/modules/MyComponent.view.tsx";
 const typesFilePath = "/app/modules/MyComponent.types.ts";
-
-afterEach(() => {
-    fs.removeSync(process.cwd() + "/app");
-});
 
 test('creates a component with component, view and types files', () => {
     componentCommand("MyComponent", false, false);
