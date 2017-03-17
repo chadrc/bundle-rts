@@ -38,6 +38,7 @@
     "@types/glob": "^5.0.30",
     "@types/jest": "^19.2.2",
     "@types/node": "^7.0.8",
+    "fs-extra": "^2.1.2",
     "jest": "^19.0.2",
     "ts-jest": "^19.0.1",
     "typescript": "^2.2.1"
