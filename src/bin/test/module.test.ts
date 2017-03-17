@@ -14,6 +14,7 @@ function getFileData(path: string): string {
 }
 
 const moduleFilePath = "/app/modules/MyModule/MyModule.module.ts";
+const stylesFilePath = "/app/modules/MyModule/MyModule.scss";
 const componentFilePath = "/app/modules/MyModule/MyModule.component.ts";
 const viewFilePath = "/app/modules/MyModule/MyModule.view.tsx";
 const typesFilePath = "/app/modules/MyModule/MyModule.types.ts";
@@ -22,10 +23,11 @@ afterEach(() => {
     fs.removeSync(process.cwd() + "/app");
 });
 
-test('creates a component with component, view and types files', () => {
+test("creates a module with a component with it's component, view and types files", () => {
     moduleCommand("MyModule", false, false, false, false);
 
     expect(fileExists(moduleFilePath)).toBeTruthy();
+    expect(fileExists(stylesFilePath)).toBeTruthy();
     expect(fileExists(componentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeTruthy();
     expect(fileExists(typesFilePath)).toBeTruthy();
