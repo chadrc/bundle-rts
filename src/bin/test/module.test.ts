@@ -1,11 +1,11 @@
 import {moduleCommand} from "../commands";
 import {fileExists, getFileData} from "./setup";
 
-const moduleFilePath = "/app/modules/MyModule/MyModule.module.ts";
-const stylesFilePath = "/app/modules/MyModule/MyModule.scss";
-const componentFilePath = "/app/modules/MyModule/MyModule.component.ts";
-const viewFilePath = "/app/modules/MyModule/MyModule.view.tsx";
-const typesFilePath = "/app/modules/MyModule/MyModule.types.ts";
+const moduleFilePath =      "/app/modules/MyModule/MyModule.module.ts";
+const stylesFilePath =      "/app/modules/MyModule/MyModule.scss";
+const componentFilePath =   "/app/modules/MyModule/MyModule.component.ts";
+const viewFilePath =        "/app/modules/MyModule/MyModule.view.tsx";
+const typesFilePath =       "/app/modules/MyModule/MyModule.types.ts";
 
 test("creates a module with styles and a component with it's component, view and types files", () => {
     moduleCommand("MyModule", false, false, false, false);

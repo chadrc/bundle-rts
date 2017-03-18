@@ -1,9 +1,9 @@
 import {componentCommand} from "../commands";
 import {fileExists, getFileData} from "./setup";
 
-const componentFilePath = "/app/modules/MyComponent.component.ts";
-const viewFilePath = "/app/modules/MyComponent.view.tsx";
-const typesFilePath = "/app/modules/MyComponent.types.ts";
+const componentFilePath =   "/app/modules/MyComponent.component.ts";
+const viewFilePath =        "/app/modules/MyComponent.view.tsx";
+const typesFilePath =       "/app/modules/MyComponent.types.ts";
 
 test('creates a component with component, view and types files', () => {
     componentCommand("MyComponent", false, false);
