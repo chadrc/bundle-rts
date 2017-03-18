@@ -29,3 +29,18 @@ test("creates project with all default files", () => {
     expect(fileExists(typesFilePath)).toBeTruthy();
 });
 
+test("creates project without module", () => {
+    projectCommand("MyProject", "1.0", true, false, false, false, false);
+
+    expect(fileExists(pkgJsonFilePath)).toBeTruthy();
+    expect(fileExists(tsconfigFilePath)).toBeTruthy();
+    expect(fileExists(webpackFilePath)).toBeTruthy();
+    expect(fileExists(indexHtmlFilePath)).toBeTruthy();
+    expect(fileExists(indexTsxFilePath)).toBeTruthy();
+
+    expect(fileExists(moduleFilePath)).toBeFalsy();
+    expect(fileExists(stylesFilePath)).toBeFalsy();
+    expect(fileExists(componentFilePath)).toBeFalsy();
+    expect(fileExists(viewFilePath)).toBeFalsy();
+    expect(fileExists(typesFilePath)).toBeFalsy();
+});
