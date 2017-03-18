@@ -4,7 +4,11 @@ import * as glob from "glob";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
 
-export function manifestCommand(basePath: string): void {
+export function manifestCommand(): void {
+    let localDir = `/app/`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    
     let pattern = process.cwd() + "/app/modules/**/*.module.ts";
     let moduleFiles = glob.sync(pattern);
     let details = [];
