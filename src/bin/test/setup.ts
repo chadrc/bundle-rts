@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 
 let originalCwd = process.cwd();
-let workingDir = originalCwd + "/tmp/rts-seed-tests/";
+let workingDir = originalCwd + "/tmp/react-flares/test";
 
 export function fileExists(path: string): boolean {
     return fs.existsSync(process.cwd() + path);
