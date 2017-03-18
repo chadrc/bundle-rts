@@ -184,3 +184,33 @@ module.exports = {
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test('created webpack.config.js file should match output', () => {
+    projectCommand("MyProject", "1.0", false, false, false, false, false);
+
+    let data = getFileData(indexHtmlFilePath);
+
+    let expectedComponentText = `\
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>MyProject</title>
+        </head>
+    <body>
+        <main id="content">
+            <p>Loading...</p>
+        </main>
+        
+        <!-- Dependencies -->
+        <script src="../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../node_modules/react/dist/react.js"></script>
+        <script src="../node_modules/react-dom/dist/react-dom.js"></script>
+        
+        <!-- Main -->
+        <script src="../dist/js/app.bundle.js"></script>
+    </body>
+</html>
+`;
+    expect(data).toBe(expectedComponentText);
+});
