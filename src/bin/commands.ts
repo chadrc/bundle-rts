@@ -106,13 +106,28 @@ export function createProject(appName: string, version: string): void {
         "webpack.config.js",
         "tsconfig.json"
     ];
-    for (let filename of filesToCopy) {
-        fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
-    }
-    
+
     let localDir = `/app/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
+
+    // Go up __dirname path until we find our package root folder
+    // To work with tests better
+    let pathAry = __dirname.split("/");
+    let i = pathAry.length-1;
+    while (i > 0) {
+        if (pathAry[i] === "rts-fw") {
+            break;
+        }
+        pathAry.pop();
+        i--;
+    }
+    let pkgPath = pathAry.join("/");
+    
+    for (let filename of filesToCopy) {
+        let file = fs.readFileSync(`${pkgPath.replace("/bin", "")}/seed/${filename}`, "utf-8");
+        writeFile(`${process.cwd()}/${filename}`, file);
+    }
     
     let indexTsxData = Templates.makeIndexTSXFile(appName);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);

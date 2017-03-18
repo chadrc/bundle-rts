@@ -13,5 +13,5 @@ export function getFileData(path: string): string {
 }
 
 afterEach(() => {
-    fs.removeSync(workingDir);
+    // fs.removeSync(workingDir);
 });

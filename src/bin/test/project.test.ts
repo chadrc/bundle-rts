@@ -45,7 +45,7 @@ test("creates project without module", () => {
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
 
-test('created module with styles and component should have expected output', () => {
+test('created package.json file should match output', () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
 
     let data = getFileData(pkgJsonFilePath);
@@ -85,6 +85,32 @@ test('created module with styles and component should have expected output', () 
     "webpack": "^2.2.1"
   }
 }  
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('created tsconfig.json file should match output', () => {
+    projectCommand("MyProject", "1.0", false, false, false, false, false);
+
+    let data = getFileData(tsconfigFilePath);
+
+    let expectedComponentText = `\
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react"
+  },
+  "include": [
+    "./app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
 `;
     expect(data).toBe(expectedComponentText);
 });
