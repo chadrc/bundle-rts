@@ -44,3 +44,47 @@ test("creates project without module", () => {
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
+
+test('created module with styles and component should have expected output', () => {
+    projectCommand("MyProject", "1.0", false, false, false, false, false);
+
+    let data = getFileData(pkgJsonFilePath);
+
+    // Lower case project name because npm requires it
+    let expectedComponentText = `\
+{
+  "name": "myproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack",
+    "test": "echo \\"Error: no test specified\\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "@types/react": "^15.0.16",
+    "@types/react-dom": "^0.14.23",
+    "@types/jquery": "^2.0.41",
+    "awesome-typescript-loader": "^3.1.2",
+    "css-loader": "^0.27.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "glob": "^7.1.1",
+    "node-sass": "^4.5.0",
+    "rts-fw": "1.0",
+    "sass-loader": "^6.0.3",
+    "source-map-loader": "^0.2.0",
+    "style-loader": "^0.13.2",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1"
+  }
+}  
+`;
+    expect(data).toBe(expectedComponentText);
+});
