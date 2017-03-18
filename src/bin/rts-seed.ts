@@ -30,7 +30,7 @@ if (args.isEmpty) {
 
         case "project":
             let appName = args.next();
-            projectCommand(appName, settings.version, basePath,
+            projectCommand(appName, settings.version,
                 args.noModule, args.noComponent, args.noStyles, args.noView, args.noTypes);
             break;
 

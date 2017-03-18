@@ -21,7 +21,7 @@ export function manifestCommand(basePath: string): void {
     writeFile(`${basePath}module.manifest.ts`, text);
 }
 
-export function projectCommand(appName: string, version: string, basePath: string,
+export function projectCommand(appName: string, version: string,
                                noMod: boolean, noComp: boolean, noStyles: boolean,
                                noView: boolean, noTypes: boolean): void {
     if (!appName) {
@@ -29,7 +29,7 @@ export function projectCommand(appName: string, version: string, basePath: strin
         return;
     }
 
-    createProject(appName, basePath, version);
+    createProject(appName, version);
 
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");
@@ -100,7 +100,7 @@ export function createModule(moduleName: string, noComp: boolean, noStyles: bool
     }
 }
 
-export function createProject(appName: string, basePath: string, version: string): void {
+export function createProject(appName: string, version: string): void {
 
     let filesToCopy: string[] = [
         "webpack.config.js",
@@ -109,7 +109,11 @@ export function createProject(appName: string, basePath: string, version: string
     for (let filename of filesToCopy) {
         fs.createReadStream(`${__dirname.replace("/bin", "")}/seed/${filename}`).pipe(fs.createWriteStream(`${process.cwd()}/${filename}`));
     }
-
+    
+    let localDir = `/app/`;
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    
     let indexTsxData = Templates.makeIndexTSXFile(appName);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
