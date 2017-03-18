@@ -13,8 +13,6 @@ const componentFilePath =   "/app/modules/MyProject/MyProject.component.ts";
 const viewFilePath =        "/app/modules/MyProject/MyProject.view.tsx";
 const typesFilePath =       "/app/modules/MyProject/MyProject.types.ts";
 
-const basePath = process.cwd() + "/app";
-
 test("creates project with all default files", () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
 
