@@ -3,14 +3,14 @@ import {fileExists, getFileData} from "./setup";
 
 const manifestFilePath = "/app/module.manifest.ts";
 
-test("creates project with all default files", () => {
+test("creates module manifest file with single module", () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
     manifestCommand();
 
     expect(fileExists(manifestFilePath)).toBeTruthy();
 });
 
-test('created package.json file should match output', () => {
+test('created module.manifest.ts file should match output', () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
     manifestCommand();
 
