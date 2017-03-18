@@ -1,9 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 ### Generated build files
-rts-fw.js
-rts-fw.js.map
-rts-fw.d.ts
+react-flares.js
+react-flares.js.map
+react-flares.d.ts
 index.d.ts
 /bin/
 tmp/

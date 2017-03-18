@@ -120,7 +120,7 @@ export function createProject(appName: string, version: string): void {
     let pathAry = __dirname.split("/");
     let i = pathAry.length-1;
     while (i > 0) {
-        if (pathAry[i] === "rts-fw") {
+        if (pathAry[i] === "react-flares") {
             break;
         }
         pathAry.pop();

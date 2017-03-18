@@ -1,6 +1,6 @@
 export function makeTypesFile(componentName: string): string {
     return `\
-import {Data, Props, State} from "rts-fw";
+import {Data, Props, State} from "react-flares";
 
 export interface ${componentName}Props extends Props{
 }
@@ -19,7 +19,7 @@ export function makeViewFile(componentName: string, noTypes: boolean): string {
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
     return `\
 import * as React from "react";
-import {${dataName}View} from "rts-fw";${dataImport}
+import {${dataName}View} from "react-flares";${dataImport}
 
 export class ${componentName}View implements View {
     make(self: ${typesBase}Data): JSX.Element {
@@ -35,7 +35,7 @@ export class ${componentName}View implements View {
 export function makeComponentFile(componentName: string, noTypes: boolean, noView: boolean): string {
     let typesBase = noTypes ? "" : componentName;
     let typesImport = noTypes ?
-        `"rts-fw"`
+        `"react-flares"`
         :
         `"./${componentName}.types"`;
     let viewImport = noView ? "" : `\nimport {${componentName}View} from "./${componentName}.view";`;
@@ -68,7 +68,7 @@ export function makeModuleFile(moduleName: string, noComp: boolean, noStyles: bo
     let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
     let compRegister = noComp ? "" : `\n        this._components["${moduleName}"] = ${moduleName};`;
     return `\
-import {Module} from "rts-fw"${compImport}${styleImport}
+import {Module} from "react-flares"${compImport}${styleImport}
 
 export class ${moduleName}Module implements Module {
     private _components: {[name:string]: any};
@@ -93,7 +93,7 @@ export function makeIndexTSXFile(appName: string): string {
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {App} from "rts-fw";
+import {App} from "react-flares";
 import Manifest from "./module.manifest";
 
 const ${appName} = new App(Manifest); 
@@ -117,7 +117,7 @@ export function makeModuleManifestFile(modDetails: ModuleDetails[]): string {
         count++;
     }
     return `\
-import {ModuleDetails} from "rts-fw";
+import {ModuleDetails} from "react-flares";
 
 let ModuleManifest: ModuleDetails[] = [
 ${mods}
@@ -180,7 +180,7 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
-    "rts-fw": "${libVersion}",
+    "react-flares": "${libVersion}",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",

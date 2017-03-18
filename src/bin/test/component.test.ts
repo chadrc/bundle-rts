@@ -70,7 +70,7 @@ test('created component with view and without types should have expected output'
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "rts-fw";
+import {Data, Props, State} from "react-flares";
 import {MyComponentView} from "./MyComponent.view";
 
 export class MyComponent extends React.Component<Props, State> implements Data {
@@ -124,7 +124,7 @@ test("created component without view and without types should have expected outp
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "rts-fw";
+import {Data, Props, State} from "react-flares";
 
 export class MyComponent extends React.Component<Props, State> implements Data {
 
@@ -152,7 +152,7 @@ test("created component's view with types should have expected output", () => {
 
     let expectedComponentText = `\
 import * as React from "react";
-import {View} from "rts-fw";
+import {View} from "react-flares";
 import {MyComponentData} from "./MyComponent.types";
 
 export class MyComponentView implements View {
@@ -174,7 +174,7 @@ test("created component's view without types should have expected output", () =>
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, View} from "rts-fw";
+import {Data, View} from "react-flares";
 
 export class MyComponentView implements View {
     make(self: Data): JSX.Element {
@@ -194,7 +194,7 @@ test("create component's types should have expected output", () => {
     let data = getFileData(typesFilePath);
 
     let expectedComponentText = `\
-import {Data, Props, State} from "rts-fw";
+import {Data, Props, State} from "react-flares";
 
 export interface MyComponentProps extends Props{
 }

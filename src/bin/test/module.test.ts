@@ -43,7 +43,7 @@ test('created module with styles and component should have expected output', () 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "rts-fw"
+import {Module} from "react-flares"
 import {MyModule} from "./MyModule.component";
 
 import "./MyModule.scss";
@@ -75,7 +75,7 @@ test('created module with styles and no component should have expected output', 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "rts-fw"
+import {Module} from "react-flares"
 
 import "./MyModule.scss";
 
@@ -105,7 +105,7 @@ test('created module with component and no styles should have expected output', 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "rts-fw"
+import {Module} from "react-flares"
 import {MyModule} from "./MyModule.component";
 
 export class MyModuleModule implements Module {
@@ -135,7 +135,7 @@ test('created module with no component and no styles should have expected output
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "rts-fw"
+import {Module} from "react-flares"
 
 export class MyModuleModule implements Module {
     private _components: {[name:string]: any};

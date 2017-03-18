@@ -77,7 +77,7 @@ test('created package.json file should match output', () => {
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
-    "rts-fw": "1.0",
+    "react-flares": "1.0",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",
@@ -223,7 +223,7 @@ test('created index.tsx file should match output', () => {
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {App} from "rts-fw";
+import {App} from "react-flares";
 import Manifest from "./module.manifest";
 
 const MyProject = new App(Manifest); 

@@ -19,7 +19,7 @@ test('created package.json file should match output', () => {
 
     // Lower case project name because npm requires it
     let expectedComponentText = `\
-import {ModuleDetails} from "rts-fw";
+import {ModuleDetails} from "react-flares";
 
 let ModuleManifest: ModuleDetails[] = [
     {

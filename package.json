@@ -1,13 +1,13 @@
 {
-  "name": "rts-fw",
-  "version": "0.0.5-DEV",
+  "name": "react-flares",
+  "version": "0.1.0-DEV",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "build-bin": "./node_modules/.bin/tsc -p src/bin",
     "build-lib": "./node_modules/.bin/tsc -p src/lib/",
-    "rename-d-ts": "mv ./rts-fw.d.ts ./index.d.ts",
+    "rename-d-ts": "mv ./react-flares.d.ts ./index.d.ts",
     "build": "npm run build-lib&npm run build-bin",
     "watch-bin": "./node_modules/.bin/tsc -p src/bin/ --watch",
     "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
@@ -23,11 +23,13 @@
     "sass"
   ],
   "bin": {
-    "rts-seed": "./bin/rts-seed.js"
+    "react-flares": "./bin/react-flares.js",
+    "flares": "./bin/react-flares.js",
+    "rf": "./bin/react-flares.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chadrc/rts-fw.git"
+    "url": "https://github.com/chadrc/react-flares.git"
   },
   "author": "Chad Collins",
   "license": "ISC",
