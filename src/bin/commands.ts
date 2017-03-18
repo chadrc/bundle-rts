@@ -14,7 +14,7 @@ export function manifestCommand(): void {
     let details = [];
     for (let m of moduleFiles) {
         let name = path.basename(m).replace(".module.ts", "");
-        let stylePath = path.dirname(m) + "/styles.scss";
+        let stylePath = path.dirname(m) + `/${name}.scss`;
         let hasStyles = fs.existsSync(stylePath);
         details.push({
             name: name,
