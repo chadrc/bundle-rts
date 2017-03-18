@@ -185,7 +185,7 @@ module.exports = {
     expect(data).toBe(expectedComponentText);
 });
 
-test('created webpack.config.js file should match output', () => {
+test('created index.html file should match output', () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
 
     let data = getFileData(indexHtmlFilePath);
@@ -211,6 +211,22 @@ test('created webpack.config.js file should match output', () => {
         <script src="../dist/js/app.bundle.js"></script>
     </body>
 </html>
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('created index.tsx file should match output', () => {
+    projectCommand("MyProject", "1.0", false, false, false, false, false);
+
+    let data = getFileData(indexTsxFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import {App} from "rts-fw";
+import Manifest from "./module.manifest";
+
+const MyProject = new App(Manifest); 
 `;
     expect(data).toBe(expectedComponentText);
 });
