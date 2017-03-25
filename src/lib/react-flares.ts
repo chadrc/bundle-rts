@@ -191,9 +191,9 @@ namespace ReactFlares {
         component: any
     }
 
-    export class ComponentFlare extends React.Component<ComponentFlareProps, ComponentFlareState> {
+    export class ComponentFlare<T extends ComponentFlareProps> extends React.Component<T, ComponentFlareState> {
 
-        constructor(props: ComponentFlareProps) {
+        constructor(props: T) {
             super(props);
             this.state = {
                 component: null
