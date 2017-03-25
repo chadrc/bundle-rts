@@ -33,7 +33,7 @@ export class ${componentName}View implements View {
 }
 
 export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean): string {
-    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../modules/${moduleName}/${componentName}.types";`;
+    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../modules/${moduleName}/components/${componentName}/${componentName}.types";`;
     let componentProps = noTypes ? "" : ` & ${componentName}Props`;
     return `\
 import * as ReactFlares from 'react-flares';${typesImport}
