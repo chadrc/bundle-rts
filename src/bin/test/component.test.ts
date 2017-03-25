@@ -1,9 +1,10 @@
 import {componentCommand} from "../commands";
 import {fileExists, getFileData} from "./setup";
 
-const componentFilePath =   "/app/modules/MyComponent.component.ts";
-const viewFilePath =        "/app/modules/MyComponent.view.tsx";
-const typesFilePath =       "/app/modules/MyComponent.types.ts";
+const componentFilePath =       "/app/modules/MyComponent.component.ts";
+const noViewComponentFilePath = componentFilePath + "x";
+const viewFilePath =            "/app/modules/MyComponent.view.tsx";
+const typesFilePath =           "/app/modules/MyComponent.types.ts";
 
 test('creates a component with component, view and types files', () => {
     componentCommand("MyComponent", false, false);
@@ -24,7 +25,7 @@ test('creates a component with component and view files', () => {
 test('creates a component with component and types files', () => {
     componentCommand("MyComponent", true, false);
 
-    expect(fileExists(componentFilePath + "x")).toBeTruthy();
+    expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeTruthy();
 });
@@ -32,7 +33,7 @@ test('creates a component with component and types files', () => {
 test('creates a component with component file only', () => {
     componentCommand("MyComponent", true, true);
 
-    expect(fileExists(componentFilePath + "x")).toBeTruthy();
+    expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
@@ -70,7 +71,7 @@ test('created component with view and without types should have expected output'
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "1react-flares";
+import {Data, Props, State} from "react-flares";
 import {MyComponentView} from "./MyComponent.view";
 
 export class MyComponent extends React.Component<Props, State> implements Data {
@@ -92,7 +93,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 test("created component without view and with types should have expected output", () => {
     componentCommand("MyComponent", true, false);
 
-    let data = getFileData(componentFilePath);
+    let data = getFileData(noViewComponentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
@@ -120,7 +121,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 test("created component without view and without types should have expected output", () => {
     componentCommand("MyComponent", true, true);
 
-    let data = getFileData(componentFilePath);
+    let data = getFileData(noViewComponentFilePath);
 
     let expectedComponentText = `\
 import * as React from "react";
