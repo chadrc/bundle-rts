@@ -50,11 +50,12 @@ module.exports = {
 
     externals: {
         "react": "React",
-        "react-dom": "ReactDOM"
+        "react-dom": "ReactDOM",
+        "react-flares": "ReactFlares"
     },
 
     plugins: [
         new CheckerPlugin(),
-        new ExtractTextPlugin('styles/[name].bundle.css')
+        new ExtractTextPlugin('css/[name].bundle.css')
     ]
 };
