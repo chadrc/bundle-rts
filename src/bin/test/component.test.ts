@@ -24,7 +24,7 @@ test('creates a component with component and view files', () => {
 test('creates a component with component and types files', () => {
     componentCommand("MyComponent", true, false);
 
-    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(componentFilePath + "x")).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeTruthy();
 });
@@ -32,7 +32,7 @@ test('creates a component with component and types files', () => {
 test('creates a component with component file only', () => {
     componentCommand("MyComponent", true, true);
 
-    expect(fileExists(componentFilePath)).toBeTruthy();
+    expect(fileExists(componentFilePath + "x")).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
 });
@@ -70,7 +70,7 @@ test('created component with view and without types should have expected output'
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "1react-flares";
 import {MyComponentView} from "./MyComponent.view";
 
 export class MyComponent extends React.Component<Props, State> implements Data {

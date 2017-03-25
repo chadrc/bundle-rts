@@ -74,7 +74,7 @@ export function createComponent(componentName: string, componentPath: string, no
     let localDir = `/app/modules/${componentPath}`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-    let componentFilePath = `${basePath}.component.ts`;
+    let componentFilePath = `${basePath}.component.ts${noView ? "x": ""}`;
     if (fs.existsSync(componentFilePath)) {
         console.error("Component already exists.");
         return;
