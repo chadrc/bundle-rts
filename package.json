@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "build-bin": "./node_modules/.bin/tsc -p src/bin",
-    "build-lib": "./node_modules/.bin/tsc -p src/lib/",
-    "rename-d-ts": "mv ./react-flares.d.ts ./index.d.ts",
+    "build-lib": "./node_modules/.bin/tsc -p src/lib",
+    "rename-d-ts": "mv ./dist/react-flares.d.ts ./index.d.ts",
     "build": "npm run build-lib&npm run build-bin",
     "watch-bin": "./node_modules/.bin/tsc -p src/bin/ --watch",
     "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
@@ -46,7 +46,8 @@
     "fs-extra": "^2.1.2",
     "jest": "^19.0.2",
     "ts-jest": "^19.0.1",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "webpack": "^2.3.2"
   },
   "jest": {
     "transform": {
