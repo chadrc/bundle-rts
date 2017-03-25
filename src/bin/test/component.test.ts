@@ -16,7 +16,7 @@ const componentFilePath =       `/app/components/${componentFile}`;
 const noViewComponentFilePath = componentFilePath + "x";
 const viewFilePath =            `/app/components/${viewFile}`;
 const typesFilePath =           `/app/components/${typesFile}`;
-const flareFilePath =           `/app/flares/${flareFile}`;
+const flareFilePath =           `/app/flares/${moduleName}/${flareFile}`;
 
 const moduleComponentFilePath = `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
 const moduleViewFilePath =      `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;

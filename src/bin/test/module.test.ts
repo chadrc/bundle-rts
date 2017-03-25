@@ -6,7 +6,7 @@ const stylesFilePath =      "/app/modules/MyModule/MyModule.scss";
 const componentFilePath =   "/app/modules/MyModule/MyModule.component.ts";
 const viewFilePath =        "/app/modules/MyModule/MyModule.view.tsx";
 const typesFilePath =       "/app/modules/MyModule/MyModule.types.ts";
-const flareFilePath =       "/app/flares/MyModule.flare.ts";
+const flareFilePath =       "/app/flares/MyModule/MyModule.flare.ts";
 
 test("creates a module with styles and a component with it's component, view and types files", () => {
     moduleCommand("MyModule", false, false, false, false);

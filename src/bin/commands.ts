@@ -97,7 +97,7 @@ export function createComponent(componentName: string, moduleName: string, noVie
     writeFile(componentFilePath, componentData);
 
     if (moduleName !== "~") {
-        let flarePath = `/app/flares/${componentName}.flare.ts`;
+        let flarePath = `/app/flares/${moduleName}/${componentName}.flare.ts`;
         ensureDir(flarePath);
         writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes, moduleRoot));
     }
