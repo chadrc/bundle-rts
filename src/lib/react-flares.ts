@@ -165,12 +165,14 @@ namespace ReactFlares {
         }
     }
 
+    export let modules:any = {};
+
     export function loadModule(name: string, callback: () => void) {
         new ModuleLoader(name).load(callback);
     }
 
     export function getModule(name: string): Module {
-        return (<any>window)[name];
+        return ReactFlares.modules[name];
     }
 
     export interface ModuleDetails {

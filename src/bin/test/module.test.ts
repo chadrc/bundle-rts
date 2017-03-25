@@ -43,12 +43,12 @@ test('created module with styles and component should have expected output', () 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "react-flares"
+import * as ReactFlares from "react-flares"
 import {MyModule} from "./MyModule.component";
 
 import "./MyModule.scss";
 
-export class MyModuleModule implements Module {
+export class MyModuleModule implements ReactFlares.Module {
     private _components: {[name:string]: any};
     constructor() {
         this._components = {};
@@ -64,7 +64,7 @@ export class MyModuleModule implements Module {
     }
 }
 
-(<any>window).MyModule = new MyModuleModule();
+ReactFlares.modules.MyModule = new MyModuleModule();
 `;
     expect(data).toBe(expectedComponentText);
 });
@@ -75,11 +75,11 @@ test('created module with styles and no component should have expected output', 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "react-flares"
+import * as ReactFlares from "react-flares"
 
 import "./MyModule.scss";
 
-export class MyModuleModule implements Module {
+export class MyModuleModule implements ReactFlares.Module {
     private _components: {[name:string]: any};
     constructor() {
         this._components = {};
@@ -94,7 +94,7 @@ export class MyModuleModule implements Module {
     }
 }
 
-(<any>window).MyModule = new MyModuleModule();
+ReactFlares.modules.MyModule = new MyModuleModule();
 `;
     expect(data).toBe(expectedComponentText);
 });
@@ -105,10 +105,10 @@ test('created module with component and no styles should have expected output', 
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "react-flares"
+import * as ReactFlares from "react-flares"
 import {MyModule} from "./MyModule.component";
 
-export class MyModuleModule implements Module {
+export class MyModuleModule implements ReactFlares.Module {
     private _components: {[name:string]: any};
     constructor() {
         this._components = {};
@@ -124,7 +124,7 @@ export class MyModuleModule implements Module {
     }
 }
 
-(<any>window).MyModule = new MyModuleModule();
+ReactFlares.modules.MyModule = new MyModuleModule();
 `;
     expect(data).toBe(expectedComponentText);
 });
@@ -135,9 +135,9 @@ test('created module with no component and no styles should have expected output
     let data = getFileData(moduleFilePath);
 
     let expectedComponentText = `\
-import {Module} from "react-flares"
+import * as ReactFlares from "react-flares"
 
-export class MyModuleModule implements Module {
+export class MyModuleModule implements ReactFlares.Module {
     private _components: {[name:string]: any};
     constructor() {
         this._components = {};
@@ -152,7 +152,7 @@ export class MyModuleModule implements Module {
     }
 }
 
-(<any>window).MyModule = new MyModuleModule();
+ReactFlares.modules.MyModule = new MyModuleModule();
 `;
     expect(data).toBe(expectedComponentText);
 });

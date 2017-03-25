@@ -35,8 +35,9 @@ export class ${componentName}View implements View {
 export function makeComponentFlareFile(componentName: string, moduleName: string): string {
     return `\
 import * as ReactFlares from 'react-flares';
+import {${componentName}Props} from "../modules/${moduleName}/${componentName}.types";
 
-export class ${componentName}Flare extends ReactFlares.ComponentFlare {
+export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & ${componentName}Props> {
     get componentId(): string {return "${moduleName}:${componentName}";}
 }
 `;
@@ -78,9 +79,9 @@ export function makeModuleFile(moduleName: string, noComp: boolean, noStyles: bo
     let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
     let compRegister = noComp ? "" : `\n        this._components["${moduleName}"] = ${moduleName};`;
     return `\
-import {Module} from "react-flares"${compImport}${styleImport}
+import * as ReactFlares from "react-flares"${compImport}${styleImport}
 
-export class ${moduleName}Module implements Module {
+export class ${moduleName}Module implements ReactFlares.Module {
     private _components: {[name:string]: any};
     constructor() {
         this._components = {};${compRegister}
@@ -95,7 +96,7 @@ export class ${moduleName}Module implements Module {
     }
 }
 
-(<any>window).${moduleName} = new ${moduleName}Module();
+ReactFlares.modules.${moduleName} = new ${moduleName}Module();
 `;
 }
 
