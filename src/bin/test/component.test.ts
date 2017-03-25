@@ -71,6 +71,22 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
     expect(data).toBe(expectedComponentText);
 });
 
+test('created component flare should have expected output', () => {
+    // Need module and component to properly test
+    componentCommand("MyModule:MyComponent", false, false);
+
+    let data = getFileData(flareFilePath);
+
+    let expectedComponentText = `\
+import * as ReactFlares from 'react-flares';
+
+export class MyComponentFlare extends ReactFlares.ComponentFlare {
+    get componentId(): string {return "MyModule:MyComponent";}
+}
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
 test('created component with view and without types should have expected output', () => {
     componentCommand(componentId, false, true);
 

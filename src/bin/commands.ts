@@ -93,7 +93,7 @@ export function createComponent(componentName: string, moduleName: string, noVie
 
     let flarePath = `/app/flares/${componentName}.flare.ts`;
     ensureDir(flarePath);
-    writeFile(process.cwd() + flarePath, "");
+    writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName));
 
     if (!noView) {
         writeFile(`${basePath}.view.tsx`, viewData);
