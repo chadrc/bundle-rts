@@ -1,13 +1,15 @@
 import {componentCommand} from "../commands";
 import {fileExists, getFileData} from "./setup";
 
-const componentFilePath =       "/app/modules/MyComponent.component.ts";
+const componentFilePath =       "/app/components/MyComponent.component.ts";
 const noViewComponentFilePath = componentFilePath + "x";
-const viewFilePath =            "/app/modules/MyComponent.view.tsx";
-const typesFilePath =           "/app/modules/MyComponent.types.ts";
+const viewFilePath =            "/app/components/MyComponent.view.tsx";
+const typesFilePath =           "/app/components/MyComponent.types.ts";
+
+const componentId = "~:MyComponent";
 
 test('creates a component with component, view and types files', () => {
-    componentCommand("MyComponent", false, false);
+    componentCommand(componentId, false, false);
 
     expect(fileExists(componentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeTruthy();
@@ -15,7 +17,7 @@ test('creates a component with component, view and types files', () => {
 });
 
 test('creates a component with component and view files', () => {
-    componentCommand("MyComponent", false, true);
+    componentCommand(componentId, false, true);
 
     expect(fileExists(componentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeTruthy();
@@ -23,7 +25,7 @@ test('creates a component with component and view files', () => {
 });
 
 test('creates a component with component and types files', () => {
-    componentCommand("MyComponent", true, false);
+    componentCommand(componentId, true, false);
 
     expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
@@ -31,7 +33,7 @@ test('creates a component with component and types files', () => {
 });
 
 test('creates a component with component file only', () => {
-    componentCommand("MyComponent", true, true);
+    componentCommand(componentId, true, true);
 
     expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
@@ -39,7 +41,7 @@ test('creates a component with component file only', () => {
 });
 
 test('created component with view and types should have expected output', () => {
-    componentCommand("MyComponent", false, false);
+    componentCommand(componentId, false, false);
     
     let data = getFileData(componentFilePath);
 
@@ -65,7 +67,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 });
 
 test('created component with view and without types should have expected output', () => {
-    componentCommand("MyComponent", false, true);
+    componentCommand(componentId, false, true);
 
     let data = getFileData(componentFilePath);
 
@@ -91,7 +93,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component without view and with types should have expected output", () => {
-    componentCommand("MyComponent", true, false);
+    componentCommand(componentId, true, false);
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -119,7 +121,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 });
 
 test("created component without view and without types should have expected output", () => {
-    componentCommand("MyComponent", true, true);
+    componentCommand(componentId, true, true);
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -147,7 +149,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component's view with types should have expected output", () => {
-    componentCommand("MyComponent", false, false);
+    componentCommand(componentId, false, false);
 
     let data = getFileData(viewFilePath);
 
@@ -169,7 +171,7 @@ export class MyComponentView implements View {
 });
 
 test("created component's view without types should have expected output", () => {
-    componentCommand("MyComponent", false, true);
+    componentCommand(componentId, false, true);
 
     let data = getFileData(viewFilePath);
 
@@ -190,7 +192,7 @@ export class MyComponentView implements View {
 });
 
 test("create component's types should have expected output", () => {
-    componentCommand("MyComponent", false, false);
+    componentCommand(componentId, false, false);
 
     let data = getFileData(typesFilePath);
 

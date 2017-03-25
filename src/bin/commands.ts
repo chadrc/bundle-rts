@@ -40,7 +40,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, `${moduleName}/${moduleName}`, noView, noTypes);
+                createComponent(moduleName, moduleName, noView, noTypes);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -53,25 +53,35 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, `${moduleName}/${moduleName}`, noTypes, noView);
+            createComponent(moduleName, moduleName, noTypes, noView);
         }
     }
 }
 
-export function componentCommand(componentPath: string, noView: boolean, noTypes: boolean): void {
-    let componentName = path.basename(componentPath);
+export function componentCommand(componentId: string, noView: boolean, noTypes: boolean): void {
+    let parts = componentId.split(":");
+    if (parts.length !== 2) {
+        throw "Invalid component id: " + componentId;
+    }
+    let moduleName = parts[0];
+    let componentName = parts[1];
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, componentPath, noView, noTypes);
+        createComponent(componentName, moduleName, noView, noTypes);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
 }
 
-export function createComponent(componentName: string, componentPath: string, noView: boolean, noTypes: boolean) {
+export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean) {
     let componentData = Templates.makeComponentFile(componentName, noTypes, noView);
     let viewData = Templates.makeViewFile(componentName, noTypes);
     let typesData = Templates.makeTypesFile(componentName);
-    let localDir = `/app/modules/${componentPath}`;
+    let localDir;
+    if (moduleName === "~") {
+        localDir = `/app/components/${componentName}`;
+    } else {
+        localDir = `/app/modules/${moduleName}/${componentName}`;
+    }
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
     let componentFilePath = `${basePath}.component.ts${noView ? "x": ""}`;
