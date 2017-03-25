@@ -32,12 +32,13 @@ export class ${componentName}View implements View {
 `;
 }
 
-export function makeComponentFlareFile(componentName: string, moduleName: string): string {
+export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean): string {
+    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../modules/${moduleName}/${componentName}.types";`;
+    let componentProps = noTypes ? "" : ` & ${componentName}Props`;
     return `\
-import * as ReactFlares from 'react-flares';
-import {${componentName}Props} from "../modules/${moduleName}/${componentName}.types";
+import * as ReactFlares from 'react-flares';${typesImport}
 
-export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & ${componentName}Props> {
+export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps${componentProps}> {
     get componentId(): string {return "${moduleName}:${componentName}";}
 }
 `;
