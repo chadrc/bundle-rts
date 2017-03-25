@@ -32,8 +32,9 @@ export class ${componentName}View implements View {
 `;
 }
 
-export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean): string {
-    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../modules/${moduleName}/components/${componentName}/${componentName}.types";`;
+export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean, rootModuleComp: boolean): string {
+    let extraImport = rootModuleComp ? "" : `components/${componentName}/`;
+    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../modules/${moduleName}/${extraImport}${componentName}.types";`;
     let componentProps = noTypes ? "" : ` & ${componentName}Props`;
     return `\
 import * as ReactFlares from 'react-flares';${typesImport}

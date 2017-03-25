@@ -8,7 +8,7 @@ export function manifestCommand(): void {
     let localDir = `/app/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-    
+
     let pattern = process.cwd() + "/app/modules/**/*.module.ts";
     let moduleFiles = glob.sync(pattern);
     let details = [];
@@ -40,7 +40,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, moduleName, noView, noTypes, false);
+                createComponent(moduleName, moduleName, noView, noTypes, false, true);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -53,7 +53,7 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, moduleName, noTypes, noView, false);
+            createComponent(moduleName, moduleName, noTypes, noView, false, true);
         }
     }
 }
@@ -72,7 +72,8 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
     }
 }
 
-export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean, placeInComponentsFolder: boolean = true) {
+export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean,
+                                placeInComponentsFolder: boolean = true, moduleRoot: boolean = false) {
     let componentData = Templates.makeComponentFile(componentName, noTypes, noView);
     let viewData = Templates.makeViewFile(componentName, noTypes);
     let typesData = Templates.makeTypesFile(componentName);
@@ -88,7 +89,7 @@ export function createComponent(componentName: string, moduleName: string, noVie
     }
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-    let componentFilePath = `${basePath}.component.ts${noView ? "x": ""}`;
+    let componentFilePath = `${basePath}.component.ts${noView ? "x" : ""}`;
     if (fs.existsSync(componentFilePath)) {
         console.error("Component already exists.");
         return;
@@ -98,7 +99,7 @@ export function createComponent(componentName: string, moduleName: string, noVie
     if (moduleName !== "~") {
         let flarePath = `/app/flares/${componentName}.flare.ts`;
         ensureDir(flarePath);
-        writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes));
+        writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes, moduleRoot));
     }
 
     if (!noView) {
@@ -139,7 +140,7 @@ export function createProject(appName: string, version: string): void {
     // Go up __dirname path until we find our package root folder
     // To work with tests better
     let pathAry = __dirname.split("/");
-    let i = pathAry.length-1;
+    let i = pathAry.length - 1;
     while (i > 0) {
         if (pathAry[i] === "react-flares") {
             break;
@@ -148,12 +149,12 @@ export function createProject(appName: string, version: string): void {
         i--;
     }
     let pkgPath = pathAry.join("/");
-    
+
     for (let filename of filesToCopy) {
         let file = fs.readFileSync(`${pkgPath.replace("/bin", "")}/seed/${filename}`, "utf-8");
         writeFile(`${process.cwd()}/${filename}`, file);
     }
-    
+
     let indexTsxData = Templates.makeIndexTSXFile(appName);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
