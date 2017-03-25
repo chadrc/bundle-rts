@@ -204,7 +204,7 @@ namespace ReactFlares {
                 throw "Cannot create ComponentFlare without a componentId.";
             }
 
-            let split: string[] = this.props.componentId.split(":");
+            let split: string[] = cid.split(":");
             if (split.length != 2) {
                 throw `Invalid componentId: ${cid}\n` + "componentIds are formatted:\n'ModuleName:ComponentName'";
             }
