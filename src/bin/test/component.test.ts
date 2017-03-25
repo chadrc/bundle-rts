@@ -79,8 +79,9 @@ test('created component flare should have expected output', () => {
 
     let expectedComponentText = `\
 import * as ReactFlares from 'react-flares';
+import {MyComponentProps} from "../modules/MyModule/MyComponent.types";
 
-export class MyComponentFlare extends ReactFlares.ComponentFlare {
+export class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyComponentProps> {
     get componentId(): string {return "MyModule:MyComponent";}
 }
 `;
