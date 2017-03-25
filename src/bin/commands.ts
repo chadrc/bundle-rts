@@ -40,7 +40,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, moduleName, noView, noTypes);
+                createComponent(moduleName, moduleName, noView, noTypes, false);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -53,7 +53,7 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, moduleName, noTypes, noView);
+            createComponent(moduleName, moduleName, noTypes, noView, false);
         }
     }
 }
@@ -72,7 +72,7 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
     }
 }
 
-export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean) {
+export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean, placeInComponentsFolder: boolean = true) {
     let componentData = Templates.makeComponentFile(componentName, noTypes, noView);
     let viewData = Templates.makeViewFile(componentName, noTypes);
     let typesData = Templates.makeTypesFile(componentName);
@@ -80,7 +80,11 @@ export function createComponent(componentName: string, moduleName: string, noVie
     if (moduleName === "~") {
         localDir = `/app/components/${componentName}`;
     } else {
-        localDir = `/app/modules/${moduleName}/${componentName}`;
+        localDir = `/app/modules/${moduleName}/`;
+        if (placeInComponentsFolder) {
+            localDir += `components/${componentName}/`;
+        }
+        localDir += componentName;
     }
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
@@ -91,9 +95,11 @@ export function createComponent(componentName: string, moduleName: string, noVie
     }
     writeFile(componentFilePath, componentData);
 
-    let flarePath = `/app/flares/${componentName}.flare.ts`;
-    ensureDir(flarePath);
-    writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName));
+    if (moduleName !== "~") {
+        let flarePath = `/app/flares/${componentName}.flare.ts`;
+        ensureDir(flarePath);
+        writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName));
+    }
 
     if (!noView) {
         writeFile(`${basePath}.view.tsx`, viewData);
