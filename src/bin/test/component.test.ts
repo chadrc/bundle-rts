@@ -5,6 +5,7 @@ const componentFilePath =       "/app/components/MyComponent.component.ts";
 const noViewComponentFilePath = componentFilePath + "x";
 const viewFilePath =            "/app/components/MyComponent.view.tsx";
 const typesFilePath =           "/app/components/MyComponent.types.ts";
+const flareFilePath =           "/app/flares/MyComponent.flare.ts";
 
 const componentId = "~:MyComponent";
 
@@ -14,6 +15,7 @@ test('creates a component with component, view and types files', () => {
     expect(fileExists(componentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeTruthy();
     expect(fileExists(typesFilePath)).toBeTruthy();
+    expect(fileExists(flareFilePath)).toBeTruthy();
 });
 
 test('creates a component with component and view files', () => {
@@ -22,6 +24,7 @@ test('creates a component with component and view files', () => {
     expect(fileExists(componentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeTruthy();
     expect(fileExists(typesFilePath)).toBeFalsy();
+    expect(fileExists(flareFilePath)).toBeTruthy();
 });
 
 test('creates a component with component and types files', () => {
@@ -30,6 +33,7 @@ test('creates a component with component and types files', () => {
     expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeTruthy();
+    expect(fileExists(flareFilePath)).toBeTruthy();
 });
 
 test('creates a component with component file only', () => {
@@ -38,6 +42,7 @@ test('creates a component with component file only', () => {
     expect(fileExists(noViewComponentFilePath)).toBeTruthy();
     expect(fileExists(viewFilePath)).toBeFalsy();
     expect(fileExists(typesFilePath)).toBeFalsy();
+    expect(fileExists(flareFilePath)).toBeTruthy();
 });
 
 test('created component with view and types should have expected output', () => {

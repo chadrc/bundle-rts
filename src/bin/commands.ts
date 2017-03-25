@@ -90,6 +90,11 @@ export function createComponent(componentName: string, moduleName: string, noVie
         return;
     }
     writeFile(componentFilePath, componentData);
+
+    let flarePath = `/app/flares/${componentName}.flare.ts`;
+    ensureDir(flarePath);
+    writeFile(process.cwd() + flarePath, "");
+
     if (!noView) {
         writeFile(`${basePath}.view.tsx`, viewData);
     }
