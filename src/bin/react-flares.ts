@@ -35,7 +35,7 @@ if (args.isEmpty) {
             break;
 
         case "manifest":
-            manifestCommand(basePath);
+            manifestCommand();
             break;
 
         default:

@@ -7,7 +7,7 @@
     "noImplicitAny": true
   },
   "include": [
-    "./rts-seed.ts"
+    "./react-flares.ts"
   ],
   "exclude": [
     "node_modules"
