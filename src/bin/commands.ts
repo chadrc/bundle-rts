@@ -17,7 +17,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, moduleName, noView, noTypes, false, true);
+                createComponent(moduleName, moduleName, noView, noTypes, false, true, `${appName} is ready~`);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -30,12 +30,12 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, moduleName, noTypes, noView, false, true);
+            createComponent(moduleName, moduleName, noTypes, noView, false, true, `${moduleName}`);
         }
     }
 }
 
-export function componentCommand(componentId: string, noView: boolean, noTypes: boolean): void {
+export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, defaultText: string): void {
     let parts = componentId.split(":");
     if (parts.length !== 2) {
         throw "Invalid component id: " + componentId;
@@ -43,16 +43,16 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
     let moduleName = parts[0];
     let componentName = parts[1];
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, moduleName, noView, noTypes);
+        createComponent(componentName, moduleName, noView, noTypes, true, false, defaultText);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
 }
 
 export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean,
-                                placeInComponentsFolder: boolean = true, moduleRoot: boolean = false) {
-    let componentData = Templates.makeComponentFile(componentName, noTypes, noView);
-    let viewData = Templates.makeViewFile(componentName, noTypes);
+                                placeInComponentsFolder: boolean = true, moduleRoot: boolean = false, defaultText: string) {
+    let componentData = Templates.makeComponentFile(componentName, noTypes, noView, defaultText);
+    let viewData = Templates.makeViewFile(componentName, noTypes, defaultText);
     let typesData = Templates.makeTypesFile(componentName);
     let localDir;
     if (moduleName === "~") {

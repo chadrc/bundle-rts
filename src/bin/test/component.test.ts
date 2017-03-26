@@ -182,7 +182,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 });
 
 test("created component without view and without types should have expected output", () => {
-    componentCommand(rootComponentId, true, true);
+    componentCommand(rootComponentId, true, true, "MyComponent");
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -201,6 +201,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
     render() {
         return (
             <section>
+                <p>MyComponent</p>
             </section>
         );
     }
@@ -210,7 +211,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component's view with types should have expected output", () => {
-    componentCommand(rootComponentId, false, false);
+    componentCommand(rootComponentId, false, false, "MyComponent");
 
     let data = getFileData(viewFilePath);
 
@@ -223,6 +224,7 @@ export class MyComponentView implements View {
     make(self: MyComponentData): JSX.Element {
         return (
             <section>
+                <p>MyComponent</p>
             </section>
         );
     }
@@ -232,7 +234,7 @@ export class MyComponentView implements View {
 });
 
 test("created component's view without types should have expected output", () => {
-    componentCommand(rootComponentId, false, true);
+    componentCommand(rootComponentId, false, true, "MyComponent");
 
     let data = getFileData(viewFilePath);
 
@@ -244,6 +246,7 @@ export class MyComponentView implements View {
     make(self: Data): JSX.Element {
         return (
             <section>
+                <p>MyComponent</p>
             </section>
         );
     }

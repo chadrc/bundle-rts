@@ -15,10 +15,11 @@ export interface ${componentName}Data extends Data {
 `;
 }
 
-export function makeViewFile(componentName: string, noTypes: boolean): string {
+export function makeViewFile(componentName: string, noTypes: boolean, defaultText: string): string {
     let typesBase = noTypes ? "" : componentName;
     let dataName = noTypes ? `Data, ` : "";
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
+    let display = defaultText ? `\n                <p>${defaultText}</p>` : "";
     return `\
 import * as React from "react";
 import {${dataName}View} from "react-flares";${dataImport}
@@ -26,7 +27,7 @@ import {${dataName}View} from "react-flares";${dataImport}
 export class ${componentName}View implements View {
     make(self: ${typesBase}Data): JSX.Element {
         return (
-            <section>
+            <section>${display}
             </section>
         );
     }
@@ -47,15 +48,16 @@ export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlare
 `;
 }
 
-export function makeComponentFile(componentName: string, noTypes: boolean, noView: boolean): string {
+export function makeComponentFile(componentName: string, noTypes: boolean, noView: boolean, defaultText: string): string {
     let typesBase = noTypes ? "" : componentName;
     let typesImport = noTypes ?
         `"react-flares"`
         :
         `"./${componentName}.types"`;
     let viewImport = noView ? "" : `\nimport {${componentName}View} from "./${componentName}.view";`;
+    let display = defaultText ? `\n                <p>${defaultText}</p>` : "";
     let viewComponent = noView ? `(
-            <section>
+            <section>${display}
             </section>
         )` : `new ${componentName}View().make(this)`;
 
