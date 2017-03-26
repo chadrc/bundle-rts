@@ -110,8 +110,7 @@ export function makeIndexTSXFile(appName: string, noComp: boolean): string {
         </section>`
         :
         `\
-        <${appName}Flare />\
-        `;
+        <${appName}Flare />`;
 
     return `\
 import * as React from "react";
