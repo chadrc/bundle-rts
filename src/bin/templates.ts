@@ -106,10 +106,15 @@ export function makeIndexTSXFile(appName: string): string {
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {App} from "react-flares";
-import Manifest from "./module.manifest";
+import * as ReactFlares from "react-flares";
+import {${appName}Flare} from "./flares/${appName}/${appName}.flare";
 
-const ${appName} = new App(Manifest); 
+window.addEventListener("load", () => {
+    ReactDom.render(
+        <${appName}Flare />
+        , document.getElementById("content")
+    );
+});
 `;
 }
 

@@ -224,10 +224,15 @@ test('created index.tsx file should match output', () => {
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {App} from "react-flares";
-import Manifest from "./module.manifest";
+import * as ReactFlares from "react-flares";
+import {MyProjectFlare} from "./flares/MyProject/MyProject.flare";
 
-const MyProject = new App(Manifest); 
+window.addEventListener("load", () => {
+    ReactDom.render(
+        <MyProjectFlare />
+        , document.getElementById("content")
+    );
+});
 `;
     expect(data).toBe(expectedComponentText);
 });
