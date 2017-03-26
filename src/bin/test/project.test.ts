@@ -184,7 +184,7 @@ module.exports = {
         new ExtractTextPlugin('css/[name].bundle.css'),
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
-            filename: "vendor.bundle.js"
+            filename: "js/vendor.bundle.js"
         })
     ]
 };
