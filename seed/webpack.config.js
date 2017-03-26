@@ -5,7 +5,6 @@ const glob = require("glob");
 
 let entries = {
     app: "./app/index.tsx",
-    index: "./app/index.html",
     vendor: ["react", "react-dom", "react-flares"]
 };
 

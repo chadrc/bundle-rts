@@ -109,6 +109,8 @@ import * as ReactDom from "react-dom";
 import * as ReactFlares from "react-flares";
 import {${appName}Flare} from "./flares/${appName}/${appName}.flare";
 
+require("./index.html");
+
 window.addEventListener("load", () => {
     ReactDom.render(
         <${appName}Flare />
@@ -132,9 +134,7 @@ export function makeIndexHTMLFile(appName: string): string {
         </main>
         
         <!-- Dependencies -->
-        <script src="../node_modules/react/dist/react.js"></script>
-        <script src="../node_modules/react-dom/dist/react-dom.js"></script>
-        <script src="../node_modules/react-flares/dist/react-flares.js"></script>
+        <script src="../dist/js/vendor.bundle.js></script>
         
         <!-- Main -->
         <script src="../dist/js/app.bundle.js"></script>
@@ -159,9 +159,11 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "license": "ISC",
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-flares": "${libVersion}"
   },
   "devDependencies": {
+    "@types/node": "^7.0.11",
     "@types/react": "^15.0.16",
     "@types/react-dom": "^0.14.23",
     "awesome-typescript-loader": "^3.1.2",
@@ -170,7 +172,6 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
     "file-loader": "^0.10.1",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
-    "react-flares": "${libVersion}",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",

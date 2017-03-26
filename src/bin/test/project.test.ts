@@ -65,9 +65,11 @@ test('created package.json file should match output', () => {
   "license": "ISC",
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-flares": "1.0"
   },
   "devDependencies": {
+    "@types/node": "^7.0.11",
     "@types/react": "^15.0.16",
     "@types/react-dom": "^0.14.23",
     "awesome-typescript-loader": "^3.1.2",
@@ -76,7 +78,6 @@ test('created package.json file should match output', () => {
     "file-loader": "^0.10.1",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
-    "react-flares": "1.0",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",
@@ -127,7 +128,6 @@ const glob = require("glob");
 
 let entries = {
     app: "./app/index.tsx",
-    index: "./app/index.html",
     vendor: ["react", "react-dom", "react-flares"]
 };
 
@@ -210,9 +210,7 @@ test('created index.html file should match output', () => {
         </main>
         
         <!-- Dependencies -->
-        <script src="../node_modules/react/dist/react.js"></script>
-        <script src="../node_modules/react-dom/dist/react-dom.js"></script>
-        <script src="../node_modules/react-flares/dist/react-flares.js"></script>
+        <script src="../dist/js/vendor.bundle.js></script>
         
         <!-- Main -->
         <script src="../dist/js/app.bundle.js"></script>
@@ -232,6 +230,8 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as ReactFlares from "react-flares";
 import {MyProjectFlare} from "./flares/MyProject/MyProject.flare";
+
+require("./index.html");
 
 window.addEventListener("load", () => {
     ReactDom.render(
