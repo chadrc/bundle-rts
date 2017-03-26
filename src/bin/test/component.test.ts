@@ -12,10 +12,10 @@ const viewFile = `${componentName}.view.tsx`;
 const typesFile = `${componentName}.types.ts`;
 const flareFile = `${componentName}.flare.ts`;
 
-const componentFilePath =       `/app/components/${componentFile}`;
+const componentFilePath =       `/app/components/${componentName}/${componentFile}`;
 const noViewComponentFilePath = componentFilePath + "x";
-const viewFilePath =            `/app/components/${viewFile}`;
-const typesFilePath =           `/app/components/${typesFile}`;
+const viewFilePath =            `/app/components/${componentName}/${viewFile}`;
+const typesFilePath =           `/app/components/${componentName}/${typesFile}`;
 const flareFilePath =           `/app/flares/${moduleName}/${flareFile}`;
 
 const moduleComponentFilePath = `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;

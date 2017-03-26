@@ -56,7 +56,7 @@ export function createComponent(componentName: string, moduleName: string, noVie
     let typesData = Templates.makeTypesFile(componentName);
     let localDir;
     if (moduleName === "~") {
-        localDir = `/app/components/${componentName}`;
+        localDir = `/app/components/${componentName}/${componentName}`;
     } else {
         localDir = `/app/modules/${moduleName}/`;
         if (placeInComponentsFolder) {
