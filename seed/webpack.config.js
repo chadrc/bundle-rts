@@ -1,6 +1,7 @@
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require("webpack");
+const path = require("path");
 const glob = require("glob");
 
 let entries = {
@@ -66,5 +67,11 @@ module.exports = {
             name: "vendor",
             filename: "js/vendor.bundle.js"
         })
-    ]
+    ],
+
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 3000
+    }
 };

@@ -184,7 +184,8 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",
     "typescript": "^2.2.1",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }  
 `;
