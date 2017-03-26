@@ -158,14 +158,12 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "@types/react": "^15.0.16",
     "@types/react-dom": "^0.14.23",
-    "@types/jquery": "^2.0.41",
     "awesome-typescript-loader": "^3.1.2",
     "css-loader": "^0.27.1",
     "extract-text-webpack-plugin": "^2.1.0",
