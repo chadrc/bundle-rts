@@ -35,7 +35,7 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     }
 }
 
-export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, defaultText: string): void {
+export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, defaultText: string = ""): void {
     let parts = componentId.split(":");
     if (parts.length !== 2) {
         throw "Invalid component id: " + componentId;
