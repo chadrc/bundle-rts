@@ -20,8 +20,8 @@ namespace ReactFlares {
     export let modules: {[key:string]: Module} = {};
     let moduleLoadResults: {[key:string]: ModuleLoadResult} = {};
 
-    let jsRoot: string = "dist/js/";
-    let cssRoot: string = "dist/css/";
+    let jsRoot: string = "js/";
+    let cssRoot: string = "css/";
 
     export function setJsRoot(root: string) {
         if (!root) {
