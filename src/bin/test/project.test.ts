@@ -245,3 +245,27 @@ window.addEventListener("load", () => {
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test('created index.tsx file without initial component should match output', () => {
+    projectCommand("MyProject", "1.0", false, true, false, false, false);
+
+    let data = getFileData(indexTsxFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import * as ReactFlares from "react-flares";
+
+require("./index.html");
+
+window.addEventListener("load", () => {
+    ReactDom.render(
+        <section>
+            <h1>MyProject - Ready</h1>
+        </section>
+        , document.getElementById("content")
+    );
+});
+`;
+    expect(data).toBe(expectedComponentText);
+});

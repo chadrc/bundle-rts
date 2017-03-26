@@ -10,7 +10,7 @@ export function projectCommand(appName: string, version: string,
         return;
     }
 
-    createProject(appName, version);
+    createProject(appName, version, noComp);
 
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");
@@ -103,7 +103,7 @@ export function createModule(moduleName: string, noComp: boolean, noStyles: bool
     }
 }
 
-export function createProject(appName: string, version: string): void {
+export function createProject(appName: string, version: string, noComp: boolean): void {
 
     let filesToCopy: string[] = [
         "webpack.config.js",
@@ -132,7 +132,7 @@ export function createProject(appName: string, version: string): void {
         writeFile(`${process.cwd()}/${filename}`, file);
     }
 
-    let indexTsxData = Templates.makeIndexTSXFile(appName);
+    let indexTsxData = Templates.makeIndexTSXFile(appName, noComp);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
 

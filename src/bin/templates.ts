@@ -102,18 +102,27 @@ ReactFlares.modules.${moduleName} = new ${moduleName}Module();
 `;
 }
 
-export function makeIndexTSXFile(appName: string): string {
+export function makeIndexTSXFile(appName: string, noComp: boolean): string {
+    let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "./flares/${appName}/${appName}.flare";`;
+    let eleRender = noComp ? `\
+        <section>
+            <h1>${appName} - Ready</h1>
+        </section>`
+        :
+        `\
+        <${appName}Flare />\
+        `;
+
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as ReactFlares from "react-flares";
-import {${appName}Flare} from "./flares/${appName}/${appName}.flare";
+import * as ReactFlares from "react-flares";${flareImport}
 
 require("./index.html");
 
 window.addEventListener("load", () => {
     ReactDom.render(
-        <${appName}Flare />
+${eleRender}
         , document.getElementById("content")
     );
 });
