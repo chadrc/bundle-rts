@@ -2,12 +2,120 @@
  * Created by chad on 3/11/17.
  */
 
-import jquery = require("jquery");
 import React = require("react");
-
 export = ReactFlares;
-
 namespace ReactFlares {
+
+    export interface ModuleLoadResult {
+        moduleName: string;
+        jsLoaded: boolean;
+        cssLoaded: boolean;
+    }
+
+    export interface Module {
+        name: string;
+        components: {[name:string]: any}
+    }
+
+    export let modules: {[key:string]: Module} = {};
+    let moduleLoadResults: {[key:string]: ModuleLoadResult} = {};
+
+    let jsRoot: string = "dist/js/";
+    let cssRoot: string = "dist/css/";
+
+    export function setJsRoot(root: string) {
+        if (!root) {
+            jsRoot = "";
+        } else {
+            jsRoot = root + (root.charAt(root.length-1) === "/" ? "" : "/");
+        }
+    }
+
+    export function setCssRoot(root: string) {
+        if (!root) {
+            cssRoot = "";
+        } else {
+            cssRoot = root + (root.charAt(root.length-1) === "/" ? "" : "/");
+        }
+    }
+
+    class ModuleLoader {
+        private _moduleName: string;
+        private _loaded: boolean;
+        private _callback: (result: ModuleLoadResult) => void;
+        private _jsStatus: boolean = null;
+        private _cssStatus: boolean = null;
+
+        constructor(moduleName: string) {
+            this._moduleName = moduleName;
+            this._loaded = false;
+        }
+
+        load(callback: (result: ModuleLoadResult) => void) {
+            let name = this._moduleName;
+            if (name in moduleLoadResults) {
+                let mod = moduleLoadResults[name];
+                callback(mod);
+            } else {
+                this.loadJs(`${jsRoot}${name}.bundle.js`);
+                this.loadStyle(`${cssRoot}${name}.bundle.css`);
+                this._callback = callback;
+            }
+        }
+
+        loadStyle(resource: string) {
+            let link = document.createElement("link");
+            let head = document.getElementsByTagName("head")[0];
+            link.setAttribute("rel", "stylesheet");
+            link.setAttribute("href", resource);
+            link.setAttribute("type", "text/css");
+            link.addEventListener("load", () => this.cssReceived(true));
+            link.addEventListener("error", () => this.cssReceived(false));
+            head.appendChild(link);
+        }
+
+        loadJs(resource: string) {
+            let script = document.createElement("script");
+            let head = document.getElementsByTagName("head")[0];
+            script.setAttribute("src", resource);
+            script.addEventListener("load", () => this.jsReceived(true));
+            script.addEventListener("error", () => this.jsReceived(false));
+            head.appendChild(script);
+        }
+
+        cssReceived(success: boolean) {
+            this._cssStatus = success;
+            this.checkSendCallback()
+        }
+
+        jsReceived(success: boolean) {
+            this._jsStatus = success;
+            this.checkSendCallback();
+        }
+
+        checkSendCallback() {
+            if (this._cssStatus !== null && this._jsStatus !== null) {
+                let loadResult: ModuleLoadResult = {
+                    moduleName: this._moduleName,
+                    jsLoaded: this._jsStatus,
+                    cssLoaded: this._cssStatus
+                };
+                moduleLoadResults[this._moduleName] = loadResult;
+                if (this._callback !== null) {
+                    this._callback(loadResult);
+                }
+            }
+        }
+    }
+
+    export function loadModule(name: string, callback: (result: ModuleLoadResult) => void) {
+        new ModuleLoader(name).load(callback);
+    }
+
+    export function getModule(name: string): Module {
+        return ReactFlares.modules[name];
+    }
+
     export interface Props {
         className?: string,
         children?: any[]
@@ -29,153 +137,6 @@ namespace ReactFlares {
     export interface Module {
         name: string;
         components: {[name:string]: any}
-    }
-
-    class StylePromise {
-        private _callback: () => void;
-        private _fail: () => void;
-
-        constructor(styleUri: string) {
-            let link = document.createElement("link");
-            let head = document.getElementsByTagName("head")[0];
-            link.setAttribute("rel", "stylesheet");
-            link.setAttribute("href", styleUri);
-            link.setAttribute("type", "text/css");
-            link.addEventListener("load", () => this.cssReceived());
-            link.addEventListener("error", () => this.cssReceived());
-            head.appendChild(link);
-        }
-
-        cssReceived() {
-            if (this._callback != null) {
-                this._callback();
-            }
-        }
-
-        cssError() {
-            if (this._fail != null) {
-                this._fail();
-            }
-        }
-
-        then(callback:() => void, failFallback?: () => void) {
-            this._callback = callback;
-            this._fail = failFallback;
-        }
-    }
-
-    class ModulePromise {
-        private _jsPromise: JQueryXHR;
-        private _cssPromise: StylePromise;
-
-        private _jsReceived: boolean;
-        private _cssReceived: boolean;
-
-        private _callback: ()=>void;
-
-        constructor(jsPromise: JQueryXHR, cssPromise: StylePromise) {
-            this._jsPromise = jsPromise;
-            this._cssPromise = cssPromise;
-            this._jsPromise.then(() => {
-                this.onJsReceived(true)
-            }, () => {
-                this.onJsReceived(false);
-            });
-            this._cssPromise.then(() => {
-                this.onCssReceived(true)
-            }, () => {
-                this.onCssReceived(false);
-            });
-            this._jsReceived = false;
-            this._cssReceived = false;
-        }
-
-        onJsReceived(received: boolean) {
-            this._jsReceived = received;
-            if ( (this._cssPromise === null || this._cssReceived)
-                && this._callback != null) {
-                this._callback();
-            }
-        }
-
-        onCssReceived(received: boolean) {
-            this._cssReceived = received;
-            if ( (this._jsPromise === null || this._jsReceived)
-                && this._callback != null) {
-                this._callback();
-            }
-        }
-
-        then(callback: ()=>void) {
-            this._callback = callback;
-        }
-    }
-
-    let jsRoot: string = "dist/js/";
-    let cssRoot: string = "dist/css/";
-
-    export let modules:any = {};
-
-    export function setJsRoot(root: string) {
-        if (!root) {
-            jsRoot = "";
-        } else {
-            jsRoot = root + (root.charAt(root.length-1) === "/" ? "" : "/");
-        }
-    }
-
-    export function setCssRoot(root: string) {
-        if (!root) {
-            cssRoot = "";
-        } else {
-            cssRoot = root + (root.charAt(root.length-1) === "/" ? "" : "/");
-        }
-    }
-
-    class ModuleLoader {
-        private _moduleName: string;
-        private _loaded: boolean;
-        private _module: Module;
-        private _promise: ModulePromise;
-        private _callback: () => void;
-
-        constructor(moduleName: string) {
-            this._moduleName = moduleName;
-            this._loaded = false;
-            this._module = null;
-        }
-
-        load(callback: () => void) {
-            let name = this._moduleName;
-            if (name in modules) {
-                callback();
-            } else {
-                let jsPromise = $.getScript(`${jsRoot}${name}.bundle.js`);
-                let cssPromise = new StylePromise(`${cssRoot}${name}.bundle.css`);
-                this._promise = new ModulePromise(jsPromise, cssPromise);
-                this._promise.then(() => {this.onModuleLoaded();});
-                this._callback = callback;
-            }
-        }
-
-        onModuleLoaded() {
-            if (this._callback !== null) {
-                this._callback();
-            }
-        }
-    }
-
-    export function loadModule(name: string, callback: () => void) {
-        new ModuleLoader(name).load(callback);
-    }
-
-    export function getModule(name: string): Module {
-        return ReactFlares.modules[name];
-    }
-
-    export interface ModuleDetails {
-        name: string,
-        hasStyles: boolean
     }
 
     export interface ComponentFlareProps extends Props {
@@ -206,10 +167,12 @@ namespace ReactFlares {
 
             let moduleName = split[0];
             let componentName = split[1];
-            loadModule(moduleName, () => {
-                this.setState({
-                    component: getModule(moduleName).components[componentName]
-                });
+            loadModule(moduleName, (result: ModuleLoadResult) => {
+                if (result.jsLoaded) {
+                    this.setState({
+                        component: getModule(moduleName).components[componentName]
+                    });
+                }
             })
         }
 
