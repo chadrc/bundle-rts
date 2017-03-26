@@ -202,9 +202,9 @@ test('created index.html file should match output', () => {
         </main>
         
         <!-- Dependencies -->
-        <script src="../node_modules/jquery/dist/jquery.js"></script>
         <script src="../node_modules/react/dist/react.js"></script>
         <script src="../node_modules/react-dom/dist/react-dom.js"></script>
+        <script src="../node_modules/react-flares/dist/react-flares.js"></script>
         
         <!-- Main -->
         <script src="../dist/js/app.bundle.js"></script>
