@@ -73,6 +73,7 @@ test('created package.json file should match output', () => {
     "awesome-typescript-loader": "^3.1.2",
     "css-loader": "^0.27.1",
     "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
     "react-flares": "1.0",
@@ -124,7 +125,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const glob = require("glob");
 
 let entries = {
-    app: "./app/index.tsx"
+    app: "./app/index.tsx",
+    index: "./app/index.html"
 };
 
 let locations = glob.sync("./app/modules/*/*.module.ts");
@@ -165,6 +167,12 @@ module.exports = {
                 test: /\\.js$/,
                 enforce: "pre",
                 use: "source-map-loader"
+            },
+            {
+                test: /\\.html$/,
+                use: [{
+                    loader: 'file-loader?name=[name].[ext]'
+                }]
             }
         ]
     },

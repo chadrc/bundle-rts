@@ -167,6 +167,7 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
     "awesome-typescript-loader": "^3.1.2",
     "css-loader": "^0.27.1",
     "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
     "glob": "^7.1.1",
     "node-sass": "^4.5.0",
     "react-flares": "${libVersion}",

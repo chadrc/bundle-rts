@@ -3,7 +3,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const glob = require("glob");
 
 let entries = {
-    app: "./app/index.tsx"
+    app: "./app/index.tsx",
+    index: "./app/index.html"
 };
 
 let locations = glob.sync("./app/modules/*/*.module.ts");
@@ -44,6 +45,12 @@ module.exports = {
                 test: /\.js$/,
                 enforce: "pre",
                 use: "source-map-loader"
+            },
+            {
+                test: /\.html$/,
+                use: [{
+                    loader: 'file-loader?name=[name].[ext]'
+                }]
             }
         ]
     },
