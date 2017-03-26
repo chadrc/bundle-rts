@@ -8,6 +8,7 @@ script:
 - npm run build
 - npm run rename-d-ts
 deploy:
+  skip_cleanup: true
   provider: npm
   email: chadrcollins91@gmail.com
   api_key:
