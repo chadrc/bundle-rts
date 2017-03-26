@@ -3,10 +3,8 @@ node_js:
   - "6"
 install:
   - npm install
-before_script:
-  - npm test
 script:
+  - npm test
   - npm build
   - npm rename-d-ts
-deploy:
   - npm publish
