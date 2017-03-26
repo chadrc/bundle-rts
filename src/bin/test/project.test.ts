@@ -213,10 +213,10 @@ test('created index.html file should match output', () => {
         </main>
         
         <!-- Dependencies -->
-        <script src="../dist/js/vendor.bundle.js"></script>
+        <script src="../js/vendor.bundle.js"></script>
         
         <!-- Main -->
-        <script src="../dist/js/app.bundle.js"></script>
+        <script src="../js/app.bundle.js"></script>
     </body>
 </html>
 `;
