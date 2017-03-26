@@ -122,11 +122,13 @@ test('created webpack.config.js file should match output', () => {
     let expectedComponentText = `\
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require("webpack");
 const glob = require("glob");
 
 let entries = {
     app: "./app/index.tsx",
-    index: "./app/index.html"
+    index: "./app/index.html",
+    vendor: ["react", "react-dom", "react-flares"]
 };
 
 let locations = glob.sync("./app/modules/*/*.module.ts");
@@ -177,15 +179,13 @@ module.exports = {
         ]
     },
 
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM",
-        "react-flares": "ReactFlares"
-    },
-
     plugins: [
         new CheckerPlugin(),
-        new ExtractTextPlugin('css/[name].bundle.css')
+        new ExtractTextPlugin('css/[name].bundle.css'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            filename: "vendor.bundle.js"
+        })
     ]
 };
 `;
