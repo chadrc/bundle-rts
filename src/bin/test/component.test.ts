@@ -8,25 +8,31 @@ const subComponentName = "MySubComponent";
 const rootComponentId = `~:${componentName}`;
 const moduleComponentId = `${moduleName}:${componentName}`;
 const subComponentId = `~:${componentName}/${subComponentName}`;
+const moduleSubComponentId = `${moduleName}:${componentName}/${subComponentName}`;
 
 const componentFile = `${componentName}.component.ts`;
 const viewFile = `${componentName}.view.tsx`;
 const typesFile = `${componentName}.types.ts`;
 const flareFile = `${componentName}.flare.ts`;
 
-const componentFilePath =       `/app/components/${componentName}/${componentFile}`;
-const noViewComponentFilePath = componentFilePath + "x";
-const viewFilePath =            `/app/components/${componentName}/${viewFile}`;
-const typesFilePath =           `/app/components/${componentName}/${typesFile}`;
-const flareFilePath =           `/app/flares/${moduleName}/${flareFile}`;
+const componentFilePath =           `/app/components/${componentName}/${componentFile}`;
+const noViewComponentFilePath =     componentFilePath + "x";
+const viewFilePath =                `/app/components/${componentName}/${viewFile}`;
+const typesFilePath =               `/app/components/${componentName}/${typesFile}`;
+const flareFilePath =               `/app/flares/${moduleName}/${flareFile}`;
 
-const moduleComponentFilePath = `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
-const moduleViewFilePath =      `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;
-const moduleTypesFilePath =     `/app/modules/${moduleName}/components/${componentName}/${typesFile}`;
+const moduleComponentFilePath =     `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
+const moduleViewFilePath =          `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;
+const moduleTypesFilePath =         `/app/modules/${moduleName}/components/${componentName}/${typesFile}`;
 
-const subComponentFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
-const subViewFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
-const subTypesFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
+const subComponentFilePath =        `/app/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
+const subViewFilePath =             `/app/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
+const subTypesFilePath =            `/app/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
+
+const moduleSubComponentFilePath =  `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
+const moduleSubViewFilePath =       `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
+const moduleSubTypesFilePath =      `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
+const moduleSubFlareFilePath =      `/app/flares/${moduleName}/${componentName}/${subComponentName}.flare.ts`;
 
 
 test('creates a component with component, view and types files', () => {
@@ -80,6 +86,15 @@ test('creates sub component', () => {
     expect(fileExists(subComponentFilePath)).toBeTruthy();
     expect(fileExists(subViewFilePath)).toBeTruthy();
     expect(fileExists(subTypesFilePath)).toBeTruthy();
+});
+
+test('creates module sub component', () => {
+    componentCommand(moduleSubComponentId, false, false);
+
+    expect(fileExists(moduleSubComponentFilePath)).toBeTruthy();
+    expect(fileExists(moduleSubViewFilePath)).toBeTruthy();
+    expect(fileExists(moduleSubTypesFilePath)).toBeTruthy();
+    expect(fileExists(moduleSubFlareFilePath)).toBeTruthy();
 });
 
 test('created component with view and types should have expected output', () => {

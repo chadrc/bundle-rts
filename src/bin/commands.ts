@@ -72,7 +72,7 @@ export function createComponent(componentName: string, componentPath: string, mo
     } else {
         localDir = `/app/modules/${moduleName}/`;
         if (placeInComponentsFolder) {
-            localDir += `components/${componentName}/`;
+            localDir += `components/${componentPath}${componentName}/`;
         }
         localDir += componentName;
     }
@@ -86,7 +86,7 @@ export function createComponent(componentName: string, componentPath: string, mo
     writeFile(componentFilePath, componentData);
 
     if (moduleName !== "~") {
-        let flarePath = `/app/flares/${moduleName}/${componentName}.flare.ts`;
+        let flarePath = `/app/flares/${moduleName}/${componentPath}${componentName}.flare.ts`;
         ensureDir(flarePath);
         writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes, moduleRoot));
     }
