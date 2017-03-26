@@ -17,7 +17,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, "", moduleName, noView, noTypes, false, true, `${appName} is ready~`);
+                createComponent(moduleName, "", moduleName, noView, noTypes, false, true, `${appName} is ready`);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -30,7 +30,7 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, "", moduleName, noTypes, noView, false, true, `${moduleName}`);
+            createComponent(moduleName, "", moduleName, noTypes, noView, false, true, moduleName);
         }
     }
 }
