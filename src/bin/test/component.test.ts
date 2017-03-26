@@ -3,9 +3,11 @@ import {fileExists, getFileData} from "./setup";
 
 const componentName = "MyComponent";
 const moduleName = "MyModule";
+const subComponentName = "MySubComponent";
 
 const rootComponentId = `~:${componentName}`;
 const moduleComponentId = `${moduleName}:${componentName}`;
+const subComponentId = `~:${componentName}/${subComponentName}`;
 
 const componentFile = `${componentName}.component.ts`;
 const viewFile = `${componentName}.view.tsx`;
@@ -21,6 +23,10 @@ const flareFilePath =           `/app/flares/${moduleName}/${flareFile}`;
 const moduleComponentFilePath = `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
 const moduleViewFilePath =      `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;
 const moduleTypesFilePath =     `/app/modules/${moduleName}/components/${componentName}/${typesFile}`;
+
+const subComponentFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
+const subViewFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
+const subTypesFilePath =    `/app/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
 
 
 test('creates a component with component, view and types files', () => {
@@ -66,6 +72,14 @@ test('creates a module component', () => {
     expect(fileExists(moduleViewFilePath)).toBeTruthy();
     expect(fileExists(moduleTypesFilePath)).toBeTruthy();
     expect(fileExists(flareFilePath)).toBeTruthy();
+});
+
+test('creates sub component', () => {
+    componentCommand(subComponentId, false, false);
+
+    expect(fileExists(subComponentFilePath)).toBeTruthy();
+    expect(fileExists(subViewFilePath)).toBeTruthy();
+    expect(fileExists(subTypesFilePath)).toBeTruthy();
 });
 
 test('created component with view and types should have expected output', () => {

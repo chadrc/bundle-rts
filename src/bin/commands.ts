@@ -17,7 +17,7 @@ export function projectCommand(appName: string, version: string,
         if (isJsIdentifier(moduleName)) {
             createModule(moduleName, noComp, noStyles);
             if (!noComp) {
-                createComponent(moduleName, moduleName, noView, noTypes, false, true, `${appName} is ready~`);
+                createComponent(moduleName, "", moduleName, noView, noTypes, false, true, `${appName} is ready~`);
             }
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -30,7 +30,7 @@ export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boo
     if (isJsIdentifier(moduleName)) {
         createModule(moduleName, noComp, noStyles);
         if (!noComp) {
-            createComponent(moduleName, moduleName, noTypes, noView, false, true, `${moduleName}`);
+            createComponent(moduleName, "", moduleName, noTypes, noView, false, true, `${moduleName}`);
         }
     }
 }
@@ -41,22 +41,34 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
         throw "Invalid component id: " + componentId;
     }
     let moduleName = parts[0];
-    let componentName = parts[1];
+    let componentParts = parts[1].split("/");
+    if (componentParts.length < 1) {
+        throw "Invalid component id: " + componentId;
+    }
+    let componentName = componentParts.pop();
+    for (let part of componentParts) {
+        if (!isJsIdentifier(part)) {
+            throw `Invalid identifier: ${componentName}. All parts of component path must be valid JavaScript identifiers.`;
+        }
+    }
+
+    let componentPath = componentParts.join("/");
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, moduleName, noView, noTypes, true, false, defaultText);
+        createComponent(componentName, componentPath, moduleName, noView, noTypes, true, false, defaultText);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
 }
 
-export function createComponent(componentName: string, moduleName: string, noView: boolean, noTypes: boolean,
+export function createComponent(componentName: string, componentPath: string, moduleName: string, noView: boolean, noTypes: boolean,
                                 placeInComponentsFolder: boolean = true, moduleRoot: boolean = false, defaultText: string) {
     let componentData = Templates.makeComponentFile(componentName, noTypes, noView, defaultText);
     let viewData = Templates.makeViewFile(componentName, noTypes, defaultText);
     let typesData = Templates.makeTypesFile(componentName);
+    componentPath = componentPath ? componentPath + "/" : "";
     let localDir;
     if (moduleName === "~") {
-        localDir = `/app/components/${componentName}/${componentName}`;
+        localDir = `/app/components/${componentPath}${componentName}/${componentName}`;
     } else {
         localDir = `/app/modules/${moduleName}/`;
         if (placeInComponentsFolder) {
