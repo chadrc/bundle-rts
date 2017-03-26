@@ -26,6 +26,9 @@ module.exports = {
     devtool: "source-map",
 
     resolve: {
+        alias: {
+            "react-flares": "react-flares/dist/react-flares.js"
+        },
         extensions: [".ts", ".tsx", ".js"]
     },
 
