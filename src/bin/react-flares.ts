@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {Arguments} from "./Arguments";
 import { ensureDir} from "./Utils";
-import {componentCommand, manifestCommand, moduleCommand, projectCommand} from "./commands";
+import {componentCommand, moduleCommand, projectCommand} from "./commands";
 
 const settings = require('../package.json');
 
@@ -15,7 +15,6 @@ if (args.isEmpty) {
 
     let appDir = "/app/";
     ensureDir(appDir);
-    let basePath = process.cwd() + appDir;
 
     switch (command) {
         case "component":
@@ -32,10 +31,6 @@ if (args.isEmpty) {
             let appName = args.next();
             projectCommand(appName, settings.version,
                 args.noModule, args.noComponent, args.noStyles, args.noView, args.noTypes);
-            break;
-
-        case "manifest":
-            manifestCommand();
             break;
 
         default:

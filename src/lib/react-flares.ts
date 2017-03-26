@@ -16,6 +16,7 @@ namespace ReactFlares {
     export interface State {
 
     }
+
     export interface Data {
         props: Props,
         state: State
@@ -112,16 +113,8 @@ namespace ReactFlares {
 
     let jsRoot: string = "dist/js/";
     let cssRoot: string = "dist/css/";
-    let manifest: ModuleDetails[] = null;
 
     export let modules:any = {};
-
-    export function setModuleManifest(modules: ModuleDetails[]) {
-        if (manifest != null) {
-            throw "Manifest has already been set.";
-        }
-        manifest = modules;
-    }
 
     export function setJsRoot(root: string) {
         if (!root) {
@@ -140,8 +133,6 @@ namespace ReactFlares {
     }
 
     class ModuleLoader {
-        private static _moduleMap: {[name:string]: ModuleLoader} = {};
-
         private _moduleName: string;
         private _loaded: boolean;
         private _module: Module;
@@ -156,9 +147,8 @@ namespace ReactFlares {
 
         load(callback: () => void) {
             let name = this._moduleName;
-            if (name in ModuleLoader._moduleMap) {
-                let info = ModuleLoader._moduleMap[name];
-                // Already loaded
+            if (name in modules) {
+                callback();
             } else {
                 let jsPromise = $.getScript(`${jsRoot}${name}.bundle.js`);
                 let cssPromise = new StylePromise(`${cssRoot}${name}.bundle.css`);

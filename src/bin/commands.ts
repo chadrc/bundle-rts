@@ -1,29 +1,6 @@
-import * as path from "path";
 import * as fs from "fs";
-import * as glob from "glob";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
-
-export function manifestCommand(): void {
-    let localDir = `/app/`;
-    ensureDir(localDir);
-    let basePath = process.cwd() + localDir;
-
-    let pattern = process.cwd() + "/app/modules/**/*.module.ts";
-    let moduleFiles = glob.sync(pattern);
-    let details = [];
-    for (let m of moduleFiles) {
-        let name = path.basename(m).replace(".module.ts", "");
-        let stylePath = path.dirname(m) + `/${name}.scss`;
-        let hasStyles = fs.existsSync(stylePath);
-        details.push({
-            name: name,
-            hasStyles: hasStyles
-        });
-    }
-    let text = Templates.makeModuleManifestFile(details);
-    writeFile(`${basePath}module.manifest.ts`, text);
-}
 
 export function projectCommand(appName: string, version: string,
                                noMod: boolean, noComp: boolean, noStyles: boolean,

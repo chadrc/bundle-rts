@@ -118,33 +118,6 @@ window.addEventListener("load", () => {
 `;
 }
 
-interface ModuleDetails {
-    name: string,
-    hasStyles: boolean
-}
-
-export function makeModuleManifestFile(modDetails: ModuleDetails[]): string {
-    let mods = "";
-    let count = 0;
-    for (let mod of modDetails) {
-        mods += `\
-    {
-        name: "${mod.name}",
-        hasStyles: ${mod.hasStyles}
-    }${count !== modDetails.length-1 ? ",\n" : ""}`;
-        count++;
-    }
-    return `\
-import * as ReactFlares from "react-flares";
-
-let ModuleManifest: ReactFlares.ModuleDetails[] = [
-${mods}
-];
-
-ReactFlares.setModuleManifest(ModuleManifest);
-`;
-}
-
 export function makeIndexHTMLFile(appName: string): string {
     return `\
 <!DOCTYPE html>
