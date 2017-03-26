@@ -9,6 +9,8 @@ export interface ${componentName}State extends State {
 }
 
 export interface ${componentName}Data extends Data {
+    props: ${componentName}Props
+    state: ${componentName}State
 }
 `;
 }

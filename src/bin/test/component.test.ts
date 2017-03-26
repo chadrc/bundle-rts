@@ -267,6 +267,8 @@ export interface MyComponentState extends State {
 }
 
 export interface MyComponentData extends Data {
+    props: MyComponentProps
+    state: MyComponentState
 }
 `;
     expect(data).toBe(expectedComponentText);
