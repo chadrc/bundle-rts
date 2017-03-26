@@ -130,13 +130,13 @@ export function makeModuleManifestFile(modDetails: ModuleDetails[]): string {
         count++;
     }
     return `\
-import {ModuleDetails} from "react-flares";
+import * as ReactFlares from "react-flares";
 
-let ModuleManifest: ModuleDetails[] = [
+let ModuleManifest: ReactFlares.ModuleDetails[] = [
 ${mods}
 ];
 
-export default ModuleManifest;  
+ReactFlares.setModuleManifest(ModuleManifest);
 `;
 }
 

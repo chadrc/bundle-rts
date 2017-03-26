@@ -112,6 +112,16 @@ namespace ReactFlares {
 
     let jsRoot: string = "dist/js/";
     let cssRoot: string = "dist/css/";
+    let manifest: ModuleDetails[] = null;
+
+    export let modules:any = {};
+
+    export function setModuleManifest(modules: ModuleDetails[]) {
+        if (manifest != null) {
+            throw "Manifest has already been set.";
+        }
+        manifest = modules;
+    }
 
     export function setJsRoot(root: string) {
         if (!root) {
@@ -165,8 +175,6 @@ namespace ReactFlares {
         }
     }
 
-    export let modules:any = {};
-
     export function loadModule(name: string, callback: () => void) {
         new ModuleLoader(name).load(callback);
     }
@@ -178,11 +186,6 @@ namespace ReactFlares {
     export interface ModuleDetails {
         name: string,
         hasStyles: boolean
-    }
-
-    export class App {
-        constructor(modules: ModuleDetails[]) {
-        }
     }
 
     export interface ComponentFlareProps extends Props {

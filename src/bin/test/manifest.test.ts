@@ -19,16 +19,16 @@ test('created module.manifest.ts file should match output', () => {
 
     // Lower case project name because npm requires it
     let expectedComponentText = `\
-import {ModuleDetails} from "react-flares";
+import * as ReactFlares from "react-flares";
 
-let ModuleManifest: ModuleDetails[] = [
+let ModuleManifest: ReactFlares.ModuleDetails[] = [
     {
         name: "MyProject",
         hasStyles: true
     }
 ];
 
-export default ModuleManifest;  
+ReactFlares.setModuleManifest(ModuleManifest);
 `;
     expect(data).toBe(expectedComponentText);
 });
