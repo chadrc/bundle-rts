@@ -260,7 +260,7 @@ test("create component's types should have expected output", () => {
     let expectedComponentText = `\
 import {Data, Props, State} from "react-flares";
 
-export interface MyComponentProps extends Props{
+export interface MyComponentProps extends Props {
 }
 
 export interface MyComponentState extends State {

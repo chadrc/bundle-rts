@@ -2,7 +2,7 @@ export function makeTypesFile(componentName: string): string {
     return `\
 import {Data, Props, State} from "react-flares";
 
-export interface ${componentName}Props extends Props{
+export interface ${componentName}Props extends Props {
 }
 
 export interface ${componentName}State extends State {
