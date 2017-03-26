@@ -160,7 +160,8 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
+    "build": "webpack",
+    "start": "webpack-dev-server --open",
     "test": "echo \\"Error: no test specified\\" && exit 1"
   },
   "author": "",
