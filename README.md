@@ -18,6 +18,7 @@ A small utility library for lazy loading React components. Also contains a scaff
 ```bash
 npm install -g react-flares
 ```
+
 ## Usage
 ### Project Setup
 Run these commands to create default project set up:
@@ -29,6 +30,7 @@ Webpack dev server comes installed with the setup. Start it with:
 ```bash
 npm start
 ```
+
 ### Commands
 #### Create a project. Should only be used once per project.
 ```bash
@@ -55,6 +57,7 @@ Options:
 * --no-comp - Prevents creation of default component and all its associated files. (project, module)
 * --no-view - Prevents creation of default components view file. (project, module, component)
 * --no-types - Prevents creation of default components types file. (project, module, component)
+
 ## Flares
 Flares are a way of lazy loading a component. They are used just like normal React components but are set up to load their corresponding component before trying to render it.
 ```tsx
@@ -79,6 +82,7 @@ ReactDom.render(
     , document.getElementById("content")
 );
 ```
+
 ### Resolution
 Modules correspond to bundles created by webpack. The default setup creates a bundle from each .module.ts file. When a module is created its default component is imported and registered in its constructor.
 ```ts
@@ -91,6 +95,7 @@ export class MyModuleModule implements ReactFlares.Module {
 }
 ```
 When you need additional components to be fetchable with flares, you'll need to add similar lines to their module's constructor.
+
 ## Configuration
 You can set a different root for flares to load .js and .css files from. Defaults are "js/" and "css/", which corresponds to how webpack-dev-server is setup to load them.
 ```ts
