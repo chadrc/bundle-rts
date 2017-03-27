@@ -25,7 +25,7 @@ import * as React from "react";
 import {${dataName}View} from "react-flares";${dataImport}
 
 export class ${componentName}View implements View {
-    make(self: ${typesBase}Data): JSX.Element {
+    make(component: ${typesBase}Data): JSX.Element {
         return (
             <section>${display}
             </section>

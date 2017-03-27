@@ -250,7 +250,7 @@ import {View} from "react-flares";
 import {MyComponentData} from "./MyComponent.types";
 
 export class MyComponentView implements View {
-    make(self: MyComponentData): JSX.Element {
+    make(component: MyComponentData): JSX.Element {
         return (
             <section>
                 <p>MyComponent</p>
@@ -272,7 +272,7 @@ import * as React from "react";
 import {Data, View} from "react-flares";
 
 export class MyComponentView implements View {
-    make(self: Data): JSX.Element {
+    make(component: Data): JSX.Element {
         return (
             <section>
                 <p>MyComponent</p>
