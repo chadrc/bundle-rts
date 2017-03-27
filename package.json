@@ -1,6 +1,6 @@
 {
   "name": "react-flares",
-  "version": "0.3.2-DEV",
+  "version": "0.3.3-DEV",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "url": "https://github.com/chadrc/react-flares.git"
   },
   "author": "Chad Collins",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "glob": "^7.1.1"
   },
