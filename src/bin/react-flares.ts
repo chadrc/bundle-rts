@@ -2,6 +2,7 @@
 import {Arguments} from "./Arguments";
 import { ensureDir} from "./Utils";
 import {componentCommand, moduleCommand, projectCommand} from "./commands";
+const spawn = require("child_process").spawn;
 
 const settings = require('../package.json');
 
@@ -31,6 +32,21 @@ if (args.isEmpty) {
             let appName = args.next();
             projectCommand(appName, settings.version,
                 args.noModule, args.noComponent, args.noStyles, args.noView, args.noTypes);
+            break;
+
+        case "build":
+            const webpack = spawn('./node_modules/.bin/webpack', ["--config", "./node_modules/react-flares/seed/webpack.config.js"]);
+            webpack.stdout.on("data", (data: BufferSource) => {
+                console.log(data.toString());
+            });
+
+            webpack.stderr.on("data", (data: BufferSource) => {
+                console.error(data.toString());
+            });
+
+            webpack.on("close", (code: number) => {
+                console.log(`webpack exited with code ${code}`);
+            });
             break;
 
         default:
