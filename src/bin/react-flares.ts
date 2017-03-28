@@ -4,6 +4,21 @@ import { ensureDir} from "./Utils";
 import {componentCommand, moduleCommand, projectCommand} from "./commands";
 const spawn = require("child_process").spawn;
 
+function execute(cmd: string, options: string[], callback: (code: number) => void) {
+    const webpack = spawn(`./node_modules/.bin/${cmd}`, options);
+    webpack.stdout.on("data", (data: BufferSource) => {
+        console.log(data.toString());
+    });
+
+    webpack.stderr.on("data", (data: BufferSource) => {
+        console.error(data.toString());
+    });
+
+    webpack.on("close", (code: number) => {
+        callback(code);
+    });
+}
+
 const settings = require('../package.json');
 
 let args = new Arguments(process.argv);
@@ -16,6 +31,8 @@ if (args.isEmpty) {
 
     let appDir = "/app/";
     ensureDir(appDir);
+    let wpArgs = args.argv;
+    wpArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
 
     switch (command) {
         case "component":
@@ -35,17 +52,14 @@ if (args.isEmpty) {
             break;
 
         case "build":
-            const webpack = spawn('./node_modules/.bin/webpack', ["--config", "./node_modules/react-flares/seed/webpack.config.js"]);
-            webpack.stdout.on("data", (data: BufferSource) => {
-                console.log(data.toString());
+            execute("webpack", wpArgs, (code) => {
+                console.log(`build exited with code ${code}`);
             });
+            break;
 
-            webpack.stderr.on("data", (data: BufferSource) => {
-                console.error(data.toString());
-            });
-
-            webpack.on("close", (code: number) => {
-                console.log(`webpack exited with code ${code}`);
+        case "start":
+            execute("webpack-dev-server", wpArgs, (code) => {
+                console.log(`start exited with code ${code}`);
             });
             break;
 
