@@ -1,8 +1,6 @@
 # react-flares
 A small utility library for lazy loading React components. Also contains a scaffolding cli designed around library. Uses React, TypeScript and Webpack in scaffolding for implementation and bundling.
 
-*Currently in development and will more than likely change.*
-
 ## Table of Contents
 [Installation](#installation)
 
