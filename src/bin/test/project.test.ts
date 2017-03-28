@@ -2,8 +2,6 @@ import {projectCommand} from "../commands";
 import {fileExists, getFileData} from "./setup";
 
 const pkgJsonFilePath =     "/package.json";
-const tsconfigFilePath =    "/tsconfig.json";
-const webpackFilePath =     "/webpack.config.js";
 const indexHtmlFilePath =   "/app/index.html";
 const indexTsxFilePath =    "/app/index.tsx";
 
@@ -17,8 +15,6 @@ test("creates project with all default files", () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
 
     expect(fileExists(pkgJsonFilePath)).toBeTruthy();
-    expect(fileExists(tsconfigFilePath)).toBeTruthy();
-    expect(fileExists(webpackFilePath)).toBeTruthy();
     expect(fileExists(indexHtmlFilePath)).toBeTruthy();
     expect(fileExists(indexTsxFilePath)).toBeTruthy();
 
@@ -33,8 +29,6 @@ test("creates project without module", () => {
     projectCommand("MyProject", "1.0", true, false, false, false, false);
 
     expect(fileExists(pkgJsonFilePath)).toBeTruthy();
-    expect(fileExists(tsconfigFilePath)).toBeTruthy();
-    expect(fileExists(webpackFilePath)).toBeTruthy();
     expect(fileExists(indexHtmlFilePath)).toBeTruthy();
     expect(fileExists(indexTsxFilePath)).toBeTruthy();
 
@@ -90,118 +84,118 @@ test('created package.json file should match output', () => {
 `;
     expect(data).toBe(expectedComponentText);
 });
-
-test('created tsconfig.json file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
-
-    let data = getFileData(tsconfigFilePath);
-
-    let expectedComponentText = `\
-{
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
-    "jsx": "react"
-  },
-  "include": [
-    "./app/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
-}
-`;
-    expect(data).toBe(expectedComponentText);
-});
-
-test('created webpack.config.js file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
-
-    let data = getFileData(webpackFilePath);
-
-    let expectedComponentText = `\
-const { CheckerPlugin } = require('awesome-typescript-loader');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const webpack = require("webpack");
-const path = require("path");
-const glob = require("glob");
-
-let entries = {
-    app: "./app/index.tsx",
-    vendor: ["react", "react-dom", "react-flares"]
-};
-
-let locations = glob.sync("./app/modules/*/*.module.ts");
-for (let g of locations) {
-    let name = g.replace("./app/modules/", "").replace(".module.tsx").split("/")[0];
-    process.stdout.write("module: " + name + " @ " + g);
-    entries[name] = g;
-}
-
-module.exports = {
-    entry: entries,
-
-    output: {
-        filename: "js/[name].bundle.js",
-        path: __dirname + "/dist"
-    },
-
-    devtool: "source-map",
-
-    resolve: {
-        alias: {
-            "react-flares": "react-flares/dist/react-flares.js"
-        },
-        extensions: [".ts", ".tsx", ".js"]
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\\.tsx?$/,
-                use: "awesome-typescript-loader"
-            },
-            {
-                test: /\\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader!sass-loader",
-                })
-            },
-            {
-                test: /\\.js$/,
-                enforce: "pre",
-                use: "source-map-loader"
-            },
-            {
-                test: /\\.html$/,
-                use: [{
-                    loader: 'file-loader?name=[name].[ext]'
-                }]
-            }
-        ]
-    },
-
-    plugins: [
-        new CheckerPlugin(),
-        new ExtractTextPlugin('css/[name].bundle.css'),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            filename: "js/vendor.bundle.js"
-        })
-    ],
-
-    devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        compress: true
-    }
-};
-`;
-    expect(data).toBe(expectedComponentText);
-});
+//
+// test('created tsconfig.json file should match output', () => {
+//     projectCommand("MyProject", "1.0", false, false, false, false, false);
+//
+//     let data = getFileData(tsconfigFilePath);
+//
+//     let expectedComponentText = `\
+// {
+//   "compilerOptions": {
+//     "outDir": "./dist/",
+//     "sourceMap": true,
+//     "noImplicitAny": true,
+//     "module": "commonjs",
+//     "target": "es5",
+//     "jsx": "react"
+//   },
+//   "include": [
+//     "./app/**/*"
+//   ],
+//   "exclude": [
+//     "node_modules"
+//   ]
+// }
+// `;
+//     expect(data).toBe(expectedComponentText);
+// });
+//
+// test('created webpack.config.js file should match output', () => {
+//     projectCommand("MyProject", "1.0", false, false, false, false, false);
+//
+//     let data = getFileData(webpackFilePath);
+//
+//     let expectedComponentText = `\
+// const { CheckerPlugin } = require('awesome-typescript-loader');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const webpack = require("webpack");
+// const path = require("path");
+// const glob = require("glob");
+//
+// let entries = {
+//     app: "./app/index.tsx",
+//     vendor: ["react", "react-dom", "react-flares"]
+// };
+//
+// let locations = glob.sync("./app/modules/*/*.module.ts");
+// for (let g of locations) {
+//     let name = g.replace("./app/modules/", "").replace(".module.tsx").split("/")[0];
+//     process.stdout.write("module: " + name + " @ " + g);
+//     entries[name] = g;
+// }
+//
+// module.exports = {
+//     entry: entries,
+//
+//     output: {
+//         filename: "js/[name].bundle.js",
+//         path: process.cwd() + "/dist"
+//     },
+//
+//     devtool: "source-map",
+//
+//     resolve: {
+//         alias: {
+//             "react-flares": "react-flares/dist/react-flares.js"
+//         },
+//         extensions: [".ts", ".tsx", ".js"]
+//     },
+//
+//     module: {
+//         rules: [
+//             {
+//                 test: /\\.tsx?$/,
+//                 use: "awesome-typescript-loader?configFileName=" + __dirname + "/tsconfig.json""
+//             },
+//             {
+//                 test: /\\.scss$/,
+//                 use: ExtractTextPlugin.extract({
+//                     fallback: "style-loader",
+//                     use: "css-loader!sass-loader",
+//                 })
+//             },
+//             {
+//                 test: /\\.js$/,
+//                 enforce: "pre",
+//                 use: "source-map-loader"
+//             },
+//             {
+//                 test: /\\.html$/,
+//                 use: [{
+//                     loader: 'file-loader?name=[name].[ext]'
+//                 }]
+//             }
+//         ]
+//     },
+//
+//     plugins: [
+//         new CheckerPlugin(),
+//         new ExtractTextPlugin('css/[name].bundle.css'),
+//         new webpack.optimize.CommonsChunkPlugin({
+//             name: "vendor",
+//             filename: "js/vendor.bundle.js"
+//         })
+//     ],
+//
+//     devServer: {
+//         contentBase: path.join(__dirname, "dist"),
+//         compress: true
+//     }
+// };
+// `;
+//     expect(data).toBe(expectedComponentText);
+// });
 
 test('created index.html file should match output', () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);

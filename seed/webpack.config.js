@@ -21,7 +21,7 @@ module.exports = {
 
     output: {
         filename: "js/[name].bundle.js",
-        path: __dirname + "/dist"
+        path: process.cwd() + "/dist"
     },
 
     devtool: "source-map",
