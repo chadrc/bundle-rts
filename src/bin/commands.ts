@@ -116,33 +116,9 @@ export function createModule(moduleName: string, noComp: boolean, noStyles: bool
 }
 
 export function createProject(appName: string, version: string, noComp: boolean): void {
-
-    // let filesToCopy: string[] = [
-    //     "webpack.config.js",
-    //     "tsconfig.json"
-    // ];
-
     let localDir = `/app/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-
-    // Go up __dirname path until we find our package root folder
-    // To work with tests better
-    // let pathAry = __dirname.split("/");
-    // let i = pathAry.length - 1;
-    // while (i > 0) {
-    //     if (pathAry[i] === "react-flares") {
-    //         break;
-    //     }
-    //     pathAry.pop();
-    //     i--;
-    // }
-    // let pkgPath = pathAry.join("/");
-    //
-    // for (let filename of filesToCopy) {
-    //     let file = fs.readFileSync(`${pkgPath.replace("/bin", "")}/seed/${filename}`, "utf-8");
-    //     writeFile(`${process.cwd()}/${filename}`, file);
-    // }
 
     let indexTsxData = Templates.makeIndexTSXFile(appName, noComp);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
