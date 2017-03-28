@@ -32,7 +32,9 @@ if (args.isEmpty) {
     let appDir = "/app/";
     ensureDir(appDir);
     let wpArgs = args.argv;
-    wpArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
+    if (wpArgs.indexOf("--config") === -1) {
+        wpArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
+    }
 
     switch (command) {
         case "component":
