@@ -1,12 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 ### Generated build files
-react-flares.js
-react-flares.js.map
-react-flares.d.ts
 index.d.ts
 /bin/
 tmp/
+dist/
 
 ### Editor files
 .idea/
