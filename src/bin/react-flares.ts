@@ -4,6 +4,13 @@ import { ensureDir} from "./Utils";
 import {componentCommand, moduleCommand, projectCommand} from "./commands";
 const spawn = require("child_process").spawn;
 
+function makeWepackArgs(existingArgs: string[]): string[] {
+    if (existingArgs.indexOf("--config") === -1) {
+        existingArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
+    }
+    return existingArgs;
+}
+
 function execute(cmd: string, options: string[], callback: (code: number) => void) {
     const webpack = spawn(`./node_modules/.bin/${cmd}`, options);
     webpack.stdout.on("data", (data: BufferSource) => {
@@ -31,10 +38,6 @@ if (args.isEmpty) {
 
     let appDir = "/app/";
     ensureDir(appDir);
-    let wpArgs = args.argv;
-    if (wpArgs.indexOf("--config") === -1) {
-        wpArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
-    }
 
     switch (command) {
         case "component":
@@ -54,13 +57,13 @@ if (args.isEmpty) {
             break;
 
         case "build":
-            execute("webpack", wpArgs, (code) => {
+            execute("webpack", makeWepackArgs(args.argv), (code) => {
                 console.log(`build exited with code ${code}`);
             });
             break;
 
         case "start":
-            execute("webpack-dev-server", wpArgs, (code) => {
+            execute("webpack-dev-server", makeWepackArgs(args.argv), (code) => {
                 console.log(`start exited with code ${code}`);
             });
             break;

@@ -164,33 +164,16 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server --open",
-    "test": "echo \\"Error: no test specified\\" && exit 1"
+    "build": "react-flares build",
+    "start": "react-flares start --open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "react-flares": "${libVersion}"
   },
   "devDependencies": {
-    "@types/node": "^7.0.11",
-    "@types/react": "^15.0.16",
-    "@types/react-dom": "^0.14.23",
-    "awesome-typescript-loader": "^3.1.2",
-    "css-loader": "^0.27.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.10.1",
-    "glob": "^7.1.1",
-    "node-sass": "^4.5.0",
-    "sass-loader": "^6.0.3",
-    "source-map-loader": "^0.2.0",
-    "style-loader": "^0.13.2",
-    "typescript": "^2.2.1",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.2"
+  
   }
 }  
 `;
