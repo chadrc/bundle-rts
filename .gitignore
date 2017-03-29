@@ -2,7 +2,7 @@
 
 ### Generated build files
 index.d.ts
-/bin/
+bin/
 tmp/
 dist/
 
