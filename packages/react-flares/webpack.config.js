@@ -20,7 +20,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "awesome-typescript-loader?{configFileName: './tsconfig.json'}"
+                use: "awesome-typescript-loader"
             },
             {
                 test: /\.js$/,
