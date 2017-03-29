@@ -1,6 +1,6 @@
 {
   "name": "xliv",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "A React component to facilitate lazy loading.",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "glob": "^7.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-flares": "0.4.0",
+    "react-flares": "^1.0.0",
     "@types/node": "^7.0.8",
     "@types/react": "^15.0.16",
     "@types/react-dom": "^0.14.23",
