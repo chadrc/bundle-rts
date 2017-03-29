@@ -3,14 +3,9 @@
   "version": "0.4.0",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "scripts": {
-    "test": "jest",
-    "build-bin": "./node_modules/.bin/tsc -p src/bin",
-    "build-lib": "./node_modules/.bin/webpack",
-    "rename-d-ts": "mv ./dist/react-flares.d.ts ./index.d.ts",
-    "build": "npm run build-lib&npm run build-bin",
-    "watch-bin": "./node_modules/.bin/tsc -p src/bin/ --watch",
-    "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
-    "watch": "npm run watch-bin&npm run watch-lib"
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test",
+    "build": "lerna run build"
   },
   "devDependencies": {
     "lerna": "2.0.0-beta.38"

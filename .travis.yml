@@ -1,12 +1,13 @@
 language: node_js
 node_js:
 - '6'
-install:
+before_install:
 - npm install
+install:
+- npm run bootstrap
 script:
 - npm test
 - npm run build
-- npm run rename-d-ts
 deploy:
   skip_cleanup: true
   provider: npm
