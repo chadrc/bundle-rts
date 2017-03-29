@@ -2,7 +2,7 @@
 const libName = "ReactFlares";
 
 module.exports = {
-    entry: __dirname + "/src/lib/react-flares.ts",
+    entry: __dirname + "/src/react-flares.ts",
     devtool: "source-map",
     output: {
         path: __dirname + "/dist",
@@ -20,7 +20,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "awesome-typescript-loader?{configFileName: './src/lib/tsconfig.json'}"
+                use: "awesome-typescript-loader?{configFileName: './tsconfig.json'}"
             },
             {
                 test: /\.js$/,

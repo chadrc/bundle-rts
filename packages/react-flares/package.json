@@ -4,9 +4,9 @@
   "description": "A React component to facilitate lazy loading.",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
+    "build": "webpack",
     "rename-d-ts": "mv ./dist/react-flares.d.ts ./index.d.ts",
-    "watch": "./node_modules/.bin/tsc -p src/lib/ --watch"
+    "watch": "tsc -p src/lib/ --watch"
   },
   "repository": {
     "type": "git",
