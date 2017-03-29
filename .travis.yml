@@ -8,11 +8,3 @@ install:
 script:
 - npm test
 - npm run build
-deploy:
-  skip_cleanup: true
-  provider: npm
-  email: chadrcollins91@gmail.com
-  api_key:
-    secure: XNXByxk9KfnSwVXq1KlYj1J55Umxs5vZXVxvVpAd0LrHf8EYc2pyJDfe7Cd9yltFmU316xidJPqaMZJg/eYEHcXjmeknV9jsUS3ne1uTNGA0bSfXwcW7KdYTiXKU7t4ivgDt3yzRTR7ywI7dPfFfWI7QGM20Ewq91uoNb4hoJPacrPs4ny+nNlTwiyFPcJEiFkJqKhfFqKRyJA4QO1X3Q8OxCeF5b+mDWMqO2HYGrrVtitECSEXUonLfGwm/m6U++HjTFwBWvOzwCXzuizAVQgxJrgfWEyO9ngPuUyIVdv6gluB2HE2Qr2WQccy0D7bb/Kogf84Z3zE6wO88uvy5e5BJ0ZttcV2xOWDCTljoR0Wng3VkQtTdqiiUOrSU4xc7fo3M+fVeyorHC/fJoKmK8wJQxit6Rt+wbYdtdVkSxMt90YvT4aIB/oCn3MgvLLW/m2DTrZIQXRfJDwLIMglJQDyYGVlx3pbDxn+ig1/GLi8eGp0tMZaUshevzpJlrZ9tfZdwkaQ+g0n0D6qjHc4iHDT0z7aVOYU9oS/ccaXJ88vhUyCp9lUvO+mc+muiVpHlB3ZdDLU73/mqGTdih0AN6p6c/9kFeExxM7okgMLrWleqqGdR40N8DbGkWvHsCh5WD79+j+ohVm6uVcmXIe/NyFNIpYc7VPkx8SjjY0Ugpkg=
-  on:
-    repo: chadrc/react-flares

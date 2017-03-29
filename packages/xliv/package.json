@@ -1,7 +1,7 @@
 {
   "name": "xliv",
   "version": "1.0.0",
-  "description": "A React component to facilitate lazy loading.",
+  "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
     "test": "jest",
