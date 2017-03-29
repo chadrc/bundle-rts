@@ -1,4 +1,4 @@
-import {componentCommand} from "../commands";
+import {componentCommand} from "../src/commands";
 import {fileExists, getFileData} from "./setup";
 
 const componentName = "MyComponent";

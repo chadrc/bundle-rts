@@ -1,4 +1,4 @@
-import {projectCommand} from "../commands";
+import {projectCommand} from "../src/commands";
 import {fileExists, getFileData} from "./setup";
 
 const pkgJsonFilePath =     "/package.json";

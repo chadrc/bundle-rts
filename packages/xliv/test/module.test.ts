@@ -1,4 +1,4 @@
-import {moduleCommand} from "../commands";
+import {moduleCommand} from "../src/commands";
 import {fileExists, getFileData} from "./setup";
 
 const moduleFilePath =      "/app/modules/MyModule/MyModule.module.ts";
