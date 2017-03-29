@@ -2,7 +2,6 @@
   "name": "react-flares",
   "version": "0.4.0",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
-  "main": "index.js",
   "scripts": {
     "test": "jest",
     "build-bin": "./node_modules/.bin/tsc -p src/bin",
@@ -13,65 +12,7 @@
     "watch-lib": "./node_modules/.bin/tsc -p src/lib/ --watch",
     "watch": "npm run watch-bin&npm run watch-lib"
   },
-  "keywords": [
-    "ReactJs",
-    "React",
-    "TypeScript",
-    "framework",
-    "packaging",
-    "webpack",
-    "sass"
-  ],
-  "bin": {
-    "react-flares": "./bin/react-flares.js",
-    "flares": "./bin/react-flares.js",
-    "rf": "./bin/react-flares.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chadrc/react-flares.git"
-  },
-  "author": "Chad Collins",
-  "license": "MIT",
-  "dependencies": {
-    "glob": "^7.1.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "@types/node": "^7.0.8",
-    "@types/react": "^15.0.16",
-    "@types/react-dom": "^0.14.23",
-    "awesome-typescript-loader": "^3.1.2",
-    "fs-extra": "^2.1.2",
-    "css-loader": "^0.27.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.10.1",
-    "node-sass": "^4.5.0",
-    "sass-loader": "^6.0.3",
-    "source-map-loader": "^0.2.0",
-    "style-loader": "^0.13.2",
-    "typescript": "^2.2.1",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.2"
-  },
   "devDependencies": {
-    "jest": "^19.0.2",
-    "ts-jest": "^19.0.1",
-    "@types/jest": "^19.2.2",
-    "@types/glob": "^5.0.30",
     "lerna": "2.0.0-beta.38"
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "globals": {
-      "__TS_CONFIG__": "src/bin/tsconfig.json"
-    }
   }
 }
