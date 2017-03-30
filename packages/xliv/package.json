@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chadrc/react-flares.git"
+    "url": "git+https://github.com/chadrc/xliv.git"
   },
   "keywords": [
     "React",
@@ -26,9 +26,9 @@
   "author": "Chad Collins <chadrcollins91@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chadrc/react-flares/issues"
+    "url": "https://github.com/chadrc/xliv/issues"
   },
-  "homepage": "https://github.com/chadrc/react-flares#readme",
+  "homepage": "https://github.com/chadrc/xliv#readme",
   "dependencies": {
     "glob": "^7.1.1",
     "react": "^15.4.2",
