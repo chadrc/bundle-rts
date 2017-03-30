@@ -4,7 +4,7 @@ import { ensureDir} from "./Utils";
 import {componentCommand, moduleCommand, projectCommand} from "./commands";
 const spawn = require("child_process").spawn;
 
-function makeWepackArgs(existingArgs: string[]): string[] {
+function makeWebpackArgs(existingArgs: string[]): string[] {
     if (existingArgs.indexOf("--config") === -1) {
         existingArgs.unshift("--config", "./node_modules/xliv/config/webpack.config.js");
     }
@@ -57,13 +57,13 @@ if (args.isEmpty) {
             break;
 
         case "build":
-            execute("webpack", makeWepackArgs(args.argv), (code) => {
+            execute("webpack", makeWebpackArgs(args.argv), (code) => {
                 console.log(`build exited with code ${code}`);
             });
             break;
 
         case "start":
-            execute("webpack-dev-server", makeWepackArgs(args.argv), (code) => {
+            execute("webpack-dev-server", makeWebpackArgs(args.argv), (code) => {
                 console.log(`start exited with code ${code}`);
             });
             break;
