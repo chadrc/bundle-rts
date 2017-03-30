@@ -6,7 +6,7 @@ const spawn = require("child_process").spawn;
 
 function makeWepackArgs(existingArgs: string[]): string[] {
     if (existingArgs.indexOf("--config") === -1) {
-        existingArgs.unshift("--config", "./node_modules/react-flares/seed/webpack.config.js");
+        existingArgs.unshift("--config", "./node_modules/xliv/config/webpack.config.js");
     }
     return existingArgs;
 }
