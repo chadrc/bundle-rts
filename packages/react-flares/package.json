@@ -1,6 +1,6 @@
 {
   "name": "react-flares",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A React component to facilitate lazy loading.",
   "main": "index.js",
   "scripts": {
