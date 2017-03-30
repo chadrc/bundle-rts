@@ -8,3 +8,8 @@ install:
 script:
 - npm test
 - npm run build
+deploy:
+  skip_cleanup: true
+after_success:
+- sh ./npm-login.sh
+- npm run ci-publish
