@@ -10,6 +10,8 @@
     "./src/xliv.ts"
   ],
   "exclude": [
-    "node_modules"
+    "tmp",
+    "node_modules",
+    "bin"
   ]
 }
