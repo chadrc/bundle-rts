@@ -21,7 +21,7 @@
     "packaging"
   ],
   "bin": {
-    "xliv": "./bin/react-flares.js"
+    "xliv": "./bin/xliv.js"
   },
   "author": "Chad Collins <chadrcollins91@gmail.com>",
   "license": "MIT",
