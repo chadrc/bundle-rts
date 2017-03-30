@@ -118,8 +118,7 @@ export function makeIndexTSXFile(appName: string, noComp: boolean): string {
 
     return `\
 import * as React from "react";
-import * as ReactDom from "react-dom";
-import * as ReactFlares from "react-flares";${flareImport}
+import * as ReactDom from "react-dom";${flareImport}
 
 require("./index.html");
 
@@ -164,13 +163,13 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "react-flares build",
-    "start": "react-flares start --open"
+    "build": "xliv build",
+    "start": "xliv start --open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react-flares": "${libVersion}"
+    "xliv": "${libVersion}"
   },
   "devDependencies": {
   

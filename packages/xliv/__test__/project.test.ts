@@ -52,13 +52,13 @@ test('created package.json file should match output', () => {
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "react-flares build",
-    "start": "react-flares start --open"
+    "build": "xliv build",
+    "start": "xliv start --open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react-flares": "1.0"
+    "xliv": "1.0"
   },
   "devDependencies": {
   
@@ -104,7 +104,6 @@ test('created index.tsx file should match output', () => {
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as ReactFlares from "react-flares";
 import {MyProjectFlare} from "./flares/MyProject/MyProject.flare";
 
 require("./index.html");
@@ -127,7 +126,6 @@ test('created index.tsx file without initial component should match output', () 
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as ReactFlares from "react-flares";
 
 require("./index.html");
 
