@@ -8,6 +8,6 @@ install:
 script:
 - npm test
 - npm run build
-after_success:
-- sh ./npm-login.sh
-- npm run ci-publish
+#after_success:
+#- sh ./npm-login.sh
+#- npm run ci-publish
