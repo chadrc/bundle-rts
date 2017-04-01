@@ -1,5 +1,6 @@
 {
   "name": "sample",
+  "private": true,
   "version": "1.0.0",
   "description": "Project for testing xliv commands.",
   "main": "index.js",

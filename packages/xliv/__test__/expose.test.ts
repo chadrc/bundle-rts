@@ -106,7 +106,13 @@ test('expose webpack config should match output', () => {
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "flares/*": [
+        "app/flares/*"
+      ]
+    }
   },
   "include": [
     "./app/**/*"

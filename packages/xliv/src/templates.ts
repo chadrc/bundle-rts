@@ -107,7 +107,7 @@ ReactFlares.modules.${moduleName} = new ${moduleName}Module();
 }
 
 export function makeIndexTSXFile(appName: string, noComp: boolean): string {
-    let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "./flares/${appName}/${appName}.flare";`;
+    let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "flares/${appName}/${appName}.flare";`;
     let eleRender = noComp ? `\
         <section>
             <h1>${appName} - Ready</h1>
