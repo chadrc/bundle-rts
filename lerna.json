@@ -5,6 +5,11 @@
       "ignore": [
         "xliv-usage-test/*"
       ]
+    },
+    "bootstrap": {
+      "ignore": [
+        "xliv-usage-test"
+      ]
     }
   },
   "packages": [
