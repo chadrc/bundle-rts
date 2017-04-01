@@ -124,6 +124,29 @@ export function createProject(appName: string, version: string, noComp: boolean)
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
 
+    let pkgJsonPath = `${process.cwd()}/package.json`;
+    if (fs.existsSync(pkgJsonPath)) {
+        let pkgJson = require(pkgJsonPath);
+        if (!pkgJson.dependencies) {
+            pkgJson.dependencies = {};
+        }
+
+        if (!pkgJson.scripts) {
+            pkgJson.scripts = {};
+        }
+
+        if (!pkgJson.scripts.build) {
+            pkgJson.scripts.build = "xliv build";
+        }
+
+        if (!pkgJson.scripts.start) {
+            pkgJson.scripts.start = "xliv start --open";
+        }
+
+        pkgJson.dependencies.xliv = version;
+        pkgJsonData = JSON.stringify(pkgJson, null, 2);
+    }
+
     writeFile(`${process.cwd()}/package.json`, pkgJsonData);
     writeFile(`${basePath}/index.html`, indexHtmlData);
     writeFile(`${basePath}/index.tsx`, indexTsxData);
