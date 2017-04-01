@@ -59,6 +59,9 @@ module.exports = {
     devtool: "source-map",
 
     resolve: {
+        alias: {
+            flares: path.resolve(process.cwd(), "app/flares/")
+        },
         extensions: [".ts", ".tsx", ".js"]
     },
 
@@ -99,7 +102,7 @@ module.exports = {
     ],
 
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: path.join(process.cwd(), "dist"),
         compress: true
     }
 };
