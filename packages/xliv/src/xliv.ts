@@ -47,9 +47,6 @@ if (args.isEmpty) {
 } else {
     let command = args.next();
 
-    let appDir = "/app/";
-    ensureDir(appDir);
-
     switch (command) {
         case "component":
             let componentPath = args.next();
@@ -80,7 +77,7 @@ if (args.isEmpty) {
             break;
 
         case "expose":
-            exposeCommand();
+            exposeCommand(args.tsOnly);
             break;
 
         default:

@@ -7,13 +7,15 @@ function cpToCwd(dirName: string, fileName: string): void {
     writeFile(`${process.cwd()}/${fileName}`, file);
 }
 
-export function exposeCommand(): void {
+export function exposeCommand(typescriptOnly: boolean = false): void {
     let configDir = __dirname;
     let parts = configDir.split("/");
     parts.pop();
     parts.push("config");
     configDir = parts.join("/");
-    cpToCwd(configDir, `webpack.config.js`);
+    if (!typescriptOnly) {
+        cpToCwd(configDir, `webpack.config.js`);
+    }
     cpToCwd(configDir, `tsconfig.json`);
 }
 

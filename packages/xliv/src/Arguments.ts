@@ -8,6 +8,7 @@ export class Arguments {
     private _noComponent: boolean;
     private _noView: boolean;
     private _noTypes: boolean;
+    private _tsOnly: boolean;
 
     argv: string[];
 
@@ -18,6 +19,7 @@ export class Arguments {
         this._noComponent = this.hasArg("--no-comp");
         this._noView = this.hasArg("--no-view");
         this._noTypes = this.hasArg("--no-types");
+        this._tsOnly = this.hasArg("--ts-only");
     }
     get noStyles(): boolean {
         return this._noStyles;
@@ -37,6 +39,10 @@ export class Arguments {
 
     get noTypes(): boolean {
         return this._noTypes;
+    }
+
+    get tsOnly(): boolean {
+        return this._tsOnly;
     }
 
     get isEmpty(): boolean {

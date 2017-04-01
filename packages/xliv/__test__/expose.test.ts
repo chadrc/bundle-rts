@@ -4,9 +4,15 @@ import {getFileData} from "./setup";
 const webpackConfigFilePath = "/webpack.config.js";
 const tsConfigFilePath = "/tsconfig.json";
 
-test('expose webpack config should create webpack.config.js file', () => {
+test('expose webpack config should create webpack.config.js and tsconfig.json files', () => {
     exposeCommand();
     expect(getFileData(webpackConfigFilePath)).toBeTruthy();
+    expect(getFileData(tsConfigFilePath)).toBeTruthy();
+});
+
+test('expose typescript config should only create tsconfig.json file', () => {
+    exposeCommand(true);
+    expect(() => getFileData(webpackConfigFilePath)).toThrow();
     expect(getFileData(tsConfigFilePath)).toBeTruthy();
 });
 
