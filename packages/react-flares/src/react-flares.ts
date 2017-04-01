@@ -12,19 +12,14 @@ namespace ReactFlares {
         cssLoaded: boolean;
     }
 
-    export interface Module {
-        name: string;
-        components: {[name:string]: any}
-    }
-
     let moduleLoadResults: {[key:string]: ModuleLoadResult} = {};
 
     let jsRoot: string = "js/";
     let cssRoot: string = "css/";
 
-    let components: {[name: string]: {new()}} = {};
+    let components: {[name: string]: any} = {};
 
-    export function registerComponent(name: string, component: {new()}): void {
+    export function registerComponent<T extends React.Component<any, any>>(name: string, component: {new(...args: any[]): T}): void {
         if (!components[name]) {
             components[name] = component;
         }
@@ -119,7 +114,7 @@ namespace ReactFlares {
         new ModuleLoader(name).load(callback);
     }
 
-    export function getComponent(name: string): {new()} {
+    export function getComponent(name: string): {new(): any} {
         return components[name];
     }
 
@@ -141,17 +136,12 @@ namespace ReactFlares {
         make(self: any): JSX.Element;
     }
 
-    export interface Module {
-        name: string;
-        components: {[name:string]: any}
-    }
-
     export interface ComponentFlareProps extends Props {
         componentId?: string
     }
 
     export interface ComponentFlareState extends State {
-        component: any
+        component: {new(...args: any[]): React.Component<any, any>}
     }
 
     export class ComponentFlare<T extends ComponentFlareProps> extends React.Component<T, ComponentFlareState> {
