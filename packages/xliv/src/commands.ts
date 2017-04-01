@@ -52,7 +52,7 @@ export function moduleCommand(moduleName: string, noStyles: boolean,
     }
 }
 
-export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, noStyles: boolean, defaultText: string = ""): void {
+export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, noStyles: boolean, makeFlare: boolean = false, defaultText: string = ""): void {
     let parts = componentId.split(":");
     if (parts.length !== 2) {
         throw "Invalid component id: " + componentId;
@@ -71,7 +71,7 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
 
     let componentPath = componentParts.join("/");
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, componentPath, moduleName, noView, noTypes, noStyles, false, true, false, defaultText);
+        createComponent(componentName, componentPath, moduleName, noView, noTypes, noStyles, makeFlare, true, false, defaultText);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
@@ -111,7 +111,7 @@ export function createComponent(componentName: string,
     }
     writeFile(componentFilePath, componentData);
 
-    if (moduleName !== "~") {
+    if (moduleName !== "~" && makeFlare) {
         let flarePath = `/app/flares/${moduleName}/${componentPath}${componentName}.flare.ts`;
         ensureDir(flarePath);
         writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes, moduleRoot));

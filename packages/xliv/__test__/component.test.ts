@@ -79,8 +79,18 @@ test('creates a component with component file only', () => {
     expect(() => getFileData(flareFilePath)).toThrow();
 });
 
-test('creates a module component', () => {
+test('creates a module component without flare', () => {
     componentCommand(moduleComponentId, false, false, false);
+
+    expect(getFileData(moduleComponentFilePath)).toBeTruthy();
+    expect(getFileData(moduleViewFilePath)).toBeTruthy();
+    expect(getFileData(moduleTypesFilePath)).toBeTruthy();
+    expect(getFileData(moduleStylesFilePath)).toBeTruthy();
+    expect(() => getFileData(flareFilePath)).toThrow();
+});
+
+test('creates a module component with flare', () => {
+    componentCommand(moduleComponentId, false, false, false, true);
 
     expect(getFileData(moduleComponentFilePath)).toBeTruthy();
     expect(getFileData(moduleViewFilePath)).toBeTruthy();
@@ -98,8 +108,8 @@ test('creates sub component', () => {
     expect(getFileData(subStylesFilePath)).toBeTruthy();
 });
 
-test('creates module sub component', () => {
-    componentCommand(moduleSubComponentId, false, false, false);
+test('creates module sub component with flare', () => {
+    componentCommand(moduleSubComponentId, false, false, false, true);
 
     expect(getFileData(moduleSubComponentFilePath)).toBeTruthy();
     expect(getFileData(moduleSubViewFilePath)).toBeTruthy();
@@ -136,9 +146,40 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
     expect(data).toBe(expectedComponentText);
 });
 
+test('created component with view, types and flare should have expected output', () => {
+    componentCommand(rootComponentId, false, false, false, true);
+
+    let data = getFileData(componentFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactFlares from "react-flares";
+import {MyComponentData, MyComponentProps, MyComponentState} from "./MyComponent.types";
+import {MyComponentView} from "./MyComponent.view";
+
+import "./MyComponent.scss";
+
+export class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
+
+    constructor(props: MyComponentProps) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    render() {
+        return new MyComponentView().make(this);
+    }
+}
+
+ReactFlares.registerComponent("MyComponent", MyComponent);
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
 test('created component flare should have expected output', () => {
     // Need module and component to properly test
-    componentCommand(moduleComponentId, false, false, false);
+    componentCommand(moduleComponentId, false, false, false, true);
 
     let data = getFileData(flareFilePath);
 
@@ -155,7 +196,7 @@ export class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.Com
 
 test('created component flare without component types should have expected output', () => {
     // Need module and component to properly test
-    componentCommand(moduleComponentId, false, true, false);
+    componentCommand(moduleComponentId, false, true, false, true);
 
     let data = getFileData(flareFilePath);
 
@@ -228,7 +269,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 });
 
 test("created component without view and without types should have expected output", () => {
-    componentCommand(rootComponentId, true, true, false, "MyComponent");
+    componentCommand(rootComponentId, true, true, false, false, "MyComponent");
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -259,7 +300,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component without view, types, nor styles should have expected output", () => {
-    componentCommand(rootComponentId, true, true, true, "MyComponent");
+    componentCommand(rootComponentId, true, true, true, false, "MyComponent");
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -288,7 +329,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component's view with types should have expected output", () => {
-    componentCommand(rootComponentId, false, false, false, "MyComponent");
+    componentCommand(rootComponentId, false, false, false, true, "MyComponent");
 
     let data = getFileData(viewFilePath);
 
@@ -311,7 +352,7 @@ export class MyComponentView implements View {
 });
 
 test("created component's view without types should have expected output", () => {
-    componentCommand(rootComponentId, false, true, false, "MyComponent");
+    componentCommand(rootComponentId, false, true, false, true, "MyComponent");
 
     let data = getFileData(viewFilePath);
 
