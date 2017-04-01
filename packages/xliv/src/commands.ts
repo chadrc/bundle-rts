@@ -32,7 +32,6 @@ export function projectCommand(appName: string, version: string,
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");
         if (isJsIdentifier(moduleName)) {
-            createModule(moduleName, noStyles);
             createComponent(moduleName, "", moduleName, noView, noTypes, noStyles, true, false, true, `${appName} is ready`);
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
@@ -43,12 +42,11 @@ export function projectCommand(appName: string, version: string,
 export function moduleCommand(moduleName: string, noStyles: boolean,
                               noTypes: boolean, noView: boolean): void {
     if (isJsIdentifier(moduleName)) {
-        createModule(moduleName, noStyles);
         createComponent(moduleName, "", moduleName, noTypes, noView, noStyles, true, false, true, moduleName);
     }
 }
 
-export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, defaultText: string = ""): void {
+export function componentCommand(componentId: string, noView: boolean, noTypes: boolean, noStyles: boolean, defaultText: string = ""): void {
     let parts = componentId.split(":");
     if (parts.length !== 2) {
         throw "Invalid component id: " + componentId;
@@ -67,7 +65,7 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
 
     let componentPath = componentParts.join("/");
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, componentPath, moduleName, noView, noTypes, true, false, true, false, defaultText);
+        createComponent(componentName, componentPath, moduleName, noView, noTypes, noStyles, false, true, false, defaultText);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
@@ -116,24 +114,13 @@ export function createComponent(componentName: string,
     if (!noView) {
         writeFile(`${basePath}.view.tsx`, viewData);
     }
+
     if (!noTypes) {
         writeFile(`${basePath}.types.ts`, typesData);
     }
-}
 
-export function createModule(moduleName: string, noStyles: boolean): void {
-    // let moduleDetails = Templates.makeModuleFile(moduleName, noComp, noStyles);
-    let localDir = `/app/modules/${moduleName}/`;
-    ensureDir(localDir);
-    let basePath = process.cwd() + localDir;
-    // let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
-    // if (fs.existsSync(moduleFilePath)) {
-    //     console.error("Module already exists.");
-    //     return;
-    // }
-    // writeFile(moduleFilePath, moduleDetails);
     if (!noStyles) {
-        writeFile(`${basePath}/${moduleName}.scss`, `/* ${moduleName} Styles */`);
+        writeFile(`${basePath}.scss`, `/* ${moduleName} Styles */`);
     }
 }
 
