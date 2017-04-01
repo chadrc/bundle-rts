@@ -2,6 +2,35 @@ import * as fs from "fs";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
 
+export function exposeCommand(webpack: boolean, typescript: boolean): void {
+    let configDir = __dirname;
+    let parts = configDir.split("/");
+    parts.pop();
+    parts.push("config");
+    configDir = parts.join("/");
+    if (webpack) {
+        let file = fs.readFileSync(`${configDir}/webpack.config.js`, "utf-8");
+        writeFile(`${process.cwd()}/webpack.config.js`, file);
+    }
+    // Go up __dirname path until we find our package root folder
+    // To work with tests better
+    // let pathAry = __dirname.split("/");
+    // let i = pathAry.length - 1;
+    // while (i > 0) {
+    //     if (pathAry[i] === "react-flares") {
+    //         break;
+    //     }
+    //     pathAry.pop();
+    //     i--;
+    // }
+    // let pkgPath = pathAry.join("/");
+    //
+    // for (let filename of filesToCopy) {
+    //     let file = fs.readFileSync(`${pkgPath.replace("/bin", "")}/seed/${filename}`, "utf-8");
+    //     writeFile(`${process.cwd()}/${filename}`, file);
+    // }
+}
+
 export function projectCommand(appName: string, version: string,
                                noMod: boolean, noComp: boolean, noStyles: boolean,
                                noView: boolean, noTypes: boolean): void {
