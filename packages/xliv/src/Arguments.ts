@@ -5,10 +5,10 @@
 export class Arguments {
     private _noStyles: boolean;
     private _noModule: boolean;
-    private _noComponent: boolean;
     private _noView: boolean;
     private _noTypes: boolean;
     private _tsOnly: boolean;
+    private _makeFlare: boolean;
 
     argv: string[];
 
@@ -16,10 +16,10 @@ export class Arguments {
         this.argv = argv;
         this._noStyles = this.hasArg("--no-styles");
         this._noModule = this.hasArg("--no-mod");
-        this._noComponent = this.hasArg("--no-comp");
         this._noView = this.hasArg("--no-view");
         this._noTypes = this.hasArg("--no-types");
         this._tsOnly = this.hasArg("--ts-only");
+        this._makeFlare = this.hasArg("--mk-flare");
     }
     get noStyles(): boolean {
         return this._noStyles;
@@ -27,10 +27,6 @@ export class Arguments {
 
     get noModule(): boolean {
         return this._noModule;
-    }
-
-    get noComponent(): boolean {
-        return this._noComponent;
     }
 
     get noView(): boolean {
@@ -43,6 +39,10 @@ export class Arguments {
 
     get tsOnly(): boolean {
         return this._tsOnly;
+    }
+
+    get makeFlare(): boolean {
+        return this._makeFlare;
     }
 
     get isEmpty(): boolean {
