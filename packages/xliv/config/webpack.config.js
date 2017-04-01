@@ -3,6 +3,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require("webpack");
 const path = require("path");
 const glob = require("glob");
+const fs = require("fs");
+
+let tsConfigPath = __dirname + "/tsconfig.json";
+try {
+    let localConfigPath = process.cwd() + "/tsconfig.json";
+    fs.readFileSync(localConfigPath);
+    tsConfigPath = localConfigPath
+} catch (e) {}
 
 let entries = {
     app: "./app/index.tsx",
@@ -34,7 +42,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "awesome-typescript-loader?configFileName=" + __dirname + "/tsconfig.json"
+                use: "awesome-typescript-loader?configFileName=" + tsConfigPath
             },
             {
                 test: /\.scss$/,
