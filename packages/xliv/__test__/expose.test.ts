@@ -102,3 +102,29 @@ module.exports = {
 `;
     expect(data).toBe(expected);
 });
+
+test('expose webpack config should match output', () => {
+    exposeCommand(false, true);
+
+    let data = getFileData(tsConfigFilePath);
+
+    let expected = `\
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react"
+  },
+  "include": [
+    "./app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+`;
+    expect(data).toBe(expected);
+});
