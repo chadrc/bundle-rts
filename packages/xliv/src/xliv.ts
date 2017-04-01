@@ -2,11 +2,22 @@
 import {Arguments} from "./Arguments";
 import { ensureDir} from "./Utils";
 import {componentCommand, moduleCommand, projectCommand} from "./commands";
+
+const fs = require("fs");
 const spawn = require("child_process").spawn;
 
 function makeWebpackArgs(existingArgs: string[]): string[] {
     if (existingArgs.indexOf("--config") === -1) {
-        existingArgs.unshift("--config", "./node_modules/xliv/config/webpack.config.js");
+        let webpackConfig = "./node_modules/xliv/config/webpack.config.js";
+        try {
+            let cwdConfig = `${process.cwd()}/webpack.config.js`;
+            fs.readFileSync(cwdConfig);
+            // No error means file exists
+            webpackConfig = cwdConfig;
+        } catch (e) {
+            console.log("No local config. Using defaults.");
+        }
+        existingArgs.unshift("--config", webpackConfig);
     }
     return existingArgs;
 }
