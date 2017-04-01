@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import {Arguments} from "./Arguments";
-import { ensureDir} from "./Utils";
 import {componentCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
 
 const fs = require("fs");
@@ -55,13 +54,13 @@ if (args.isEmpty) {
 
         case "module":
             let moduleName = args.next();
-            moduleCommand(moduleName, args.noComponent, args.noStyles, args.noTypes, args.noView);
+            moduleCommand(moduleName, args.noStyles, args.noTypes, args.noView);
             break;
 
         case "project":
             let appName = args.next();
             projectCommand(appName, settings.version,
-                args.noModule, args.noComponent, args.noStyles, args.noView, args.noTypes);
+                args.noModule, args.noStyles, args.noView, args.noTypes);
             break;
 
         case "build":
