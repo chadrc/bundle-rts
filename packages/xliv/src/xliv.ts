@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {Arguments} from "./Arguments";
 import { ensureDir} from "./Utils";
-import {componentCommand, moduleCommand, projectCommand} from "./commands";
+import {componentCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
 
 const fs = require("fs");
 const spawn = require("child_process").spawn;
@@ -77,6 +77,10 @@ if (args.isEmpty) {
             execute("webpack-dev-server", makeWebpackArgs(args.argv), (code) => {
                 console.log(`start exited with code ${code}`);
             });
+            break;
+
+        case "expose":
+            exposeCommand();
             break;
 
         default:
