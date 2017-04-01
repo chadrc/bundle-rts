@@ -2,9 +2,9 @@ import * as fs from "fs";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
 
-function cpToCwd(fileName: string): void {
-    let file = fs.readFileSync(fileName, "utf-8");
-    writeFile(`${process.cwd()}/${fileName.split("/").pop()}`, file);
+function cpToCwd(dirName: string, fileName: string): void {
+    let file = fs.readFileSync(`${dirName}/${fileName}`, "utf-8");
+    writeFile(`${process.cwd()}/${fileName}`, file);
 }
 
 export function exposeCommand(): void {
@@ -13,8 +13,8 @@ export function exposeCommand(): void {
     parts.pop();
     parts.push("config");
     configDir = parts.join("/");
-    cpToCwd(`${configDir}/webpack.config.js`);
-    cpToCwd(`${configDir}/tsconfig.json`);
+    cpToCwd(configDir, `webpack.config.js`);
+    cpToCwd(configDir, `tsconfig.json`);
 }
 
 export function projectCommand(appName: string, version: string,
