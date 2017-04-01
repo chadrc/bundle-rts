@@ -2,21 +2,19 @@ import * as fs from "fs";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
 
-export function exposeCommand(webpack: boolean, typescript: boolean): void {
+function cpToCwd(fileName: string): void {
+    let file = fs.readFileSync(fileName, "utf-8");
+    writeFile(`${process.cwd()}/${fileName.split("/").pop()}`, file);
+}
+
+export function exposeCommand(): void {
     let configDir = __dirname;
     let parts = configDir.split("/");
     parts.pop();
     parts.push("config");
     configDir = parts.join("/");
-    if (webpack) {
-        let file = fs.readFileSync(`${configDir}/webpack.config.js`, "utf-8");
-        writeFile(`${process.cwd()}/webpack.config.js`, file);
-    }
-
-    if (typescript) {
-        let file = fs.readFileSync(`${configDir}/tsconfig.json`, "utf-8");
-        writeFile(`${process.cwd()}/tsconfig.json`, file);
-    }
+    cpToCwd(`${configDir}/webpack.config.js`);
+    cpToCwd(`${configDir}/tsconfig.json`);
 }
 
 export function projectCommand(appName: string, version: string,

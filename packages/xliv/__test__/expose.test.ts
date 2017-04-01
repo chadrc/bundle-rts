@@ -5,23 +5,13 @@ const webpackConfigFilePath = "/webpack.config.js";
 const tsConfigFilePath = "/tsconfig.json";
 
 test('expose webpack config should create webpack.config.js file', () => {
-    exposeCommand(true, false);
-
-    let data = getFileData(webpackConfigFilePath);
-
-    expect(data).toBeTruthy();
-});
-
-test('expose typescript config should create tsconfig.json file', () => {
-    exposeCommand(false, true);
-
-    let data = getFileData(tsConfigFilePath);
-
-    expect(data).toBeTruthy();
+    exposeCommand();
+    expect(getFileData(webpackConfigFilePath)).toBeTruthy();
+    expect(getFileData(tsConfigFilePath)).toBeTruthy();
 });
 
 test('expose webpack config should match output', () => {
-    exposeCommand(true, false);
+    exposeCommand();
 
     let data = getFileData(webpackConfigFilePath);
 
@@ -104,7 +94,7 @@ module.exports = {
 });
 
 test('expose webpack config should match output', () => {
-    exposeCommand(false, true);
+    exposeCommand();
 
     let data = getFileData(tsConfigFilePath);
 
