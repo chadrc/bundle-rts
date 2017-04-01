@@ -7,7 +7,17 @@ const tsConfigFilePath = "/tsconfig.json";
 test('expose webpack config should create webpack.config.js file', () => {
     exposeCommand(true, false);
 
-    fileExists(webpackConfigFilePath);
+    let data = getFileData(webpackConfigFilePath);
+
+    expect(data).toBeTruthy();
+});
+
+test('expose typescript config should create tsconfig.json file', () => {
+    exposeCommand(false, true);
+
+    let data = getFileData(tsConfigFilePath);
+
+    expect(data).toBeTruthy();
 });
 
 test('expose webpack config should match output', () => {

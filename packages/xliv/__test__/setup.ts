@@ -1,4 +1,6 @@
 import * as fse from "fs-extra";
+const fs = require("fs");
+const path = require("path");
 
 let originalCwd = process.cwd();
 
@@ -11,8 +13,8 @@ export function getFileData(path: string): string {
 }
 
 beforeEach(() => {
-    let workingDir = originalCwd + "/tmp/react-flares/test-";
-    fse.mkdirsSync("tmp/react-flares/");
+    let workingDir = originalCwd + "/tmp/xliv/test-";
+    fse.mkdirsSync("tmp/xliv/");
     let tmpDir = fse.mkdtempSync(workingDir);
     process.chdir(tmpDir);
 });
