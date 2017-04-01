@@ -5,7 +5,6 @@ before_install:
 - npm install
 install:
 - npm run bootstrap
-- npm run setup
 script:
 - npm test
 - npm run build

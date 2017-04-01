@@ -5,7 +5,8 @@
   "description": "Project for testing xliv commands.",
   "main": "index.js",
   "scripts": {
-    "build": "xliv build",
+    "build": "echo stub",
+    "safe-build": "xliv build",
     "start": "xliv start --open",
     "setup": "npm install ../xliv/ --save"
   },
