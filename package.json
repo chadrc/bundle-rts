@@ -6,6 +6,7 @@
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "build": "lerna run build",
+    "setup": "lerna run setup",
     "ci-publish": "lerna publish --canary --yes --skip-git"
   },
   "devDependencies": {

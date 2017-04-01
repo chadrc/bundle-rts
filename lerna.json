@@ -3,7 +3,14 @@
   "commands": {
     "publish": {
       "ignore": [
-        "xliv-usage-test/*"
+        "xliv-usage-test/*",
+        "package.json",
+        "travis.json",
+        "lerna.json",
+        "README.md",
+        "LICENSE",
+        ".gitignore",
+        ".npmignore"
       ]
     },
     "bootstrap": {

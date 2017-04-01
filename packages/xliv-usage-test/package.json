@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "xliv build",
-    "start": "xliv start --open"
+    "start": "xliv start --open",
+    "setup": "npm install"
   },
   "author": "",
   "license": "ISC",
