@@ -20,35 +20,31 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
 }
 
 export function projectCommand(appName: string, version: string,
-                               noMod: boolean, noComp: boolean, noStyles: boolean,
+                               noMod: boolean, noStyles: boolean,
                                noView: boolean, noTypes: boolean): void {
     if (!appName) {
         console.error("No app name provided.");
         return;
     }
 
-    createProject(appName, version, noComp);
+    createProject(appName, version, noMod);
 
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");
         if (isJsIdentifier(moduleName)) {
-            createModule(moduleName, noComp, noStyles);
-            if (!noComp) {
-                createComponent(moduleName, "", moduleName, noView, noTypes, false, true, `${appName} is ready`);
-            }
+            createModule(moduleName, noStyles);
+            createComponent(moduleName, "", moduleName, noView, noTypes, noStyles, true, false, true, `${appName} is ready`);
         } else {
             console.log("Initial module could not be created. App name could not be turned into valid JavaScript identifier.");
         }
     }
 }
 
-export function moduleCommand(moduleName: string, noComp: boolean, noStyles: boolean,
+export function moduleCommand(moduleName: string, noStyles: boolean,
                               noTypes: boolean, noView: boolean): void {
     if (isJsIdentifier(moduleName)) {
-        createModule(moduleName, noComp, noStyles);
-        if (!noComp) {
-            createComponent(moduleName, "", moduleName, noTypes, noView, false, true, moduleName);
-        }
+        createModule(moduleName, noStyles);
+        createComponent(moduleName, "", moduleName, noTypes, noView, noStyles, true, false, true, moduleName);
     }
 }
 
@@ -71,15 +67,23 @@ export function componentCommand(componentId: string, noView: boolean, noTypes: 
 
     let componentPath = componentParts.join("/");
     if (isJsIdentifier(componentName)) {
-        createComponent(componentName, componentPath, moduleName, noView, noTypes, true, false, defaultText);
+        createComponent(componentName, componentPath, moduleName, noView, noTypes, true, false, true, false, defaultText);
     } else {
         console.error("Invalid identifier: " + componentName);
     }
 }
 
-export function createComponent(componentName: string, componentPath: string, moduleName: string, noView: boolean, noTypes: boolean,
-                                placeInComponentsFolder: boolean = true, moduleRoot: boolean = false, defaultText: string) {
-    let componentData = Templates.makeComponentFile(componentName, noTypes, noView, defaultText);
+export function createComponent(componentName: string,
+                                componentPath: string,
+                                moduleName: string,
+                                noView: boolean,
+                                noTypes: boolean,
+                                noStyles: boolean,
+                                makeFlare: boolean,
+                                placeInComponentsFolder: boolean = true,
+                                moduleRoot: boolean = false,
+                                defaultText: string) {
+    let componentData = Templates.makeComponentFile(componentName, noTypes, noView, noStyles, makeFlare, defaultText);
     let viewData = Templates.makeViewFile(componentName, noTypes, defaultText);
     let typesData = Templates.makeTypesFile(componentName);
     componentPath = componentPath ? componentPath + "/" : "";
@@ -95,7 +99,8 @@ export function createComponent(componentName: string, componentPath: string, mo
     }
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-    let componentFilePath = `${basePath}.component.ts${noView ? "x" : ""}`;
+    let componentFileType = moduleRoot ? "module" : "component";
+    let componentFilePath = `${basePath}.${componentFileType}.ts${noView ? "x" : ""}`;
     if (fs.existsSync(componentFilePath)) {
         console.error("Component already exists.");
         return;
@@ -116,28 +121,28 @@ export function createComponent(componentName: string, componentPath: string, mo
     }
 }
 
-export function createModule(moduleName: string, noComp: boolean, noStyles: boolean): void {
-    let moduleDetails = Templates.makeModuleFile(moduleName, noComp, noStyles);
+export function createModule(moduleName: string, noStyles: boolean): void {
+    // let moduleDetails = Templates.makeModuleFile(moduleName, noComp, noStyles);
     let localDir = `/app/modules/${moduleName}/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
-    let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
-    if (fs.existsSync(moduleFilePath)) {
-        console.error("Module already exists.");
-        return;
-    }
-    writeFile(moduleFilePath, moduleDetails);
+    // let moduleFilePath = `${basePath}/${moduleName}.module.ts`;
+    // if (fs.existsSync(moduleFilePath)) {
+    //     console.error("Module already exists.");
+    //     return;
+    // }
+    // writeFile(moduleFilePath, moduleDetails);
     if (!noStyles) {
         writeFile(`${basePath}/${moduleName}.scss`, `/* ${moduleName} Styles */`);
     }
 }
 
-export function createProject(appName: string, version: string, noComp: boolean): void {
+export function createProject(appName: string, version: string, noMod: boolean): void {
     let localDir = `/app/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
 
-    let indexTsxData = Templates.makeIndexTSXFile(appName, noComp);
+    let indexTsxData = Templates.makeIndexTSXFile(appName, noMod);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
 

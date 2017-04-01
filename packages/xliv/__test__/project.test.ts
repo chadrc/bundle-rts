@@ -13,7 +13,7 @@ const viewFilePath =        "/app/modules/MyProject/MyProject.view.tsx";
 const typesFilePath =       "/app/modules/MyProject/MyProject.types.ts";
 
 test("creates project with all default files", () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
+    projectCommand("MyProject", "1.0", false, false, false, false);
 
     expect(getFileData(pkgJsonFilePath)).toBeTruthy();
     expect(getFileData(indexHtmlFilePath)).toBeTruthy();
@@ -21,13 +21,13 @@ test("creates project with all default files", () => {
 
     expect(getFileData(moduleFilePath)).toBeTruthy();
     expect(getFileData(stylesFilePath)).toBeTruthy();
-    expect(getFileData(componentFilePath)).toBeTruthy();
+    expect(() => getFileData(componentFilePath)).toThrow();
     expect(getFileData(viewFilePath)).toBeTruthy();
     expect(getFileData(typesFilePath)).toBeTruthy();
 });
 
 test("creates project without module", () => {
-    projectCommand("MyProject", "1.0", true, false, false, false, false);
+    projectCommand("MyProject", "1.0", true, false, false, false);
 
     expect(getFileData(pkgJsonFilePath)).toBeTruthy();
     expect(getFileData(indexHtmlFilePath)).toBeTruthy();
@@ -41,7 +41,7 @@ test("creates project without module", () => {
 });
 
 test('created package.json file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
+    projectCommand("MyProject", "1.0", false, false, false, false);
 
     let data = getFileData(pkgJsonFilePath);
 
@@ -75,7 +75,7 @@ test('existing package.json should be updated with xliv library value', () => {
   "custom": "my custom value"
 }
 `);
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
+    projectCommand("MyProject", "1.0", false, false, false, false);
 
     let data = getFileData(pkgJsonFilePath);
 
@@ -88,7 +88,7 @@ test('existing package.json should be updated with xliv library value', () => {
 });
 
 test('created index.html file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
+    projectCommand("MyProject", "1.0", false, false, false, false);
 
     let data = getFileData(indexHtmlFilePath);
 
@@ -116,7 +116,7 @@ test('created index.html file should match output', () => {
 });
 
 test('created index.tsx file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false, false);
+    projectCommand("MyProject", "1.0", false, false, false, false);
 
     let data = getFileData(indexTsxFilePath);
 
@@ -137,8 +137,8 @@ window.addEventListener("load", () => {
     expect(data).toBe(expectedComponentText);
 });
 
-test('created index.tsx file without initial component should match output', () => {
-    projectCommand("MyProject", "1.0", false, true, false, false, false);
+test('created index.tsx file without initial module should match output', () => {
+    projectCommand("MyProject", "1.0", true, false, false, false);
 
     let data = getFileData(indexTsxFilePath);
 

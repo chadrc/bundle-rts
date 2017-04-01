@@ -48,7 +48,15 @@ export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlare
 `;
 }
 
-export function makeComponentFile(componentName: string, noTypes: boolean, noView: boolean, defaultText: string): string {
+export function makeComponentFile(componentName: string,
+                                  noTypes: boolean,
+                                  noView: boolean,
+                                  noStyles: boolean,
+                                  makeFlare: boolean,
+                                  defaultText: string): string {
+    let flareImport = makeFlare ? `\nimport * as ReactFlares from "react-flares";` : "";
+    let flareRegister = makeFlare ? `\n\nReactFlares.registerComponent("${componentName}", ${componentName});` : "";
+    let styleImport = noStyles ? "" : `\n\nimport "./${componentName}.scss";`;
     let typesBase = noTypes ? "" : componentName;
     let typesImport = noTypes ?
         `"react-flares"`
@@ -62,8 +70,8 @@ export function makeComponentFile(componentName: string, noTypes: boolean, noVie
         )` : `new ${componentName}View().make(this)`;
 
     return `\
-import * as React from "react";
-import {${typesBase}Data, ${typesBase}Props, ${typesBase}State} from ${typesImport};${viewImport}
+import * as React from "react";${flareImport}
+import {${typesBase}Data, ${typesBase}Props, ${typesBase}State} from ${typesImport};${viewImport}${styleImport}
 
 export class ${componentName} extends React.Component<${typesBase}Props, ${typesBase}State> implements ${typesBase}Data {
 
@@ -76,7 +84,7 @@ export class ${componentName} extends React.Component<${typesBase}Props, ${types
     render() {
         return ${viewComponent};
     }
-}
+}${flareRegister}
 `;
 }
 

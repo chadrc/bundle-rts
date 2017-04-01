@@ -17,11 +17,18 @@ namespace ReactFlares {
         components: {[name:string]: any}
     }
 
-    export let modules: {[key:string]: Module} = {};
     let moduleLoadResults: {[key:string]: ModuleLoadResult} = {};
 
     let jsRoot: string = "js/";
     let cssRoot: string = "css/";
+
+    let components: {[name: string]: {new()}} = {};
+
+    export function registerComponent(name: string, component: {new()}): void {
+        if (!components[name]) {
+            components[name] = component;
+        }
+    }
 
     export function setJsRoot(root: string) {
         if (!root) {
@@ -112,8 +119,8 @@ namespace ReactFlares {
         new ModuleLoader(name).load(callback);
     }
 
-    export function getModule(name: string): Module {
-        return ReactFlares.modules[name];
+    export function getComponent(name: string): {new()} {
+        return components[name];
     }
 
     export interface Props {
@@ -170,7 +177,7 @@ namespace ReactFlares {
             loadModule(moduleName, (result: ModuleLoadResult) => {
                 if (result.jsLoaded) {
                     this.setState({
-                        component: getModule(moduleName).components[componentName]
+                        component: getComponent(componentName)
                     });
                 }
             })
