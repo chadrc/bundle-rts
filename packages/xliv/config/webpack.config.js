@@ -5,6 +5,8 @@ const path = require("path");
 const glob = require("glob");
 const fs = require("fs");
 
+console.log("Building with webpack.config.js from " + __filename);
+
 let tsConfigPath = __dirname + "/tsconfig.json";
 try {
     let localConfigPath = process.cwd() + "/tsconfig.json";

@@ -16,7 +16,13 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     if (!typescriptOnly) {
         cpToCwd(configDir, `webpack.config.js`);
     }
-    cpToCwd(configDir, `tsconfig.json`);
+
+    let tsConfig = require(`${configDir}/tsconfig.json`);
+    tsConfig.compilerOptions.baseUrl = ".";
+
+    writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
+
+    //cpToCwd(configDir, `tsconfig.json`);
 }
 
 export function projectCommand(appName: string, version: string,
