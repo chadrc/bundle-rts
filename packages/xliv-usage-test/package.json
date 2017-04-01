@@ -7,7 +7,7 @@
   "scripts": {
     "build": "xliv build",
     "start": "xliv start --open",
-    "setup": "npm install"
+    "setup": "npm install ../xliv/ --save"
   },
   "author": "",
   "license": "ISC",
