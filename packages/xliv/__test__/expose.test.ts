@@ -112,7 +112,7 @@ module.exports = {
     expect(data).toBe(expected);
 });
 
-test('expose webpack config should match output', () => {
+test('expose tsconfig config should match output', () => {
     exposeCommand();
 
     let data = getFileData(tsConfigFilePath);

@@ -5,7 +5,7 @@ const path = require("path");
 let originalCwd = process.cwd();
 
 export function getFileData(path: string): string {
-    return fse.readFileSync(process.cwd() + path, "utf-8");
+    return fse.readFileSync(process.cwd() + path, "utf-8").replace("\r\n", "\n");
 }
 
 beforeEach(() => {

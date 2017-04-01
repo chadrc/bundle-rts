@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as path from "path";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
 
@@ -9,10 +10,10 @@ function cpToCwd(dirName: string, fileName: string): void {
 
 export function exposeCommand(typescriptOnly: boolean = false): void {
     let configDir = __dirname;
-    let parts = configDir.split("/");
+    let parts = configDir.split(path.sep);
     parts.pop();
     parts.push("config");
-    configDir = parts.join("/");
+    configDir = parts.join(path.sep);
     if (!typescriptOnly) {
         cpToCwd(configDir, `webpack.config.js`);
     }
