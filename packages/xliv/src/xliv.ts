@@ -49,7 +49,7 @@ if (args.isEmpty) {
     switch (command) {
         case "component":
             let componentPath = args.next();
-            componentCommand(componentPath, args.noView, args.noTypes);
+            componentCommand(componentPath, args.noView, args.noTypes, args.noStyles);
             break;
 
         case "module":
