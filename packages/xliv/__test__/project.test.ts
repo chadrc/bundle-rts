@@ -1,5 +1,5 @@
 import {projectCommand} from "../src/commands";
-import {fileExists, getFileData} from "./setup";
+import {getFileData} from "./setup";
 import * as fse from "fs-extra";
 
 const pkgJsonFilePath =     "/package.json";
@@ -15,29 +15,29 @@ const typesFilePath =       "/app/modules/MyProject/MyProject.types.ts";
 test("creates project with all default files", () => {
     projectCommand("MyProject", "1.0", false, false, false, false, false);
 
-    expect(fileExists(pkgJsonFilePath)).toBeTruthy();
-    expect(fileExists(indexHtmlFilePath)).toBeTruthy();
-    expect(fileExists(indexTsxFilePath)).toBeTruthy();
+    expect(getFileData(pkgJsonFilePath)).toBeTruthy();
+    expect(getFileData(indexHtmlFilePath)).toBeTruthy();
+    expect(getFileData(indexTsxFilePath)).toBeTruthy();
 
-    expect(fileExists(moduleFilePath)).toBeTruthy();
-    expect(fileExists(stylesFilePath)).toBeTruthy();
-    expect(fileExists(componentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeTruthy();
-    expect(fileExists(typesFilePath)).toBeTruthy();
+    expect(getFileData(moduleFilePath)).toBeTruthy();
+    expect(getFileData(stylesFilePath)).toBeTruthy();
+    expect(getFileData(componentFilePath)).toBeTruthy();
+    expect(getFileData(viewFilePath)).toBeTruthy();
+    expect(getFileData(typesFilePath)).toBeTruthy();
 });
 
 test("creates project without module", () => {
     projectCommand("MyProject", "1.0", true, false, false, false, false);
 
-    expect(fileExists(pkgJsonFilePath)).toBeTruthy();
-    expect(fileExists(indexHtmlFilePath)).toBeTruthy();
-    expect(fileExists(indexTsxFilePath)).toBeTruthy();
+    expect(getFileData(pkgJsonFilePath)).toBeTruthy();
+    expect(getFileData(indexHtmlFilePath)).toBeTruthy();
+    expect(getFileData(indexTsxFilePath)).toBeTruthy();
 
-    expect(fileExists(moduleFilePath)).toBeFalsy();
-    expect(fileExists(stylesFilePath)).toBeFalsy();
-    expect(fileExists(componentFilePath)).toBeFalsy();
-    expect(fileExists(viewFilePath)).toBeFalsy();
-    expect(fileExists(typesFilePath)).toBeFalsy();
+    expect(() => getFileData(moduleFilePath)).toThrow();
+    expect(() => getFileData(stylesFilePath)).toThrow();
+    expect(() => getFileData(componentFilePath)).toThrow();
+    expect(() => getFileData(viewFilePath)).toThrow();
+    expect(() => getFileData(typesFilePath)).toThrow();
 });
 
 test('created package.json file should match output', () => {

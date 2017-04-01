@@ -1,5 +1,5 @@
 import {moduleCommand} from "../src/commands";
-import {fileExists, getFileData} from "./setup";
+import {getFileData} from "./setup";
 
 const moduleFilePath =      "/app/modules/MyModule/MyModule.module.ts";
 const stylesFilePath =      "/app/modules/MyModule/MyModule.scss";
@@ -11,31 +11,31 @@ const flareFilePath =       "/app/flares/MyModule/MyModule.flare.ts";
 test("creates a module with styles and a component with it's component, view and types files", () => {
     moduleCommand("MyModule", false, false, false, false);
 
-    expect(fileExists(moduleFilePath)).toBeTruthy();
-    expect(fileExists(stylesFilePath)).toBeTruthy();
-    expect(fileExists(componentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeTruthy();
-    expect(fileExists(typesFilePath)).toBeTruthy();
+    expect(getFileData(moduleFilePath)).toBeTruthy();
+    expect(getFileData(stylesFilePath)).toBeTruthy();
+    expect(getFileData(componentFilePath)).toBeTruthy();
+    expect(getFileData(viewFilePath)).toBeTruthy();
+    expect(getFileData(typesFilePath)).toBeTruthy();
 });
 
 test("creates a module with styles and no component", () => {
     moduleCommand("MyModule", true, false, false, false);
 
-    expect(fileExists(moduleFilePath)).toBeTruthy();
-    expect(fileExists(stylesFilePath)).toBeTruthy();
-    expect(fileExists(componentFilePath)).toBeFalsy();
-    expect(fileExists(viewFilePath)).toBeFalsy();
-    expect(fileExists(typesFilePath)).toBeFalsy();
+    expect(getFileData(moduleFilePath)).toBeTruthy();
+    expect(getFileData(stylesFilePath)).toBeTruthy();
+    expect(() => getFileData(componentFilePath)).toThrow();
+    expect(() => getFileData(viewFilePath)).toThrow();
+    expect(() => getFileData(typesFilePath)).toThrow();
 });
 
 test("creates a module with no component and no styles", () => {
     moduleCommand("MyModule", true, true, false, false);
 
-    expect(fileExists(moduleFilePath)).toBeTruthy();
-    expect(fileExists(stylesFilePath)).toBeFalsy();
-    expect(fileExists(componentFilePath)).toBeFalsy();
-    expect(fileExists(viewFilePath)).toBeFalsy();
-    expect(fileExists(typesFilePath)).toBeFalsy();
+    expect(getFileData(moduleFilePath)).toBeTruthy();
+    expect(() => getFileData(stylesFilePath)).toThrow();
+    expect(() => getFileData(componentFilePath)).toThrow();
+    expect(() => getFileData(viewFilePath)).toThrow();
+    expect(() => getFileData(typesFilePath)).toThrow();
 });
 
 test('created module with styles and component should have expected output', () => {

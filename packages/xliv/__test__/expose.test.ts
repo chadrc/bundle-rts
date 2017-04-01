@@ -1,5 +1,5 @@
 import {exposeCommand} from "../src/commands";
-import {fileExists, getFileData} from "./setup";
+import {getFileData} from "./setup";
 
 const webpackConfigFilePath = "/webpack.config.js";
 const tsConfigFilePath = "/tsconfig.json";

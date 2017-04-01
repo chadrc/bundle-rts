@@ -128,7 +128,7 @@ export function createModule(moduleName: string, noComp: boolean, noStyles: bool
     }
     writeFile(moduleFilePath, moduleDetails);
     if (!noStyles) {
-        writeFile(`${basePath}/${moduleName}.scss`, "");
+        writeFile(`${basePath}/${moduleName}.scss`, `/* ${moduleName} Styles */`);
     }
 }
 

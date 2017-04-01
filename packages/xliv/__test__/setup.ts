@@ -4,10 +4,6 @@ const path = require("path");
 
 let originalCwd = process.cwd();
 
-export function fileExists(path: string): boolean {
-    return fse.existsSync(process.cwd() + path);
-}
-
 export function getFileData(path: string): string {
     return fse.readFileSync(process.cwd() + path, "utf-8");
 }

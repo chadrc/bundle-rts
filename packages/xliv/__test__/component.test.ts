@@ -1,5 +1,5 @@
 import {componentCommand} from "../src/commands";
-import {fileExists, getFileData} from "./setup";
+import {getFileData} from "./setup";
 
 const componentName = "MyComponent";
 const moduleName = "MyModule";
@@ -38,63 +38,63 @@ const moduleSubFlareFilePath =      `/app/flares/${moduleName}/${componentName}/
 test('creates a component with component, view and types files', () => {
     componentCommand(rootComponentId, false, false);
 
-    expect(fileExists(componentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeTruthy();
-    expect(fileExists(typesFilePath)).toBeTruthy();
-    expect(fileExists(flareFilePath)).toBeFalsy();
+    expect(getFileData(componentFilePath)).toBeTruthy();
+    expect(getFileData(viewFilePath)).toBeTruthy();
+    expect(getFileData(typesFilePath)).toBeTruthy();
+    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a component with component and view files', () => {
     componentCommand(rootComponentId, false, true);
 
-    expect(fileExists(componentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeTruthy();
-    expect(fileExists(typesFilePath)).toBeFalsy();
-    expect(fileExists(flareFilePath)).toBeFalsy();
+    expect(getFileData(componentFilePath)).toBeTruthy();
+    expect(getFileData(viewFilePath)).toBeTruthy();
+    expect(() => getFileData(typesFilePath)).toThrow();
+    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a component with component and types files', () => {
     componentCommand(rootComponentId, true, false);
 
-    expect(fileExists(noViewComponentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeFalsy();
-    expect(fileExists(typesFilePath)).toBeTruthy();
-    expect(fileExists(flareFilePath)).toBeFalsy();
+    expect(getFileData(noViewComponentFilePath)).toBeTruthy();
+    expect(() => getFileData(viewFilePath)).toThrow();
+    expect(getFileData(typesFilePath)).toBeTruthy();
+    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a component with component file only', () => {
     componentCommand(rootComponentId, true, true);
 
-    expect(fileExists(noViewComponentFilePath)).toBeTruthy();
-    expect(fileExists(viewFilePath)).toBeFalsy();
-    expect(fileExists(typesFilePath)).toBeFalsy();
-    expect(fileExists(flareFilePath)).toBeFalsy();
+    expect(getFileData(noViewComponentFilePath)).toBeTruthy();
+    expect(() => getFileData(viewFilePath)).toThrow();
+    expect(() => getFileData(typesFilePath)).toThrow();
+    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a module component', () => {
     componentCommand(moduleComponentId, false, false);
 
-    expect(fileExists(moduleComponentFilePath)).toBeTruthy();
-    expect(fileExists(moduleViewFilePath)).toBeTruthy();
-    expect(fileExists(moduleTypesFilePath)).toBeTruthy();
-    expect(fileExists(flareFilePath)).toBeTruthy();
+    expect(getFileData(moduleComponentFilePath)).toBeTruthy();
+    expect(getFileData(moduleViewFilePath)).toBeTruthy();
+    expect(getFileData(moduleTypesFilePath)).toBeTruthy();
+    expect(getFileData(flareFilePath)).toBeTruthy();
 });
 
 test('creates sub component', () => {
     componentCommand(subComponentId, false, false);
 
-    expect(fileExists(subComponentFilePath)).toBeTruthy();
-    expect(fileExists(subViewFilePath)).toBeTruthy();
-    expect(fileExists(subTypesFilePath)).toBeTruthy();
+    expect(getFileData(subComponentFilePath)).toBeTruthy();
+    expect(getFileData(subViewFilePath)).toBeTruthy();
+    expect(getFileData(subTypesFilePath)).toBeTruthy();
 });
 
 test('creates module sub component', () => {
     componentCommand(moduleSubComponentId, false, false);
 
-    expect(fileExists(moduleSubComponentFilePath)).toBeTruthy();
-    expect(fileExists(moduleSubViewFilePath)).toBeTruthy();
-    expect(fileExists(moduleSubTypesFilePath)).toBeTruthy();
-    expect(fileExists(moduleSubFlareFilePath)).toBeTruthy();
+    expect(getFileData(moduleSubComponentFilePath)).toBeTruthy();
+    expect(getFileData(moduleSubViewFilePath)).toBeTruthy();
+    expect(getFileData(moduleSubTypesFilePath)).toBeTruthy();
+    expect(getFileData(moduleSubFlareFilePath)).toBeTruthy();
 });
 
 test('created component with view and types should have expected output', () => {
