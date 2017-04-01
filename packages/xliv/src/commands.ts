@@ -146,6 +146,10 @@ export function createProject(appName: string, version: string, noComp: boolean)
             pkgJson.dependencies = {};
         }
 
+        if (!pkgJson.dependencies.xliv) {
+            pkgJson.dependencies.xliv = version;
+        }
+
         if (!pkgJson.scripts) {
             pkgJson.scripts = {};
         }
@@ -158,7 +162,6 @@ export function createProject(appName: string, version: string, noComp: boolean)
             pkgJson.scripts.start = "xliv start --open";
         }
 
-        pkgJson.dependencies.xliv = version;
         pkgJsonData = JSON.stringify(pkgJson, null, 2);
     }
 

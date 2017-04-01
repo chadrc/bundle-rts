@@ -1,10 +1,17 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+### Sandbox files
+packages/xliv-usage-test/*
+!packages/xliv-usage-test/package.json
+
 ### Generated build files
 index.d.ts
 bin/
 tmp/
 dist/
+bin/*
+tmp/*
+dist/*
 
 ### Editor files
 .idea/

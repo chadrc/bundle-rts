@@ -72,11 +72,6 @@ test('created package.json file should match output', () => {
 test('existing package.json should be updated with xliv library value', () => {
      fse.writeFileSync(process.cwd() + pkgJsonFilePath, `\
 {
-  "scripts" : {
-  },
-  "dependencies": {
-    "xliv": "1.0-test"
-  },
   "custom": "my custom value"
 }
 `);

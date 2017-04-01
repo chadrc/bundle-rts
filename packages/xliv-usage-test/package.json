@@ -1,0 +1,16 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "description": "Project for testing xliv commands.",
+  "main": "index.js",
+  "scripts": {
+    "build": "xliv build",
+    "start": "xliv start --open"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "xliv": "file:///home/chad/WebstormProjects/xliv/packages/xliv"
+  },
+  "devDependencies": {}
+}
