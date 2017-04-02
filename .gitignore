@@ -12,6 +12,7 @@ dist/
 bin/*
 tmp/*
 dist/*
+packages/xliv/utils/index.js
 
 ### Editor files
 .idea/
