@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {Arguments} from "./Arguments";
-import {componentCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
+import {componentCommand, envCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
 
 const fs = require("fs");
 const spawn = require("child_process").spawn;
@@ -89,6 +89,20 @@ if (args.isEmpty) {
 
         case "expose":
             exposeCommand(args.tsOnly);
+            break;
+
+        case "env":
+            let env = args.next();
+            let initialValues: {[name: string]: string} = {};
+            for (let val of args.argv) {
+                let pair = val.split("=");
+                if (pair.length !== 2) {
+                    console.log(`Ignoring invalid define pair value: ${val}`);
+                    continue;
+                }
+                initialValues[pair[0]] = pair[1];
+            }
+            envCommand(env, initialValues);
             break;
 
         default:
