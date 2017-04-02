@@ -20,3 +20,38 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
     }
     return baseEntries;
 }
+
+interface EnvConfig {
+    defines?: {[name: string]: any}
+}
+
+export function getDefines(baseDefines: {[name: string]: string}) {
+    let env = process.env.NODE_ENV;
+    let baseConfig: EnvConfig = {};
+    try {
+        baseConfig = require(process.cwd() + "/environments/base.js");
+    } catch (e) {}
+
+    let envConfig: EnvConfig = {};
+    try {
+        envConfig = require(process.cwd() + `/environments/${env}.js`);
+    } catch (e) {}
+
+    if (!envConfig.defines) {
+        envConfig.defines = {};
+    }
+
+    if (!baseConfig.defines) {
+        baseConfig.defines = {};
+    }
+
+    for (let key of Object.keys(envConfig.defines)) {
+        baseConfig[key] = envConfig[key];
+    }
+
+    for (let key of Object.keys(baseConfig.defines)) {
+        baseDefines[key] = JSON.stringify(baseConfig[key]);
+    }
+
+    return baseDefines;
+}
