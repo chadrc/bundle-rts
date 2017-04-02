@@ -26,13 +26,13 @@ export interface EnvConfig {
 }
 
 export function getDefines(baseDefines: {[name: string]: string}) {
-    let env = process.env.NODE_ENV;
-    let baseConfig: EnvConfig = {};
+    let env: string = process.env.NODE_ENV;
+    let baseConfig: {[name: string]: EnvConfig} = {};
     try {
         baseConfig = require(process.cwd() + "/environments/base.js");
     } catch (e) {}
 
-    let envConfig: EnvConfig = {};
+    let envConfig: {[name: string]: EnvConfig} = {};
     try {
         envConfig = require(process.cwd() + `/environments/${env}.js`);
     } catch (e) {}
