@@ -87,9 +87,9 @@ module.exports = {
             name: "vendor",
             filename: "js/vendor.bundle.js"
         }),
-        new webpack.DefinePlugin({
+        new webpack.DefinePlugin(xliv.getDefines({
             BUILD_ENV: JSON.stringify(process.env.NODE_ENV)
-        })
+        }))
     ],
 
     devServer: {

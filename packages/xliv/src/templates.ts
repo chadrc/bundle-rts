@@ -182,6 +182,24 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "devDependencies": {
   
   }
-}  
+}
+`;
+}
+
+export function makeEnvConfigFile(): string {
+    return `\
+module.exports = {
+    defines: {
+        
+    }
+};  
+`;
+}
+
+export function makeEnvTypingsFile(): string {
+    return `\
+/* Generated File for Typescript compilation */
+
+declare const BUILD_ENV: string;
 `;
 }

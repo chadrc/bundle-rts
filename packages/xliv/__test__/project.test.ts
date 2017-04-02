@@ -64,7 +64,7 @@ test('created package.json file should match output', () => {
   "devDependencies": {
   
   }
-}  
+}
 `;
     expect(data).toBe(expectedComponentText);
 });

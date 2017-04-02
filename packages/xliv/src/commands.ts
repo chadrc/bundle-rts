@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
+import {makeEnvConfigFile, makeEnvTypingsFile} from "./templates";
 
 function cpToCwd(dirName: string, fileName: string): void {
     let file = fs.readFileSync(`${dirName}/${fileName}`, "utf-8");
@@ -30,6 +31,18 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
 
     //cpToCwd(configDir, `tsconfig.json`);
+}
+
+export function envCommand(): void {
+    let localDir = "/environments/";
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    try {
+        fs.readFileSync(`${basePath}base.js`);
+    } catch (e) {
+        writeFile(`${basePath}base.js`, makeEnvConfigFile());
+    }
+    writeFile(`${basePath}typings.d.ts`, makeEnvTypingsFile());
 }
 
 export function projectCommand(appName: string, version: string,
