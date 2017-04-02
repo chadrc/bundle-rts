@@ -91,32 +91,6 @@ export class ${componentName} extends React.Component<${typesBase}Props, ${types
 `;
 }
 
-export function makeModuleFile(moduleName: string, noComp: boolean, noStyles: boolean): string {
-    let styleImport = noStyles ? "" : `\n\nimport "./${moduleName}.scss";`;
-    let compImport = noComp ? "" : `\nimport {${moduleName}} from "./${moduleName}.component";`;
-    let compRegister = noComp ? "" : `\n        this._components["${moduleName}"] = ${moduleName};`;
-    return `\
-import * as ReactFlares from "react-flares"${compImport}${styleImport}
-
-export class ${moduleName}Module implements ReactFlares.Module {
-    private _components: {[name:string]: any};
-    constructor() {
-        this._components = {};${compRegister}
-    }
-
-    get components(): {[name:string]: any} {
-        return this._components;
-    }
-
-    get name(): string {
-        return "${moduleName}";
-    }
-}
-
-ReactFlares.modules.${moduleName} = new ${moduleName}Module();
-`;
-}
-
 export function makeIndexTSXFile(appName: string, noComp: boolean): string {
     let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "flares/${appName}/${appName}.flare";`;
     let eleRender = noComp ? `\
@@ -212,7 +186,6 @@ export function makeEnvTypingsFile(): string {
     let files = glob.sync("./environments/*.js");
     for (let file of files) {
         file = file.replace(/^\./, process.cwd());
-        console.log(`file: ${file}`);
         let config: EnvConfig = null;
         try {
             config = require(file);
