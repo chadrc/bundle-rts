@@ -19,7 +19,7 @@ test("create env file for development", () => {
     expect(getFileData(typingsFile)).toBeTruthy();
 });
 
-test('created package.json file should match output', () => {
+test('created env config should match', () => {
     envCommand();
 
     let data = getFileData(baseEnvFile);
@@ -35,7 +35,7 @@ module.exports = {
     expect(data).toBe(expectedComponentText);
 });
 
-test('created package.json file should match output', () => {
+test('created env typings should match', () => {
     envCommand();
 
     let data = getFileData(typingsFile);
