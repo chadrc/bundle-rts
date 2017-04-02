@@ -53,7 +53,7 @@ test('created package.json file should match output', () => {
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "xliv build",
+    "build": "xliv build --optimize-minimize",
     "start": "xliv start --open"
   },
   "author": "",

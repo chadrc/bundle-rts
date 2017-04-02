@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "echo stub",
-    "safe-build": "xliv build",
+    "safe-build": "xliv build --optimize-minimize",
     "start": "xliv start --open",
     "setup": "npm install ../xliv/ --save"
   },
