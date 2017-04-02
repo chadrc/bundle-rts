@@ -20,7 +20,13 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
 
     let tsConfig = require(`${configDir}/tsconfig.json`);
     tsConfig.compilerOptions.baseUrl = ".";
+    let includes = tsConfig.include;
+    let newIncludes = [];
+    for (let item of includes) {
+        newIncludes.push(item.replace("../../../", "./"));
+    }
 
+    tsConfig.include = newIncludes;
     writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
 
     //cpToCwd(configDir, `tsconfig.json`);
