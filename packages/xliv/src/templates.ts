@@ -1,5 +1,4 @@
 import * as glob from "glob";
-import {EnvConfig} from "../utils/index";
 
 export function makeTypesFile(componentName: string): string {
     return `\

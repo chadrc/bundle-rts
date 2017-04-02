@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc&&npm run build-utils",
-    "build-utils": "tsc -p utils",
+    "build": "tsc -p src&&tsc -p utils",
     "watch": "tsc --watch",
     "watch-utils": "tsc -p utils --watch",
     "clean": "rm -R tmp"

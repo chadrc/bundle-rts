@@ -3,8 +3,9 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "files": [
-    "index.ts"
+  "include": [
+    "index.ts",
+    "../types.d.ts"
   ],
   "exclude": [
     "node_modules"

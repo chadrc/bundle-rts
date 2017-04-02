@@ -3,11 +3,12 @@
     "module": "commonjs",
     "target": "es6",
     "jsx": "react",
-    "outDir": "bin",
+    "outDir": "../bin",
     "noImplicitAny": true
   },
   "include": [
-    "./src/xliv.ts"
+    "xliv.ts",
+    "../types.d.ts"
   ],
   "exclude": [
     "tmp",

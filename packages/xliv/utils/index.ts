@@ -21,10 +21,6 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
     return baseEntries;
 }
 
-export interface EnvConfig {
-    defines?: {[name: string]: any}
-}
-
 export function getDefines(baseDefines: {[name: string]: string}) {
     let env: string = process.env.NODE_ENV;
     let baseConfig: {[name: string]: EnvConfig} = {};
