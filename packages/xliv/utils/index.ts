@@ -42,11 +42,11 @@ export function getDefines(baseDefines: {[name: string]: string}) {
     }
 
     for (let key of Object.keys(envConfig.defines)) {
-        baseConfig[key] = envConfig[key];
+        baseConfig.defines[key] = envConfig.defines[key];
     }
 
     for (let key of Object.keys(baseConfig.defines)) {
-        baseDefines[key] = JSON.stringify(baseConfig[key]);
+        baseDefines[key] = JSON.stringify(baseConfig.defines[key]);
     }
 
     return baseDefines;
