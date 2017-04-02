@@ -23,12 +23,12 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
 
 export function getDefines(baseDefines: {[name: string]: string}) {
     let env: string = process.env.NODE_ENV;
-    let baseConfig: {[name: string]: EnvConfig} = {};
+    let baseConfig: EnvConfig = {};
     try {
         baseConfig = require(process.cwd() + "/environments/base.js");
     } catch (e) {}
 
-    let envConfig: {[name: string]: EnvConfig} = {};
+    let envConfig: EnvConfig = {};
     try {
         envConfig = require(process.cwd() + `/environments/${env}.js`);
     } catch (e) {}
