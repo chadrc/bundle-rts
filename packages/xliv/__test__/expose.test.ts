@@ -86,6 +86,9 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             filename: "js/vendor.bundle.js"
+        }),
+        new webpack.DefinePlugin({
+            BUILD_ENV: JSON.stringify(process.env.NODE_ENV)
         })
     ],
 
@@ -120,7 +123,8 @@ test('expose tsconfig config should match output', () => {
     }
   },
   "include": [
-    "./app/**/*"
+    "./app/**/*",
+    "./environments/typings.d.ts"
   ],
   "exclude": [
     "node_modules"

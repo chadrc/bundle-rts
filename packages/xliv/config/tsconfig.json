@@ -14,7 +14,8 @@
     }
   },
   "include": [
-    "./app/**/*"
+    "./app/**/*",
+    "./environments/typings.d.ts"
   ],
   "exclude": [
     "node_modules"
