@@ -9,6 +9,9 @@ export class Arguments {
     private _noTypes: boolean;
     private _tsOnly: boolean;
     private _makeFlare: boolean;
+    private _production: boolean;
+    private _development: boolean;
+    private _env: string;
 
     argv: string[];
 
@@ -20,7 +23,25 @@ export class Arguments {
         this._noTypes = this.hasArg("--no-types");
         this._tsOnly = this.hasArg("--ts-only");
         this._makeFlare = this.hasArg("--mk-flare");
+        this._production = this.hasArg("--prod");
+        this._development = this.hasArg("--dev");
+
+        let toDelete: number[] = [];
+        for (let arg of argv) {
+            if (arg.startsWith("--env")) {
+                let parts = arg.split("=");
+                if (parts.length === 2) {
+                    this._env = parts[1];
+                }
+                toDelete.push(argv.indexOf(arg));
+            }
+        }
+
+        for (let index of toDelete) {
+            argv.splice(index, 1);
+        }
     }
+
     get noStyles(): boolean {
         return this._noStyles;
     }
@@ -45,6 +66,18 @@ export class Arguments {
         return this._makeFlare;
     }
 
+    get production(): boolean {
+        return this._production;
+    }
+
+    get development(): boolean {
+        return this._development;
+    }
+
+    get env(): string {
+        return this._env;
+    }
+
     get isEmpty(): boolean {
         return this.argv.length === 0;
     }
@@ -60,6 +93,11 @@ export class Arguments {
     }
 
     private hasArg(arg: string): boolean {
-        return this.argv.indexOf(arg.toLocaleLowerCase()) !== -1;
+        let index = this.argv.indexOf(arg.toLocaleLowerCase());
+        let has = index !== -1;
+        if (has) {
+            this.argv.splice(index, 1);
+        }
+        return has;
     }
 }

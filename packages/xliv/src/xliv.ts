@@ -68,13 +68,21 @@ if (args.isEmpty) {
             break;
 
         case "build":
-            execute("webpack", "production", makeWebpackArgs(args.argv), (code) => {
+            let buildEnv = args.development ? "development" : "production";
+            if (args.env) {
+                buildEnv = args.env;
+            }
+            execute("webpack", buildEnv, makeWebpackArgs(args.argv), (code) => {
                 console.log(`build exited with code ${code}`);
             });
             break;
 
         case "start":
-            execute("webpack-dev-server", "development", makeWebpackArgs(args.argv), (code) => {
+            let startEnv = args.production ? "production" : "development";
+            if (args.env) {
+                startEnv = args.env;
+            }
+            execute("webpack-dev-server", startEnv, makeWebpackArgs(args.argv), (code) => {
                 console.log(`start exited with code ${code}`);
             });
             break;
