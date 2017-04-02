@@ -186,11 +186,18 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
 `;
 }
 
-export function makeEnvConfigFile(): string {
+export function makeEnvConfigFile(initialValues: {[name: string]: string}): string {
+
+    let initialText = "";
+    for (let key of Object.keys(initialValues)) {
+        initialText += `        ${key}: "${initialValues[key]}"\n`
+    }
+    initialText = initialText.trim();
+
     return `\
 module.exports = {
     defines: {
-        
+        ${initialText}
     }
 };  
 `;

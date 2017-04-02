@@ -48,3 +48,21 @@ declare const BUILD_ENV: string;
 `;
     expect(data).toBe(expectedComponentText);
 });
+
+test('create env config with initial values should match output', () => {
+    envCommand("development", {
+        VERSION: "1.0.0",
+    });
+
+    let data = getFileData(developmentEnvFile);
+
+    // Lower case project name because npm requires it
+    let expectedComponentText = `\
+module.exports = {
+    defines: {
+        VERSION: "1.0.0"
+    }
+};  
+`;
+    expect(data).toBe(expectedComponentText);
+});

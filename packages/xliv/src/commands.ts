@@ -33,14 +33,17 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     //cpToCwd(configDir, `tsconfig.json`);
 }
 
-export function envCommand(env: string = "base"): void {
+export function envCommand(env: string = "base", initialValues: {[name: string]: string} = null): void {
     let localDir = "/environments/";
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
+    if (initialValues === null) {
+        initialValues = {};
+    }
     try {
         fs.readFileSync(`${basePath}${env}.js`);
     } catch (e) {
-        writeFile(`${basePath}${env}.js`, makeEnvConfigFile());
+        writeFile(`${basePath}${env}.js`, makeEnvConfigFile(initialValues));
     }
     writeFile(`${basePath}typings.d.ts`, makeEnvTypingsFile());
 }
