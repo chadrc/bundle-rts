@@ -1,3 +1,6 @@
+import * as glob from "glob";
+import {EnvConfig} from "../utils/index";
+
 export function makeTypesFile(componentName: string): string {
     return `\
 import {Data, Props, State} from "react-flares";
@@ -204,9 +207,34 @@ module.exports = {
 }
 
 export function makeEnvTypingsFile(): string {
+    let constMap: {[name: string]: boolean} = {};
+
+    let files = glob.sync("./environments/*.js");
+    for (let file of files) {
+        file = file.replace(/^\./, process.cwd());
+        console.log(`file: ${file}`);
+        let config: EnvConfig = null;
+        try {
+            config = require(file);
+        } catch (e) {}
+
+        if (config && config.defines) {
+            for (let key of Object.keys(config.defines)) {
+                constMap[key] = true;
+            }
+        }
+    }
+
+    let constText = "";
+    for (let key of Object.keys(constMap)) {
+        constText += `declare const ${key}: string;\n`;
+    }
+    constText = constText.trim();
+
     return `\
 /* Generated File for Typescript compilation */
 
 declare const BUILD_ENV: string;
+${constText}
 `;
 }

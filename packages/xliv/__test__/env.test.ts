@@ -1,4 +1,4 @@
-import {envCommand} from "../src/commands";
+import {envCommand, exposeCommand} from "../src/commands";
 import {getFileData} from "./setup";
 
 let baseEnvFile = "/environments/base.js";
@@ -45,6 +45,7 @@ test('created env typings should match', () => {
 /* Generated File for Typescript compilation */
 
 declare const BUILD_ENV: string;
+
 `;
     expect(data).toBe(expectedComponentText);
 });
@@ -63,6 +64,26 @@ module.exports = {
         VERSION: "1.0.0"
     }
 };  
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('create env typings with initial values should match output', () => {
+    // Expose tsconfig.json because jest is looking for it when using require()
+    exposeCommand(true);
+
+    envCommand("development", {
+        VERSION: "1.0.0",
+    });
+
+    let data = getFileData(typingsFile);
+
+    // Lower case project name because npm requires it
+    let expectedComponentText = `\
+/* Generated File for Typescript compilation */
+
+declare const BUILD_ENV: string;
+declare const VERSION: string;
 `;
     expect(data).toBe(expectedComponentText);
 });

@@ -21,7 +21,7 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
     return baseEntries;
 }
 
-interface EnvConfig {
+export interface EnvConfig {
     defines?: {[name: string]: any}
 }
 
