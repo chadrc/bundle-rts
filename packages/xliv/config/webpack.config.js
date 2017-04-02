@@ -5,6 +5,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 console.log("Building with webpack.config.js from " + __filename);
+console.log("Environment: " + process.env.NODE_ENV);
 
 module.exports = {
     entry: xliv.addModuleEntries({

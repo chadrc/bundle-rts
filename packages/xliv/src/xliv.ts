@@ -21,8 +21,12 @@ function makeWebpackArgs(existingArgs: string[]): string[] {
     return existingArgs;
 }
 
-function execute(cmd: string, options: string[], callback: (code: number) => void) {
-    const webpack = spawn(`./node_modules/.bin/${cmd}`, options);
+function execute(cmd: string, env: string, options: string[], callback: (code: number) => void) {
+    if (!options) {
+        options = []
+    }
+    options.unshift(`NODE_ENV=${env}`, `./node_modules/.bin/${cmd}`);
+    const webpack = spawn(`./node_modules/.bin/cross-env`, options);
     webpack.stdout.on("data", (data: BufferSource) => {
         console.log(data.toString());
     });
@@ -64,13 +68,13 @@ if (args.isEmpty) {
             break;
 
         case "build":
-            execute("webpack", makeWebpackArgs(args.argv), (code) => {
+            execute("webpack", "production", makeWebpackArgs(args.argv), (code) => {
                 console.log(`build exited with code ${code}`);
             });
             break;
 
         case "start":
-            execute("webpack-dev-server", makeWebpackArgs(args.argv), (code) => {
+            execute("webpack-dev-server", "development", makeWebpackArgs(args.argv), (code) => {
                 console.log(`start exited with code ${code}`);
             });
             break;
