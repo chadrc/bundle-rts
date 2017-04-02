@@ -45,6 +45,14 @@ export function envCommand(env: string = "base", initialValues: {[name: string]:
     } catch (e) {
         writeFile(`${basePath}${env}.js`, makeEnvConfigFile(initialValues));
     }
+
+    envGenTypings();
+}
+
+export function envGenTypings(): void {
+    let localDir = "/environments/";
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
     writeFile(`${basePath}typings.d.ts`, makeEnvTypingsFile());
 }
 

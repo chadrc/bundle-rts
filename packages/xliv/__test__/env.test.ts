@@ -1,5 +1,6 @@
-import {envCommand, exposeCommand} from "../src/commands";
+import {envCommand, envGenTypings, exposeCommand} from "../src/commands";
 import {getFileData} from "./setup";
+import * as fs from "fs";
 
 let baseEnvFile = "/environments/base.js";
 let developmentEnvFile = "/environments/development.js";
@@ -86,4 +87,33 @@ declare const BUILD_ENV: string;
 declare const VERSION: string;
 `;
     expect(data).toBe(expectedComponentText);
+});
+
+test('create env config without command and typings should have defines for it', () => {
+    // Expose tsconfig.json because jest is looking for it when using require()
+    exposeCommand(true);
+
+    envCommand("base", {
+        VERSION: "1.0.0",
+    });
+
+    fs.writeFileSync(process.cwd() + developmentEnvFile, `
+module.exports = {
+    defines: {
+        API: "my api"
+    }
+};  
+`);
+
+    envGenTypings();
+
+    let data = getFileData(typingsFile);
+
+    let hasBuildLine = data.indexOf("declare const BUILD_ENV: string") !== -1;
+    let hasVersionLine = data.indexOf("declare const VERSION: string") !== -1;
+    let hasApiLine = data.indexOf("declare const API: string") !== -1;
+
+    expect(hasBuildLine).toBeTruthy();
+    expect(hasVersionLine).toBeTruthy();
+    expect(hasApiLine).toBeTruthy();
 });
