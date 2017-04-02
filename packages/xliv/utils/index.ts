@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as glob from "glob";
+import {ensureDir, writeFile} from "../src/Utils";
 
 export function getTsConfig(baseDir: string) {
     let tsConfigPath = baseDir + "/tsconfig.json";
@@ -50,4 +51,41 @@ export function getDefines(baseDefines: {[name: string]: string}) {
     }
 
     return baseDefines;
+}
+
+export function genDefineTypes() {
+    let constMap: {[name: string]: boolean} = {};
+
+    let files = glob.sync("./environments/*.js");
+    for (let file of files) {
+        file = file.replace(/^\./, process.cwd());
+        let config: EnvConfig = null;
+        try {
+            config = require(file);
+        } catch (e) {}
+
+        if (config && config.defines) {
+            for (let key of Object.keys(config.defines)) {
+                constMap[key] = true;
+            }
+        }
+    }
+
+    let constText = "";
+    for (let key of Object.keys(constMap)) {
+        constText += `declare const ${key}: string;\n`;
+    }
+    constText = constText.trim();
+
+    let text = `\
+/* Generated File for Typescript compilation */
+
+declare const BUILD_ENV: string;
+${constText}
+`;
+
+    let localDir = "/environments/";
+    ensureDir(localDir);
+    let basePath = process.cwd() + localDir;
+    writeFile(`${basePath}typings.d.ts`, text);
 }

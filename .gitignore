@@ -6,13 +6,13 @@ packages/xliv-usage-test/*
 
 ### Generated build files
 index.d.ts
-bin/
 tmp/
 dist/
 bin/*
 tmp/*
 dist/*
-packages/xliv/utils/index.js
+packages/xliv/src/*.js
+packages/xliv/utils/*.js
 
 ### Editor files
 .idea/
