@@ -31,6 +31,8 @@ const path = require("path");
 console.log("Building with webpack.config.js from " + __filename);
 console.log("Environment: " + process.env.NODE_ENV);
 
+let isProduction = process.env.NODE_ENV === "production";
+
 module.exports = {
     entry: xliv.addModuleEntries({
         app: "./app/index.tsx",
@@ -42,7 +44,7 @@ module.exports = {
         path: process.cwd() + "/dist"
     },
 
-    devtool: "source-map",
+    devtool: isProduction ? "source-map" : "eval-source-map",
 
     resolve: {
         alias: {
@@ -89,7 +91,7 @@ module.exports = {
 
     devServer: {
         contentBase: path.join(process.cwd(), "dist"),
-        compress: true
+        compress: isProduction
     }
 };
 `;
