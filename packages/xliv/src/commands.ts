@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
-import {makeEnvConfigFile, makeEnvTypingsFile} from "./templates";
+import {makeEnvConfigFile} from "./templates";
 
 function cpToCwd(dirName: string, fileName: string): void {
     let file = fs.readFileSync(`${dirName}/${fileName}`, "utf-8");
@@ -54,6 +54,7 @@ export function projectCommand(appName: string, version: string,
     }
 
     createProject(appName, version, noMod);
+    envCommand("base", appName);
 
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");
