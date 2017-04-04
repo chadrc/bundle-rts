@@ -31,7 +31,7 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
 }
 
-export function envCommand(env: string = "base", appName: string, initialValues: {[name: string]: string} = null): void {
+export function envCommand(env: string, appName: string, initialValues: {[name: string]: string} = null): void {
     let localDir = "/app/env/";
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
