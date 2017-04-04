@@ -8,14 +8,13 @@
     "jsx": "react",
     "baseUrl": "../../../",
     "paths": {
-      "flares/*": [
-        "app/flares/*"
+      "*": [
+        "app/*"
       ]
     }
   },
   "include": [
-    "../../../app/**/*",
-    "../../../environments/typings.d.ts"
+    "../../../app/**/*"
   ],
   "exclude": [
     "node_modules"

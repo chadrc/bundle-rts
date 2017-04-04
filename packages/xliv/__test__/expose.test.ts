@@ -48,8 +48,12 @@ module.exports = {
 
     resolve: {
         alias: {
-            flares: path.resolve(process.cwd(), "app/flares/")
+            "env/base.env":  xliv.getEnvFile()
         },
+        modules: [
+            path.resolve(process.cwd(), "app/"),
+            "node_modules"
+        ],
         extensions: [".ts", ".tsx", ".js"]
     },
 
@@ -86,10 +90,7 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             filename: "js/vendor.bundle.js"
-        }),
-        new webpack.DefinePlugin(xliv.getDefines({
-            BUILD_ENV: JSON.stringify(process.env.NODE_ENV)
-        }))
+        })
     ],
 
     devServer: {
@@ -117,14 +118,13 @@ test('expose tsconfig config should match output', () => {
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "flares/*": [
-        "app/flares/*"
+      "*": [
+        "app/*"
       ]
     }
   },
   "include": [
-    "./app/**/*",
-    "./environments/typings.d.ts"
+    "./app/**/*"
   ],
   "exclude": [
     "node_modules"
