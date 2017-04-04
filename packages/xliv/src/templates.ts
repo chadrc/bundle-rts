@@ -1,4 +1,3 @@
-import * as glob from "glob";
 
 export function makeTypesFile(componentName: string): string {
     return `\
