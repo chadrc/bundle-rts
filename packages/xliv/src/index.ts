@@ -102,7 +102,7 @@ if (args.isEmpty) {
                 }
                 initialValues[pair[0]] = pair[1];
             }
-            envCommand(env, initialValues);
+            envCommand(env, "", initialValues);
             break;
 
         default:
