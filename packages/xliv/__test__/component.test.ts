@@ -269,7 +269,7 @@ export class MyComponent extends React.Component<MyComponentProps, MyComponentSt
 });
 
 test("created component without view and without types should have expected output", () => {
-    componentCommand(rootComponentId, true, true, false, false, "MyComponent");
+    componentCommand(rootComponentId, true, true, false, false, "{this.props.children}");
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -290,7 +290,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
     render() {
         return (
             <section>
-                <p>MyComponent</p>
+                {this.props.children}
             </section>
         );
     }
@@ -300,7 +300,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component without view, types, nor styles should have expected output", () => {
-    componentCommand(rootComponentId, true, true, true, false, "MyComponent");
+    componentCommand(rootComponentId, true, true, true, false, "{this.props.children}");
 
     let data = getFileData(noViewComponentFilePath);
 
@@ -319,7 +319,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
     render() {
         return (
             <section>
-                <p>MyComponent</p>
+                {this.props.children}
             </section>
         );
     }
@@ -329,7 +329,7 @@ export class MyComponent extends React.Component<Props, State> implements Data {
 });
 
 test("created component's view with types should have expected output", () => {
-    componentCommand(rootComponentId, false, false, false, true, "MyComponent");
+    componentCommand(rootComponentId, false, false, false, true, "{this.props.children}");
 
     let data = getFileData(viewFilePath);
 
@@ -342,7 +342,7 @@ export class MyComponentView implements View {
     make(component: MyComponentData): JSX.Element {
         return (
             <section>
-                <p>MyComponent</p>
+                {this.props.children}
             </section>
         );
     }
@@ -352,7 +352,7 @@ export class MyComponentView implements View {
 });
 
 test("created component's view without types should have expected output", () => {
-    componentCommand(rootComponentId, false, true, false, true, "MyComponent");
+    componentCommand(rootComponentId, false, true, false, true, "{this.props.children}");
 
     let data = getFileData(viewFilePath);
 
@@ -364,7 +364,7 @@ export class MyComponentView implements View {
     make(component: Data): JSX.Element {
         return (
             <section>
-                <p>MyComponent</p>
+                {this.props.children}
             </section>
         );
     }

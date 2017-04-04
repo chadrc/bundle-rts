@@ -124,12 +124,15 @@ test('created index.tsx file should match output', () => {
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import {MyProjectFlare} from "flares/MyProject/MyProject.flare";
+import * as ENV from "env/base.env";
 
-require("./index.html");
+require("index.html");
 
 window.addEventListener("load", () => {
     ReactDom.render(
-        <MyProjectFlare />
+        <MyProjectFlare>
+            {ENV.APP_NAME} - Ready
+        </MyProjectFlare>
         , document.getElementById("content")
     );
 });
@@ -145,13 +148,14 @@ test('created index.tsx file without initial module should match output', () => 
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
+import * as ENV from "env/base.env";
 
-require("./index.html");
+require("index.html");
 
 window.addEventListener("load", () => {
     ReactDom.render(
         <section>
-            <h1>MyProject - Ready</h1>
+            {ENV.APP_NAME} - Ready
         </section>
         , document.getElementById("content")
     );

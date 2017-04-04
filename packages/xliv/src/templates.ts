@@ -20,7 +20,7 @@ export function makeViewFile(componentName: string, noTypes: boolean, defaultTex
     let typesBase = noTypes ? "" : componentName;
     let dataName = noTypes ? `Data, ` : "";
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
-    let display = defaultText ? `\n                <p>${defaultText}</p>` : "";
+    let display = defaultText ? `\n                ${defaultText}` : "";
     return `\
 import * as React from "react";
 import {${dataName}View} from "react-flares";${dataImport}
@@ -64,7 +64,7 @@ export function makeComponentFile(componentName: string,
         :
         `"./${componentName}.types"`;
     let viewImport = noView ? "" : `\nimport {${componentName}View} from "./${componentName}.view";`;
-    let display = defaultText ? `\n                <p>${defaultText}</p>` : "";
+    let display = defaultText ? `\n                ${defaultText}` : "";
     let viewComponent = noView ? `(
             <section>${display}
             </section>
@@ -93,17 +93,20 @@ export function makeIndexTSXFile(appName: string, noComp: boolean): string {
     let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "flares/${appName}/${appName}.flare";`;
     let eleRender = noComp ? `\
         <section>
-            <h1>${appName} - Ready</h1>
+            {ENV.APP_NAME} - Ready
         </section>`
         :
         `\
-        <${appName}Flare />`;
+        <${appName}Flare>
+            {ENV.APP_NAME} - Ready
+        </${appName}Flare>`;
 
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";${flareImport}
+import * as ENV from "env/base.env";
 
-require("./index.html");
+require("index.html");
 
 window.addEventListener("load", () => {
     ReactDom.render(
