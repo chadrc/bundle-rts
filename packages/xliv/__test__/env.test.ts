@@ -1,58 +1,37 @@
-import {envCommand, envGenTypings, exposeCommand} from "../src/commands";
+import {envCommand} from "../src/commands";
 import {getFileData} from "./setup";
-import * as fs from "fs";
 
-let baseEnvFile = "/environments/base.js";
-let developmentEnvFile = "/environments/development.js";
-let typingsFile = "/environments/typings.d.ts";
+let baseEnvFile = "/app/env/base.env.ts";
+let developmentEnvFile = "/app/env/development.env.ts";
 
 test("env command with no args should create base.js and generate typings.d.ts", () => {
-    envCommand();
+    envCommand("base", "My App");
 
     expect(getFileData(baseEnvFile)).toBeTruthy();
-    expect(getFileData(typingsFile)).toBeTruthy();
 });
 
 test("create env file for development", () => {
-    envCommand("development");
+    envCommand("development", "My App");
 
     expect(getFileData(developmentEnvFile)).toBeTruthy();
-    expect(getFileData(typingsFile)).toBeTruthy();
 });
 
 test('created env config should match', () => {
-    envCommand();
+    envCommand("base", "My App");
 
     let data = getFileData(baseEnvFile);
 
     // Lower case project name because npm requires it
     let expectedComponentText = `\
-module.exports = {
-    defines: {
-        
-    }
-};  
-`;
-    expect(data).toBe(expectedComponentText);
-});
+export const APP_NAME: string = "My App";
 
-test('created env typings should match', () => {
-    envCommand();
-
-    let data = getFileData(typingsFile);
-
-    // Lower case project name because npm requires it
-    let expectedComponentText = `\
-/* Generated File for Typescript compilation */
-
-declare const BUILD_ENV: string;
-
+// export const MY_CONST: string = "My constant value";
 `;
     expect(data).toBe(expectedComponentText);
 });
 
 test('create env config with initial values should match output', () => {
-    envCommand("development", {
+    envCommand("development", "My App", {
         VERSION: "1.0.0",
     });
 
@@ -60,60 +39,9 @@ test('create env config with initial values should match output', () => {
 
     // Lower case project name because npm requires it
     let expectedComponentText = `\
-module.exports = {
-    defines: {
-        VERSION: "1.0.0"
-    }
-};  
+export * from "./base.env";
+
+export const VERSION: string = "1.0.0";
 `;
     expect(data).toBe(expectedComponentText);
-});
-
-test('create env typings with initial values should match output', () => {
-    // Expose tsconfig.json because jest is looking for it when using require()
-    exposeCommand(true);
-
-    envCommand("development", {
-        VERSION: "1.0.0",
-    });
-
-    let data = getFileData(typingsFile);
-
-    // Lower case project name because npm requires it
-    let expectedComponentText = `\
-/* Generated File for Typescript compilation */
-
-declare const BUILD_ENV: string;
-declare const VERSION: string;
-`;
-    expect(data).toBe(expectedComponentText);
-});
-
-test('create env config without command and typings should have defines for it', () => {
-    // Expose tsconfig.json because jest is looking for it when using require()
-    exposeCommand(true);
-
-    envCommand("base", {
-        VERSION: "1.0.0",
-    });
-
-    fs.writeFileSync(process.cwd() + developmentEnvFile, `
-module.exports = {
-    defines: {
-        API: "my api"
-    }
-};  
-`);
-
-    envGenTypings();
-
-    let data = getFileData(typingsFile);
-
-    let hasBuildLine = data.indexOf("declare const BUILD_ENV: string") !== -1;
-    let hasVersionLine = data.indexOf("declare const VERSION: string") !== -1;
-    let hasApiLine = data.indexOf("declare const API: string") !== -1;
-
-    expect(hasBuildLine).toBeTruthy();
-    expect(hasVersionLine).toBeTruthy();
-    expect(hasApiLine).toBeTruthy();
 });

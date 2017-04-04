@@ -29,31 +29,20 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
 
     tsConfig.include = newIncludes;
     writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
-
-    //cpToCwd(configDir, `tsconfig.json`);
 }
 
-export function envCommand(env: string = "base", initialValues: {[name: string]: string} = null): void {
-    let localDir = "/environments/";
+export function envCommand(env: string = "base", appName: string, initialValues: {[name: string]: string} = null): void {
+    let localDir = "/app/env/";
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
     if (initialValues === null) {
         initialValues = {};
     }
     try {
-        fs.readFileSync(`${basePath}${env}.js`);
+        fs.readFileSync(`${basePath}${env}.env.ts`);
     } catch (e) {
-        writeFile(`${basePath}${env}.js`, makeEnvConfigFile(initialValues));
+        writeFile(`${basePath}${env}.env.ts`, makeEnvConfigFile(env !== "base", appName, initialValues));
     }
-
-    envGenTypings();
-}
-
-export function envGenTypings(): void {
-    let localDir = "/environments/";
-    ensureDir(localDir);
-    let basePath = process.cwd() + localDir;
-    writeFile(`${basePath}typings.d.ts`, makeEnvTypingsFile());
 }
 
 export function projectCommand(appName: string, version: string,

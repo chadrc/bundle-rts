@@ -162,51 +162,20 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
 `;
 }
 
-export function makeEnvConfigFile(initialValues: {[name: string]: string}): string {
-
+export function makeEnvConfigFile(exportBase: boolean, appName: string, initialValues: {[name: string]: string}): string {
     let initialText = "";
     for (let key of Object.keys(initialValues)) {
-        initialText += `        ${key}: "${initialValues[key]}"\n`
+        initialText += `export const ${key}: string = "${initialValues[key]}";\n`
     }
     initialText = initialText.trim();
+    let baseImport = exportBase ? `export * from "./base.env";` : `export const APP_NAME: string = "${appName}";`;
+    if (initialText === "") {
+        initialText = `// export const MY_CONST: string = "My constant value";`;
+    }
 
     return `\
-module.exports = {
-    defines: {
-        ${initialText}
-    }
-};  
-`;
-}
+${baseImport}
 
-export function makeEnvTypingsFile(): string {
-    let constMap: {[name: string]: boolean} = {};
-
-    let files = glob.sync("./environments/*.js");
-    for (let file of files) {
-        file = file.replace(/^\./, process.cwd());
-        let config: EnvConfig = null;
-        try {
-            config = require(file);
-        } catch (e) {}
-
-        if (config && config.defines) {
-            for (let key of Object.keys(config.defines)) {
-                constMap[key] = true;
-            }
-        }
-    }
-
-    let constText = "";
-    for (let key of Object.keys(constMap)) {
-        constText += `declare const ${key}: string;\n`;
-    }
-    constText = constText.trim();
-
-    return `\
-/* Generated File for Typescript compilation */
-
-declare const BUILD_ENV: string;
-${constText}
+${initialText}
 `;
 }
