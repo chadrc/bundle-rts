@@ -24,8 +24,6 @@ test('created env config should match', () => {
     // Lower case project name because npm requires it
     let expectedComponentText = `\
 export const APP_NAME: string = "My App";
-
-// export const MY_CONST: string = "My constant value";
 `;
     expect(data).toBe(expectedComponentText);
 });

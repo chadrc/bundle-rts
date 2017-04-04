@@ -169,13 +169,15 @@ export function makeEnvConfigFile(exportBase: boolean, appName: string, initialV
     }
     initialText = initialText.trim();
     let baseImport = exportBase ? `export * from "./base.env";` : `export const APP_NAME: string = "${appName}";`;
-    if (initialText === "") {
+    if (initialText === "" && exportBase) {
         initialText = `// export const MY_CONST: string = "My constant value";`;
     }
 
-    return `\
-${baseImport}
+    if (initialText !== "") {
+        initialText = `\n\n${initialText}`;
+    }
 
-${initialText}
+    return `\
+${baseImport}${initialText}
 `;
 }
