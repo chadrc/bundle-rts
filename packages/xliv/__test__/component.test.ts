@@ -126,11 +126,11 @@ test('created component with view and types should have expected output', () => 
     let expectedComponentText = `\
 import * as React from "react";
 import {MyComponentData, MyComponentProps, MyComponentState} from "./MyComponent.types";
-import {MyComponentView} from "./MyComponent.view";
+import MyComponentView from "./MyComponent.view";
 
 import "./MyComponent.scss";
 
-export class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
+export default class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
 
     constructor(props: MyComponentProps) {
         super(props);
@@ -155,11 +155,11 @@ test('created component with view, types and flare should have expected output',
 import * as React from "react";
 import * as ReactFlares from "react-flares";
 import {MyComponentData, MyComponentProps, MyComponentState} from "./MyComponent.types";
-import {MyComponentView} from "./MyComponent.view";
+import MyComponentView from "./MyComponent.view";
 
 import "./MyComponent.scss";
 
-export class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
+export default class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
 
     constructor(props: MyComponentProps) {
         super(props);
@@ -185,9 +185,9 @@ test('created component flare should have expected output', () => {
 
     let expectedComponentText = `\
 import * as ReactFlares from 'react-flares';
-import {MyComponentProps} from "../../modules/MyModule/components/MyComponent/MyComponent.types";
+import {MyComponentProps} from "modules/MyModule/components/MyComponent/MyComponent.types";
 
-export class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyComponentProps> {
+export default class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyComponentProps> {
     get componentId(): string {return "MyModule:MyComponent";}
 }
 `;
@@ -203,7 +203,7 @@ test('created component flare without component types should have expected outpu
     let expectedComponentText = `\
 import * as ReactFlares from 'react-flares';
 
-export class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps> {
+export default class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps> {
     get componentId(): string {return "MyModule:MyComponent";}
 }
 `;
@@ -218,11 +218,11 @@ test('created component with view and without types should have expected output'
     let expectedComponentText = `\
 import * as React from "react";
 import {Data, Props, State} from "react-flares";
-import {MyComponentView} from "./MyComponent.view";
+import MyComponentView from "./MyComponent.view";
 
 import "./MyComponent.scss";
 
-export class MyComponent extends React.Component<Props, State> implements Data {
+export default class MyComponent extends React.Component<Props, State> implements Data {
 
     constructor(props: Props) {
         super(props);
@@ -249,7 +249,7 @@ import {MyComponentData, MyComponentProps, MyComponentState} from "./MyComponent
 
 import "./MyComponent.scss";
 
-export class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
+export default class MyComponent extends React.Component<MyComponentProps, MyComponentState> implements MyComponentData {
 
     constructor(props: MyComponentProps) {
         super(props);
@@ -279,7 +279,7 @@ import {Data, Props, State} from "react-flares";
 
 import "./MyComponent.scss";
 
-export class MyComponent extends React.Component<Props, State> implements Data {
+export default class MyComponent extends React.Component<Props, State> implements Data {
 
     constructor(props: Props) {
         super(props);
@@ -308,7 +308,7 @@ test("created component without view, types, nor styles should have expected out
 import * as React from "react";
 import {Data, Props, State} from "react-flares";
 
-export class MyComponent extends React.Component<Props, State> implements Data {
+export default class MyComponent extends React.Component<Props, State> implements Data {
 
     constructor(props: Props) {
         super(props);
@@ -338,7 +338,7 @@ import * as React from "react";
 import {View} from "react-flares";
 import {MyComponentData} from "./MyComponent.types";
 
-export class MyComponentView implements View {
+export default class MyComponentView implements View {
     make(component: MyComponentData): JSX.Element {
         return (
             <section>
@@ -360,7 +360,7 @@ test("created component's view without types should have expected output", () =>
 import * as React from "react";
 import {Data, View} from "react-flares";
 
-export class MyComponentView implements View {
+export default class MyComponentView implements View {
     make(component: Data): JSX.Element {
         return (
             <section>

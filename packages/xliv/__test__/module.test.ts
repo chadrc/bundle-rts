@@ -34,11 +34,11 @@ test('created module with styles and component should have expected output', () 
 import * as React from "react";
 import * as ReactFlares from "react-flares";
 import {MyModuleData, MyModuleProps, MyModuleState} from "./MyModule.types";
-import {MyModuleView} from "./MyModule.view";
+import MyModuleView from "./MyModule.view";
 
 import "./MyModule.scss";
 
-export class MyModule extends React.Component<MyModuleProps, MyModuleState> implements MyModuleData {
+export default class MyModule extends React.Component<MyModuleProps, MyModuleState> implements MyModuleData {
 
     constructor(props: MyModuleProps) {
         super(props);
@@ -63,9 +63,9 @@ test('created component flare for root module component should have expected out
 
     let expectedComponentText = `\
 import * as ReactFlares from 'react-flares';
-import {MyModuleProps} from "../../modules/MyModule/MyModule.types";
+import {MyModuleProps} from "modules/MyModule/MyModule.types";
 
-export class MyModuleFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyModuleProps> {
+export default class MyModuleFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyModuleProps> {
     get componentId(): string {return "MyModule:MyModule";}
 }
 `;
@@ -81,9 +81,9 @@ test('created module with component and no styles should have expected output', 
 import * as React from "react";
 import * as ReactFlares from "react-flares";
 import {MyModuleData, MyModuleProps, MyModuleState} from "./MyModule.types";
-import {MyModuleView} from "./MyModule.view";
+import MyModuleView from "./MyModule.view";
 
-export class MyModule extends React.Component<MyModuleProps, MyModuleState> implements MyModuleData {
+export default class MyModule extends React.Component<MyModuleProps, MyModuleState> implements MyModuleData {
 
     constructor(props: MyModuleProps) {
         super(props);

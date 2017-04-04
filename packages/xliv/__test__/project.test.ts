@@ -123,7 +123,7 @@ test('created index.tsx file should match output', () => {
     let expectedComponentText = `\
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {MyProjectFlare} from "flares/MyProject/MyProject.flare";
+import MyProjectFlare from "flares/MyProject/MyProject.flare";
 import * as ENV from "env/base.env";
 
 require("index.html");

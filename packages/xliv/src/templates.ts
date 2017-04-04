@@ -25,7 +25,7 @@ export function makeViewFile(componentName: string, noTypes: boolean, defaultTex
 import * as React from "react";
 import {${dataName}View} from "react-flares";${dataImport}
 
-export class ${componentName}View implements View {
+export default class ${componentName}View implements View {
     make(component: ${typesBase}Data): JSX.Element {
         return (
             <section>${display}
@@ -38,12 +38,12 @@ export class ${componentName}View implements View {
 
 export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean, rootModuleComp: boolean): string {
     let extraImport = rootModuleComp ? "" : `components/${componentName}/`;
-    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "../../modules/${moduleName}/${extraImport}${componentName}.types";`;
+    let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "modules/${moduleName}/${extraImport}${componentName}.types";`;
     let componentProps = noTypes ? "" : ` & ${componentName}Props`;
     return `\
 import * as ReactFlares from 'react-flares';${typesImport}
 
-export class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps${componentProps}> {
+export default class ${componentName}Flare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps${componentProps}> {
     get componentId(): string {return "${moduleName}:${componentName}";}
 }
 `;
@@ -63,7 +63,7 @@ export function makeComponentFile(componentName: string,
         `"react-flares"`
         :
         `"./${componentName}.types"`;
-    let viewImport = noView ? "" : `\nimport {${componentName}View} from "./${componentName}.view";`;
+    let viewImport = noView ? "" : `\nimport ${componentName}View from "./${componentName}.view";`;
     let display = defaultText ? `\n                ${defaultText}` : "";
     let viewComponent = noView ? `(
             <section>${display}
@@ -74,7 +74,7 @@ export function makeComponentFile(componentName: string,
 import * as React from "react";${flareImport}
 import {${typesBase}Data, ${typesBase}Props, ${typesBase}State} from ${typesImport};${viewImport}${styleImport}
 
-export class ${componentName} extends React.Component<${typesBase}Props, ${typesBase}State> implements ${typesBase}Data {
+export default class ${componentName} extends React.Component<${typesBase}Props, ${typesBase}State> implements ${typesBase}Data {
 
     constructor(props: ${typesBase}Props) {
         super(props);
@@ -90,7 +90,7 @@ export class ${componentName} extends React.Component<${typesBase}Props, ${types
 }
 
 export function makeIndexTSXFile(appName: string, noComp: boolean): string {
-    let flareImport = noComp ? "" : `\nimport {${appName}Flare} from "flares/${appName}/${appName}.flare";`;
+    let flareImport = noComp ? "" : `\nimport ${appName}Flare from "flares/${appName}/${appName}.flare";`;
     let eleRender = noComp ? `\
         <section>
             {ENV.APP_NAME} - Ready
