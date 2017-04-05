@@ -50,62 +50,66 @@ if (args.isEmpty) {
 } else {
     let command = args.next();
 
-    switch (command) {
-        case "component":
-            let componentPath = args.next();
-            componentCommand(componentPath, args.noView, args.noTypes, args.noStyles, args.makeFlare);
-            break;
+    try {
+        switch (command) {
+            case "component":
+                let componentPath = args.next();
+                componentCommand(componentPath, args.noView, args.noTypes, args.noStyles, args.makeFlare);
+                break;
 
-        case "module":
-            let moduleName = args.next();
-            moduleCommand(moduleName, args.noStyles, args.noTypes, args.noView);
-            break;
+            case "module":
+                let moduleName = args.next();
+                moduleCommand(moduleName, args.noStyles, args.noTypes, args.noView);
+                break;
 
-        case "project":
-            let appName = args.next();
-            projectCommand(appName, settings.version,
-                args.noModule, args.noStyles, args.noView, args.noTypes);
-            break;
+            case "project":
+                let appName = args.next();
+                projectCommand(appName, settings.version,
+                    args.noModule, args.noStyles, args.noView, args.noTypes);
+                break;
 
-        case "build":
-            let buildEnv = args.development ? "development" : "production";
-            if (args.env) {
-                buildEnv = args.env;
-            }
-            execute("webpack", buildEnv, makeWebpackArgs(args.argv), (code) => {
-                console.log(`build exited with code ${code}`);
-            });
-            break;
-
-        case "start":
-            let startEnv = args.production ? "production" : "development";
-            if (args.env) {
-                startEnv = args.env;
-            }
-            execute("webpack-dev-server", startEnv, makeWebpackArgs(args.argv), (code) => {
-                console.log(`start exited with code ${code}`);
-            });
-            break;
-
-        case "expose":
-            exposeCommand(args.tsOnly);
-            break;
-
-        case "env":
-            let env = args.next();
-            let initialValues: {[name: string]: string} = {};
-            for (let val of args.argv) {
-                let pair = val.split("=");
-                if (pair.length !== 2) {
-                    console.log(`Ignoring invalid define pair value: ${val}`);
-                    continue;
+            case "build":
+                let buildEnv = args.development ? "development" : "production";
+                if (args.env) {
+                    buildEnv = args.env;
                 }
-                initialValues[pair[0]] = pair[1];
-            }
-            envCommand(env, "", initialValues);
-            break;
+                execute("webpack", buildEnv, makeWebpackArgs(args.argv), (code) => {
+                    console.log(`build exited with code ${code}`);
+                });
+                break;
 
-        default:
-            console.error("No such command: " + command);
+            case "start":
+                let startEnv = args.production ? "production" : "development";
+                if (args.env) {
+                    startEnv = args.env;
+                }
+                execute("webpack-dev-server", startEnv, makeWebpackArgs(args.argv), (code) => {
+                    console.log(`start exited with code ${code}`);
+                });
+                break;
+
+            case "expose":
+                exposeCommand(args.tsOnly);
+                break;
+
+            case "env":
+                let env = args.next();
+                let initialValues: {[name: string]: string} = {};
+                for (let val of args.argv) {
+                    let pair = val.split("=");
+                    if (pair.length !== 2) {
+                        console.log(`Ignoring invalid define pair value: ${val}`);
+                        continue;
+                    }
+                    initialValues[pair[0]] = pair[1];
+                }
+                envCommand(env, "", initialValues);
+                break;
+
+            default:
+                console.error("No such command: " + command);
+        }
+    } catch (e) {
+        console.error(e);
     }
 }
