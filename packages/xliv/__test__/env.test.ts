@@ -16,6 +16,12 @@ test("create env file for development", () => {
     expect(getFileData(developmentEnvFile)).toBeTruthy();
 });
 
+test("duplicate env creation should fail", () => {
+    envCommand("development", "My App");
+
+    expect(() => envCommand("development", "My App")).toThrow();
+});
+
 test('created env config should match', () => {
     envCommand("base", "My App");
 

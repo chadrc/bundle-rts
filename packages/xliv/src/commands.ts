@@ -38,11 +38,12 @@ export function envCommand(env: string, appName: string, initialValues: {[name: 
     if (initialValues === null) {
         initialValues = {};
     }
-    try {
-        fs.readFileSync(`${basePath}${env}.env.ts`);
-    } catch (e) {
-        writeFile(`${basePath}${env}.env.ts`, makeEnvConfigFile(env !== "base", appName, initialValues));
+
+    let file = `${basePath}${env}.env.ts`;
+    if (fs.existsSync(file)) {
+        throw `Environment file for ${env} already exists.`;
     }
+    writeFile(`${basePath}${env}.env.ts`, makeEnvConfigFile(env !== "base", appName, initialValues));
 }
 
 export function projectCommand(appName: string, version: string,
