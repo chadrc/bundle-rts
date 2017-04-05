@@ -127,8 +127,7 @@ export function createComponent(componentName: string,
     let componentFileType = moduleRoot ? "module" : "component";
     let componentFilePath = `${basePath}.${componentFileType}.ts${noView ? "x" : ""}`;
     if (fs.existsSync(componentFilePath)) {
-        console.error("Component already exists.");
-        return;
+        throw "Component already exists.";
     }
     writeFile(componentFilePath, componentData);
 
@@ -155,6 +154,10 @@ export function createProject(appName: string, version: string, noMod: boolean):
     let localDir = `/app/`;
     ensureDir(localDir);
     let basePath = process.cwd() + localDir;
+
+    if (fs.existsSync(`${basePath}/index.tsx`)) {
+        throw "Project already exists in current directory.";
+    }
 
     let indexTsxData = Templates.makeIndexTSXFile(appName, noMod);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);

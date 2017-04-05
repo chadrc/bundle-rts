@@ -1,6 +1,6 @@
 import {projectCommand} from "../src/commands";
 import {getFileData} from "./setup";
-import * as fse from "fs-extra";
+import * as fs from "fs";
 
 const pkgJsonFilePath =     "/package.json";
 const indexHtmlFilePath =   "/app/index.html";
@@ -69,8 +69,13 @@ test('created package.json file should match output', () => {
     expect(data).toBe(expectedComponentText);
 });
 
+test("fail to create project if index.tsx already exists", () => {
+    projectCommand("My Project", "1.0", false, false, false, false);
+    expect( () => projectCommand("My Project", "1.0", false, false, false, false)).toThrow();
+});
+
 test('existing package.json should be updated with xliv library value', () => {
-     fse.writeFileSync(process.cwd() + pkgJsonFilePath, `\
+     fs.writeFileSync(process.cwd() + pkgJsonFilePath, `\
 {
   "custom": "my custom value"
 }

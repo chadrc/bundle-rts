@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 import {componentCommand} from "../src/commands";
 import {getFileData} from "./setup";
 
@@ -144,6 +146,11 @@ export default class MyComponent extends React.Component<MyComponentProps, MyCom
 }
 `;
     expect(data).toBe(expectedComponentText);
+});
+
+test('fail to create same component twice', () => {
+    componentCommand(rootComponentId, false, false, false);
+    expect(() => componentCommand(rootComponentId, false, false, false)).toThrow();
 });
 
 test('created component with view, types and flare should have expected output', () => {
