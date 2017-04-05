@@ -16,19 +16,24 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     parts.push("config");
     configDir = parts.join(path.sep);
     if (!typescriptOnly) {
-        cpToCwd(configDir, `webpack.config.js`);
+        if (!fs.existsSync(`${process.cwd()}/webpack.config.js`)) {
+            cpToCwd(configDir, `webpack.config.js`);
+        }
     }
 
-    let tsConfig = require(`${configDir}/tsconfig.json`);
-    tsConfig.compilerOptions.baseUrl = ".";
-    let includes = tsConfig.include;
-    let newIncludes = [];
-    for (let item of includes) {
-        newIncludes.push(item.replace("../../../", "./"));
-    }
+    let tsConfigFile = `${process.cwd()}/tsconfig.json`;
+    if (!fs.existsSync(tsConfigFile)) {
+        let tsConfig = require(`${configDir}/tsconfig.json`);
+        tsConfig.compilerOptions.baseUrl = ".";
+        let includes = tsConfig.include;
+        let newIncludes = [];
+        for (let item of includes) {
+            newIncludes.push(item.replace("../../../", "./"));
+        }
 
-    tsConfig.include = newIncludes;
-    writeFile(`${process.cwd()}/tsconfig.json`, JSON.stringify(tsConfig, null, 2));
+        tsConfig.include = newIncludes;
+        writeFile(tsConfigFile, JSON.stringify(tsConfig, null, 2));
+    }
 }
 
 export function envCommand(env: string, appName: string, initialValues: {[name: string]: string} = null): void {
