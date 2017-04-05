@@ -52,6 +52,14 @@ test('creates a component with component, view and types files', () => {
     expect(() => getFileData(flareFilePath)).toThrow();
 });
 
+test("component id without module and component parts should fail", () => {
+    expect(() => componentCommand("MyComponent", false, false, false)).toThrow();
+});
+
+test("component id with bad path should fail", () => {
+    expect(() => componentCommand("MyModule:/", false, false, false)).toThrow();
+});
+
 test('creates a component with component and view files', () => {
     componentCommand(rootComponentId, false, true, false);
 
