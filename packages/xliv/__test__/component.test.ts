@@ -1,4 +1,3 @@
-import * as fs from "fs";
 
 import {componentCommand} from "../src/commands";
 import {getFileData} from "./setup";
