@@ -5,15 +5,12 @@
   "description": "Project for testing xliv commands.",
   "main": "index.js",
   "scripts": {
-    "build": "echo stub",
-    "safe-build": "xliv build --optimize-minimize",
-    "start": "xliv start --open",
-    "setup": "npm install ../xliv/ --save"
+    "build": "echo stub"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xliv": "file:///home/chad/WebstormProjects/xliv/packages/xliv"
+    "xliv": "file:../xliv"
   },
   "devDependencies": {}
 }
