@@ -16,11 +16,10 @@ export interface ${componentName}Data extends Data {
 `;
 }
 
-export function makeViewFile(componentName: string, noTypes: boolean, defaultText: string): string {
+export function makeViewFile(componentName: string, noTypes: boolean): string {
     let typesBase = noTypes ? "" : componentName;
     let dataName = noTypes ? `Data, ` : "";
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
-    let display = defaultText ? `\n                ${defaultText}` : "";
     return `\
 import * as React from "react";
 import {${dataName}View} from "react-flares";${dataImport}
@@ -28,7 +27,8 @@ import {${dataName}View} from "react-flares";${dataImport}
 export default class ${componentName}View implements View {
     make(component: ${typesBase}Data): JSX.Element {
         return (
-            <section>${display}
+            <section>
+                {component.props.children}
             </section>
         );
     }
@@ -53,8 +53,7 @@ export function makeComponentFile(componentName: string,
                                   noTypes: boolean,
                                   noView: boolean,
                                   noStyles: boolean,
-                                  makeFlare: boolean,
-                                  defaultText: string): string {
+                                  makeFlare: boolean): string {
     let flareImport = makeFlare ? `\nimport * as ReactFlares from "react-flares";` : "";
     let flareRegister = makeFlare ? `\n\nReactFlares.registerComponent("${componentName}", ${componentName});` : "";
     let styleImport = noStyles ? "" : `\n\nimport "./${componentName}.scss";`;
@@ -64,9 +63,9 @@ export function makeComponentFile(componentName: string,
         :
         `"./${componentName}.types"`;
     let viewImport = noView ? "" : `\nimport ${componentName}View from "./${componentName}.view";`;
-    let display = defaultText ? `\n                ${defaultText}` : "";
     let viewComponent = noView ? `(
-            <section>${display}
+            <section>
+                {this.props.children}
             </section>
         )` : `new ${componentName}View().make(this)`;
 
