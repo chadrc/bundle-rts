@@ -105,7 +105,7 @@ import * as React from "react";
 import * as ReactDom from "react-dom";${flareImport}
 import * as ENV from "env/base.env";
 
-require("index.html");
+import "index.html";
 
 window.addEventListener("load", () => {
     ReactDom.render(
