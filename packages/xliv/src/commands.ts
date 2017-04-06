@@ -180,18 +180,6 @@ export function createProject(appName: string, version: string, noMod: boolean):
             pkgJson.dependencies.xliv = version;
         }
 
-        if (!pkgJson.scripts) {
-            pkgJson.scripts = {};
-        }
-
-        if (!pkgJson.scripts.build) {
-            pkgJson.scripts.build = "xliv build";
-        }
-
-        if (!pkgJson.scripts.start) {
-            pkgJson.scripts.start = "xliv start --open";
-        }
-
         pkgJsonData = JSON.stringify(pkgJson, null, 2);
     }
 

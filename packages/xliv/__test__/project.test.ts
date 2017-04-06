@@ -53,8 +53,6 @@ test('created package.json file should match output', () => {
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "xliv build --optimize-minimize",
-    "start": "xliv start --open"
   },
   "author": "",
   "license": "ISC",
@@ -87,8 +85,6 @@ test('existing package.json should be updated with xliv library value', () => {
     let pkgJson = JSON.parse(data);
 
     expect(pkgJson.dependencies.xliv).toBe("1.0");
-    expect(pkgJson.scripts.build).toBe("xliv build");
-    expect(pkgJson.scripts.start).toBe("xliv start --open");
     expect(pkgJson.custom).toBe("my custom value");
 });
 

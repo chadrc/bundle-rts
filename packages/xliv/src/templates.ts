@@ -149,8 +149,6 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "xliv build --optimize-minimize",
-    "start": "xliv start --open"
   },
   "author": "",
   "license": "ISC",
