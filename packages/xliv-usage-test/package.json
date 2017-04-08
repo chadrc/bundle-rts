@@ -4,13 +4,12 @@
   "version": "1.0.0",
   "description": "Project for testing xliv commands.",
   "main": "index.js",
-  "scripts": {
-    "build": "echo stub"
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xliv": "file:../xliv"
+    "xliv": "file:../xliv",
+    "env-file-resolver-plugin": "file:../env-file-resolver-plugin"
   },
   "devDependencies": {}
 }
