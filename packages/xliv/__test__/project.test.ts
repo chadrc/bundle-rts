@@ -134,7 +134,7 @@ import MyProject from "modules/MyProject/MyProject.module";
 
 import "index.html";
 
-const APP_NAME: string = MyProject;
+const APP_NAME: string = "MyProject";
 
 const render = (Component: any) => {
     ReactDom.render(
@@ -173,7 +173,7 @@ import * as ReactDom from "react-dom";
 
 import "index.html";
 
-const APP_NAME: string = MyProject;
+const APP_NAME: string = "MyProject";
 
 const render = (Component: any) => {
     ReactDom.render(
@@ -212,7 +212,7 @@ import MyProject from "modules/MyProject/MyProject.module";
 
 import "index.html";
 
-const APP_NAME: string = MyProject;
+const APP_NAME: string = "MyProject";
 
 ReactDom.render(
     <MyProject>
@@ -235,7 +235,7 @@ import * as ReactDom from "react-dom";
 
 import "index.html";
 
-const APP_NAME: string = MyProject;
+const APP_NAME: string = "MyProject";
 
 ReactDom.render(
     <section>

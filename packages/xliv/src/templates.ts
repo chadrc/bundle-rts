@@ -113,7 +113,7 @@ import * as ReactDom from "react-dom";${flareImport}
 
 import "index.html";
 
-const APP_NAME: string = ${appName};
+const APP_NAME: string = "${appName}";
 
 const render = (Component: any) => {
     ReactDom.render(
@@ -152,7 +152,7 @@ import * as ReactDom from "react-dom";${flareImport}
 
 import "index.html";
 
-const APP_NAME: string = ${appName};
+const APP_NAME: string = "${appName}";
 
 ReactDom.render(
 ${eleRender}
