@@ -12,7 +12,7 @@ bin/*
 tmp/*
 dist/*
 packages/xliv/src/*.js
-packages/xliv/utils/*.js
+packages/xliv/utils/index.js
 
 ### Editor files
 .idea/
