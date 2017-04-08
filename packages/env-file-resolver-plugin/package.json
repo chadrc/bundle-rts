@@ -1,5 +1,5 @@
 {
-  "name": "env-file-resolver",
+  "name": "env-file-resolver-plugin",
   "version": "0.1.0",
   "description": "Resolver plugin for Webpack that will replace file according to current environment.",
   "main": "index.js",

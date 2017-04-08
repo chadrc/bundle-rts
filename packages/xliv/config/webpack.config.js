@@ -1,5 +1,6 @@
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const EnvFileResolverPlugin = require("env-file-resolver-plugin");
 const xliv = require("xliv/utils");
 const webpack = require("webpack");
 const path = require("path");
@@ -34,14 +35,14 @@ module.exports = {
     devtool: isProduction ? "source-map" : "eval-source-map",
 
     resolve: {
-        alias: {
-            "env/base.env": xliv.getEnvFile()
-        },
         modules: [
             path.resolve(process.cwd(), "app/"),
             "node_modules"
         ],
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".ts", ".tsx", ".js"],
+        plugins: [
+            new EnvFileResolverPlugin()
+        ]
     },
 
     module: {

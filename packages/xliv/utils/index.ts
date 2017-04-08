@@ -20,16 +20,3 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
     }
     return baseEntries;
 }
-
-export function getEnvFile(): string {
-    let envFile = `${process.cwd()}/app/env/${process.env.NODE_ENV}.env`;
-    console.log(`Looking for env file ${envFile}`);
-    try {
-        fs.readFileSync(envFile + ".ts");
-        console.log(`Using env file ${envFile}`);
-    } catch (e) {
-        console.log(`Couldn't find env file for ${process.env.NODE_ENV}. Defaulting to base.env.`);
-        envFile = `${process.cwd()}/app/env/base.env`;
-    }
-    return envFile;
-}
