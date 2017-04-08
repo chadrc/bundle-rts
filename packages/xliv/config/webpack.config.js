@@ -10,14 +10,20 @@ console.log("Environment: " + process.env.NODE_ENV);
 let isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
+    context: path.resolve(process.cwd(), 'app'),
+
     entry: xliv.addModuleEntries({
-        app: "./app/index.tsx",
+        patch: 'react-hot-loader/patch',
+        client: 'webpack-dev-server/client?http://8080',
+        hot: 'webpack/hot/only-dev-server',
+        app: "./index.tsx",
         vendor: ["react", "react-dom", "react-flares"]
     }),
 
     output: {
         filename: "js/[name].bundle.js",
-        path: process.cwd() + "/dist"
+        path: process.cwd() + "/dist",
+        publicPath: "/"
     },
 
     devtool: isProduction ? "source-map" : "eval-source-map",
@@ -37,7 +43,10 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "awesome-typescript-loader?configFileName=" + xliv.getTsConfig(__dirname)
+                use: [
+                    "react-hot-loader/webpack",
+                    "awesome-typescript-loader?configFileName=" + xliv.getTsConfig(__dirname)
+                ]
             },
             {
                 test: /\.scss$/,
@@ -61,6 +70,8 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
         new CheckerPlugin(),
         new ExtractTextPlugin('css/[name].bundle.css'),
         new webpack.optimize.CommonsChunkPlugin({
@@ -71,6 +82,8 @@ module.exports = {
 
     devServer: {
         contentBase: path.join(process.cwd(), "dist"),
-        compress: isProduction
+        compress: isProduction,
+        publicPath: "/",
+        hot: true
     }
 };

@@ -16,7 +16,7 @@ export function addModuleEntries(baseEntries: {[name: string]: string | string[]
     for (let g of locations) {
         let name = g.replace("./app/modules/", "").replace(".module.tsx", "").split("/")[0];
         process.stdout.write("module: " + name + " @ " + g);
-        baseEntries[name] = g;
+        baseEntries[name] = g.replace("./app", "./");
     }
     return baseEntries;
 }

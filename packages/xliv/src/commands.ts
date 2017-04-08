@@ -32,6 +32,9 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
         }
 
         tsConfig.include = newIncludes;
+
+        tsConfig.files[0] = "./node_modules/@types/webpack-env/index.d.ts";
+
         writeFile(tsConfigFile, JSON.stringify(tsConfig, null, 2));
     }
 }

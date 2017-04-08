@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/webpack-env": "^1.13.0",
     "xliv": "file:../xliv"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react-hot-loader": "^3.0.1",
+    "react-hot-loader": "^3.0.0-beta.6"
+  }
 }

@@ -89,30 +89,48 @@ export default class ${componentName} extends React.Component<${typesBase}Props,
 }
 
 export function makeIndexTSXFile(appName: string, noComp: boolean): string {
-    let flareImport = noComp ? "" : `\nimport ${appName}Flare from "flares/${appName}/${appName}.flare";`;
+    let flareImport = noComp ? "" : `\nimport ${appName} from "modules/${appName}/${appName}.module";`;
     let eleRender = noComp ? `\
-        <section>
-            {ENV.APP_NAME} - Ready
-        </section>`
+            <section>
+                {ENV.APP_NAME} - Ready
+            </section>`
         :
         `\
-        <${appName}Flare>
-            {ENV.APP_NAME} - Ready
-        </${appName}Flare>`;
-
+            <Component>
+                {ENV.APP_NAME} - Ready
+            </Component>`;
+    let commentMarks = noComp ? "// " : "";
+    let instructions = noComp ? `\
+// Uncomment when a module/component will be rendered
+// Change all 'MyProject' occurrences to your module/component's name
+` : "";
     return `\
+import "react-hot-loader/patch";
+import {AppContainer} from "react-hot-loader";
+
 import * as React from "react";
 import * as ReactDom from "react-dom";${flareImport}
 import * as ENV from "env/base.env";
 
 import "index.html";
 
-window.addEventListener("load", () => {
+const render = (Component: any) => {
     ReactDom.render(
+        <AppContainer>
 ${eleRender}
+        </AppContainer>
         , document.getElementById("content")
     );
-});
+};
+
+render(${appName});
+
+${instructions}${commentMarks}if (module.hot) {
+${commentMarks}    module.hot.accept('./modules/${appName}/${appName}.module', () => {
+${commentMarks}        const next: any = require('./modules/${appName}/${appName}.module');
+${commentMarks}        render(next.default);
+${commentMarks}    });
+${commentMarks}}
 `;
 }
 

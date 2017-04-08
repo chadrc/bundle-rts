@@ -122,21 +122,35 @@ test('created index.tsx file should match output', () => {
     let data = getFileData(indexTsxFilePath);
 
     let expectedComponentText = `\
+import "react-hot-loader/patch";
+import {AppContainer} from "react-hot-loader";
+
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import MyProjectFlare from "flares/MyProject/MyProject.flare";
+import MyProject from "modules/MyProject/MyProject.module";
 import * as ENV from "env/base.env";
 
 import "index.html";
 
-window.addEventListener("load", () => {
+const render = (Component: any) => {
     ReactDom.render(
-        <MyProjectFlare>
-            {ENV.APP_NAME} - Ready
-        </MyProjectFlare>
+        <AppContainer>
+            <Component>
+                {ENV.APP_NAME} - Ready
+            </Component>
+        </AppContainer>
         , document.getElementById("content")
     );
-});
+};
+
+render(MyProject);
+
+if (module.hot) {
+    module.hot.accept('./modules/MyProject/MyProject.module', () => {
+        const next: any = require('./modules/MyProject/MyProject.module');
+        render(next.default);
+    });
+}
 `;
     expect(data).toBe(expectedComponentText);
 });
@@ -147,20 +161,36 @@ test('created index.tsx file without initial module should match output', () => 
     let data = getFileData(indexTsxFilePath);
 
     let expectedComponentText = `\
+import "react-hot-loader/patch";
+import {AppContainer} from "react-hot-loader";
+
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as ENV from "env/base.env";
 
 import "index.html";
 
-window.addEventListener("load", () => {
+const render = (Component: any) => {
     ReactDom.render(
-        <section>
-            {ENV.APP_NAME} - Ready
-        </section>
+        <AppContainer>
+            <section>
+                {ENV.APP_NAME} - Ready
+            </section>
+        </AppContainer>
         , document.getElementById("content")
     );
-});
+};
+
+render(MyProject);
+
+// Uncomment when a module/component will be rendered
+// Change all 'MyProject' occurrences to your module/component's name
+// if (module.hot) {
+//     module.hot.accept('./modules/MyProject/MyProject.module', () => {
+//         const next: any = require('./modules/MyProject/MyProject.module');
+//         render(next.default);
+//     });
+// }
 `;
     expect(data).toBe(expectedComponentText);
 });

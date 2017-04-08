@@ -16,6 +16,9 @@
   "include": [
     "../../../app/**/*"
   ],
+  "files": [
+    "../../@types/webpack-env/index.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
