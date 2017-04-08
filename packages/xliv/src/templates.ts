@@ -178,23 +178,3 @@ export function makePackageJSONFile(appName: string, libVersion: string): string
 }
 `;
 }
-
-export function makeEnvConfigFile(exportBase: boolean, appName: string, initialValues: {[name: string]: string}): string {
-    let initialText = "";
-    for (let key of Object.keys(initialValues)) {
-        initialText += `export const ${key}: string = "${initialValues[key]}";\n`
-    }
-    initialText = initialText.trim();
-    let baseImport = exportBase ? `export * from "./base.env";` : `export const APP_NAME: string = "${appName}";`;
-    if (initialText === "" && exportBase) {
-        initialText = `// export const MY_CONST: string = "My constant value";`;
-    }
-
-    if (initialText !== "") {
-        initialText = `\n\n${initialText}`;
-    }
-
-    return `\
-${baseImport}${initialText}
-`;
-}

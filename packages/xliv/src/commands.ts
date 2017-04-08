@@ -39,21 +39,6 @@ export function exposeCommand(typescriptOnly: boolean = false): void {
     }
 }
 
-export function envCommand(env: string, appName: string, initialValues: {[name: string]: string} = null): void {
-    let localDir = "/app/env/";
-    ensureDir(localDir);
-    let basePath = process.cwd() + localDir;
-    if (initialValues === null) {
-        initialValues = {};
-    }
-
-    let file = `${basePath}${env}.env.ts`;
-    if (fs.existsSync(file)) {
-        throw `Environment file for ${env} already exists.`;
-    }
-    writeFile(`${basePath}${env}.env.ts`, makeEnvConfigFile(env !== "base", appName, initialValues));
-}
-
 export function projectCommand(appName: string, version: string,
                                noMod: boolean, noStyles: boolean,
                                noView: boolean, noTypes: boolean): void {
@@ -63,7 +48,6 @@ export function projectCommand(appName: string, version: string,
     }
 
     createProject(appName, version, noMod);
-    envCommand("base", appName);
 
     if (!noMod) {
         let moduleName = appName.replace(/ /g, "");

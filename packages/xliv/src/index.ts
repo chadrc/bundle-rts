@@ -92,20 +92,6 @@ if (args.isEmpty) {
                 exposeCommand(args.tsOnly);
                 break;
 
-            case "env":
-                let env = args.next();
-                let initialValues: {[name: string]: string} = {};
-                for (let val of args.argv) {
-                    let pair = val.split("=");
-                    if (pair.length !== 2) {
-                        console.log(`Ignoring invalid define pair value: ${val}`);
-                        continue;
-                    }
-                    initialValues[pair[0]] = pair[1];
-                }
-                envCommand(env, "", initialValues);
-                break;
-
             default:
                 console.error("No such command: " + command);
         }
