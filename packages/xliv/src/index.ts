@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {Arguments} from "./Arguments";
-import {componentCommand, envCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
+import {componentCommand, exposeCommand, moduleCommand, projectCommand} from "./commands";
 
 const fs = require("fs");
 const spawn = require("child_process").spawn;
