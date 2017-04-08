@@ -5,6 +5,7 @@ import * as fs from "fs";
 const pkgJsonFilePath =     "/package.json";
 const indexHtmlFilePath =   "/app/index.html";
 const indexTsxFilePath =    "/app/index.tsx";
+const prodIndexTsxFilePath =    "/app/index.production.tsx";
 
 const moduleFilePath =      "/app/modules/MyProject/MyProject.module.ts";
 const stylesFilePath =      "/app/modules/MyProject/MyProject.scss";
@@ -18,6 +19,7 @@ test("creates project with all default files", () => {
     expect(getFileData(pkgJsonFilePath)).toBeTruthy();
     expect(getFileData(indexHtmlFilePath)).toBeTruthy();
     expect(getFileData(indexTsxFilePath)).toBeTruthy();
+    expect(getFileData(prodIndexTsxFilePath)).toBeTruthy();
 
     expect(getFileData(moduleFilePath)).toBeTruthy();
     expect(getFileData(stylesFilePath)).toBeTruthy();
@@ -32,6 +34,7 @@ test("creates project without module", () => {
     expect(getFileData(pkgJsonFilePath)).toBeTruthy();
     expect(getFileData(indexHtmlFilePath)).toBeTruthy();
     expect(getFileData(indexTsxFilePath)).toBeTruthy();
+    expect(getFileData(prodIndexTsxFilePath)).toBeTruthy();
 
     expect(() => getFileData(moduleFilePath)).toThrow();
     expect(() => getFileData(stylesFilePath)).toThrow();
@@ -128,15 +131,16 @@ import {AppContainer} from "react-hot-loader";
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import MyProject from "modules/MyProject/MyProject.module";
-import * as ENV from "env/base.env";
 
 import "index.html";
+
+const APP_NAME: string = MyProject;
 
 const render = (Component: any) => {
     ReactDom.render(
         <AppContainer>
             <Component>
-                {ENV.APP_NAME} - Ready
+                {APP_NAME} - Ready
             </Component>
         </AppContainer>
         , document.getElementById("content")
@@ -166,15 +170,16 @@ import {AppContainer} from "react-hot-loader";
 
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as ENV from "env/base.env";
 
 import "index.html";
+
+const APP_NAME: string = MyProject;
 
 const render = (Component: any) => {
     ReactDom.render(
         <AppContainer>
             <section>
-                {ENV.APP_NAME} - Ready
+                {APP_NAME} - Ready
             </section>
         </AppContainer>
         , document.getElementById("content")
@@ -191,6 +196,53 @@ render(MyProject);
 //         render(next.default);
 //     });
 // }
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('created index.production.tsx file should match output', () => {
+    projectCommand("MyProject", "1.0", false, false, false, false);
+
+    let data = getFileData(prodIndexTsxFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import MyProject from "modules/MyProject/MyProject.module";
+
+import "index.html";
+
+const APP_NAME: string = MyProject;
+
+ReactDom.render(
+    <MyProject>
+        {APP_NAME} - Ready
+    </MyProject>
+    , document.getElementById("content")
+);
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
+test('created index.production.tsx file without initial module should match output', () => {
+    projectCommand("MyProject", "1.0", true, false, false, false);
+
+    let data = getFileData(prodIndexTsxFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactDom from "react-dom";
+
+import "index.html";
+
+const APP_NAME: string = MyProject;
+
+ReactDom.render(
+    <section>
+        {APP_NAME} - Ready
+    </section>
+    , document.getElementById("content")
+);
 `;
     expect(data).toBe(expectedComponentText);
 });

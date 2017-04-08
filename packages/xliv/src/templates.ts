@@ -92,12 +92,12 @@ export function makeIndexTSXFile(appName: string, noComp: boolean): string {
     let flareImport = noComp ? "" : `\nimport ${appName} from "modules/${appName}/${appName}.module";`;
     let eleRender = noComp ? `\
             <section>
-                {ENV.APP_NAME} - Ready
+                {APP_NAME} - Ready
             </section>`
         :
         `\
             <Component>
-                {ENV.APP_NAME} - Ready
+                {APP_NAME} - Ready
             </Component>`;
     let commentMarks = noComp ? "// " : "";
     let instructions = noComp ? `\
@@ -110,9 +110,10 @@ import {AppContainer} from "react-hot-loader";
 
 import * as React from "react";
 import * as ReactDom from "react-dom";${flareImport}
-import * as ENV from "env/base.env";
 
 import "index.html";
+
+const APP_NAME: string = ${appName};
 
 const render = (Component: any) => {
     ReactDom.render(
@@ -131,6 +132,32 @@ ${commentMarks}        const next: any = require('./modules/${appName}/${appName
 ${commentMarks}        render(next.default);
 ${commentMarks}    });
 ${commentMarks}}
+`;
+}
+
+export function makeProdIndexTsxFile(appName: string, noComp: boolean): string {
+    let flareImport = noComp ? "" : `\nimport ${appName} from "modules/${appName}/${appName}.module";`;
+    let eleRender = noComp ? `\
+    <section>
+        {APP_NAME} - Ready
+    </section>`
+        :
+        `\
+    <${appName}>
+        {APP_NAME} - Ready
+    </${appName}>`;
+    return `\
+import * as React from "react";
+import * as ReactDom from "react-dom";${flareImport}
+
+import "index.html";
+
+const APP_NAME: string = ${appName};
+
+ReactDom.render(
+${eleRender}
+    , document.getElementById("content")
+);
 `;
 }
 

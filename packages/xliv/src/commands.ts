@@ -2,7 +2,6 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Templates from './templates'
 import {ensureDir, isJsIdentifier, writeFile} from "./Utils";
-import {makeEnvConfigFile} from "./templates";
 
 function cpToCwd(dirName: string, fileName: string): void {
     let file = fs.readFileSync(`${dirName}/${fileName}`, "utf-8");
@@ -152,6 +151,7 @@ export function createProject(appName: string, version: string, noMod: boolean):
     }
 
     let indexTsxData = Templates.makeIndexTSXFile(appName, noMod);
+    let prodIndexTsxData = Templates.makeProdIndexTsxFile(appName, noMod);
     let indexHtmlData = Templates.makeIndexHTMLFile(appName);
     let pkgJsonData = Templates.makePackageJSONFile(appName, version);
 
@@ -172,4 +172,5 @@ export function createProject(appName: string, version: string, noMod: boolean):
     writeFile(`${process.cwd()}/package.json`, pkgJsonData);
     writeFile(`${basePath}/index.html`, indexHtmlData);
     writeFile(`${basePath}/index.tsx`, indexTsxData);
+    writeFile(`${basePath}/index.production.tsx`, prodIndexTsxData);
 }
