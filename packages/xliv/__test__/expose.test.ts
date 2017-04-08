@@ -34,16 +34,21 @@ console.log("Environment: " + process.env.NODE_ENV);
 
 let isProduction = process.env.NODE_ENV === "production";
 
+let entries = xliv.addModuleEntries({
+    app: "./index.tsx",
+    vendor: ["react", "react-dom", "react-flares"]
+});
+
+if (!isProduction) {
+    entries.patch = 'react-hot-loader/patch';
+    entries.client = 'webpack-dev-server/client?http://8080';
+    entries.hot = 'webpack/hot/only-dev-server';
+}
+
 module.exports = {
     context: path.resolve(process.cwd(), 'app'),
 
-    entry: xliv.addModuleEntries({
-        patch: 'react-hot-loader/patch',
-        client: 'webpack-dev-server/client?http://8080',
-        hot: 'webpack/hot/only-dev-server',
-        app: "./index.tsx",
-        vendor: ["react", "react-dom", "react-flares"]
-    }),
+    entry: entries,
 
     output: {
         filename: "js/[name].bundle.js",
@@ -55,7 +60,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            "env/base.env":  xliv.getEnvFile()
+            "env/base.env": xliv.getEnvFile()
         },
         modules: [
             path.resolve(process.cwd(), "app/"),
@@ -137,16 +142,21 @@ console.log("Environment: " + process.env.NODE_ENV);
 
 let isProduction = process.env.NODE_ENV === "production";
 
+let entries = xliv.addModuleEntries({
+    app: "./index.tsx",
+    vendor: ["react", "react-dom", "react-flares"]
+});
+
+if (!isProduction) {
+    entries.patch = 'react-hot-loader/patch';
+    entries.client = 'webpack-dev-server/client?http://8080';
+    entries.hot = 'webpack/hot/only-dev-server';
+}
+
 module.exports = {
     context: path.resolve(process.cwd(), 'app'),
 
-    entry: xliv.addModuleEntries({
-        patch: 'react-hot-loader/patch',
-        client: 'webpack-dev-server/client?http://8080',
-        hot: 'webpack/hot/only-dev-server',
-        app: "./index.tsx",
-        vendor: ["react", "react-dom", "react-flares"]
-    }),
+    entry: entries,
 
     output: {
         filename: "js/[name].bundle.js",
@@ -158,7 +168,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            "env/base.env":  xliv.getEnvFile()
+            "env/base.env": xliv.getEnvFile()
         },
         modules: [
             path.resolve(process.cwd(), "app/"),
