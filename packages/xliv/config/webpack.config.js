@@ -84,6 +84,6 @@ module.exports = {
         contentBase: path.join(process.cwd(), "dist"),
         compress: isProduction,
         publicPath: "/",
-        hot: true
+        hot: !isProduction
     }
 };
