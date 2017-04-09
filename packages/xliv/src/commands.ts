@@ -122,12 +122,6 @@ export function createComponent(componentName: string,
     }
     writeFile(componentFilePath, componentData);
 
-    // if (moduleName !== "~" && makeFlare) {
-    //     let flarePath = `/app/flares/${moduleName}/${componentPath}${componentName}.flare.ts`;
-    //     ensureDir(flarePath);
-    //     writeFile(process.cwd() + flarePath, Templates.makeComponentFlareFile(componentName, moduleName, noTypes, moduleRoot));
-    // }
-
     if (!noView) {
         writeFile(`${basePath}.view.tsx`, viewData);
     }

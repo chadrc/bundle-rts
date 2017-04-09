@@ -15,14 +15,12 @@ const componentFile = `${componentName}.component.ts`;
 const viewFile = `${componentName}.view.tsx`;
 const typesFile = `${componentName}.types.ts`;
 const stylesFile = `${componentName}.scss`;
-const flareFile = `${componentName}.flare.ts`;
 
 const componentFilePath =           `/app/components/${componentName}/${componentFile}`;
 const noViewComponentFilePath =     componentFilePath + "x";
 const viewFilePath =                `/app/components/${componentName}/${viewFile}`;
 const typesFilePath =               `/app/components/${componentName}/${typesFile}`;
 const stylesFilePath =              `/app/components/${componentName}/${stylesFile}`;
-const flareFilePath =               `/app/flares/${moduleName}/${flareFile}`;
 
 const moduleComponentFilePath =     `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
 const moduleViewFilePath =          `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;
@@ -38,7 +36,6 @@ const moduleSubComponentFilePath =  `/app/modules/${moduleName}/components/${com
 const moduleSubViewFilePath =       `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
 const moduleSubTypesFilePath =      `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
 const moduleSubStylesFilePath =     `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.scss`;
-const moduleSubFlareFilePath =      `/app/flares/${moduleName}/${componentName}/${subComponentName}.flare.ts`;
 
 
 test('creates a component with component, view and types files', () => {
@@ -48,7 +45,6 @@ test('creates a component with component, view and types files', () => {
     expect(getFileData(viewFilePath)).toBeTruthy();
     expect(getFileData(typesFilePath)).toBeTruthy();
     expect(getFileData(stylesFilePath)).toBeTruthy();
-    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test("component id without module and component parts should fail", () => {
@@ -65,7 +61,6 @@ test('creates a component with component and view files', () => {
     expect(getFileData(componentFilePath)).toBeTruthy();
     expect(getFileData(viewFilePath)).toBeTruthy();
     expect(() => getFileData(typesFilePath)).toThrow();
-    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a component with component and types files', () => {
@@ -75,7 +70,6 @@ test('creates a component with component and types files', () => {
     expect(() => getFileData(viewFilePath)).toThrow();
     expect(getFileData(typesFilePath)).toBeTruthy();
     expect(getFileData(stylesFilePath)).toBeTruthy();
-    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a component with component file only', () => {
@@ -85,7 +79,6 @@ test('creates a component with component file only', () => {
     expect(() => getFileData(viewFilePath)).toThrow();
     expect(() => getFileData(typesFilePath)).toThrow();
     expect(() => getFileData(stylesFilePath)).toThrow();
-    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a module component without flare', () => {
@@ -95,7 +88,6 @@ test('creates a module component without flare', () => {
     expect(getFileData(moduleViewFilePath)).toBeTruthy();
     expect(getFileData(moduleTypesFilePath)).toBeTruthy();
     expect(getFileData(moduleStylesFilePath)).toBeTruthy();
-    expect(() => getFileData(flareFilePath)).toThrow();
 });
 
 test('creates a module component with flare', () => {
@@ -105,7 +97,6 @@ test('creates a module component with flare', () => {
     expect(getFileData(moduleViewFilePath)).toBeTruthy();
     expect(getFileData(moduleTypesFilePath)).toBeTruthy();
     expect(getFileData(moduleStylesFilePath)).toBeTruthy();
-    expect(getFileData(flareFilePath)).toBeTruthy();
 });
 
 test('creates sub component', () => {
@@ -123,7 +114,6 @@ test('creates module sub component with flare', () => {
     expect(getFileData(moduleSubComponentFilePath)).toBeTruthy();
     expect(getFileData(moduleSubViewFilePath)).toBeTruthy();
     expect(getFileData(moduleSubTypesFilePath)).toBeTruthy();
-    expect(getFileData(moduleSubFlareFilePath)).toBeTruthy();
     expect(getFileData(moduleSubStylesFilePath)).toBeTruthy();
 });
 
@@ -187,39 +177,6 @@ export default class MyComponent extends React.Component<MyComponentProps, MyCom
 }
 
 ReactFlares.registerComponent("MyComponent", MyComponent);
-`;
-    expect(data).toBe(expectedComponentText);
-});
-
-test('created component flare should have expected output', () => {
-    // Need module and component to properly test
-    componentCommand(moduleComponentId, false, false, false, true);
-
-    let data = getFileData(flareFilePath);
-
-    let expectedComponentText = `\
-import * as ReactFlares from 'react-flares';
-import {MyComponentProps} from "modules/MyModule/components/MyComponent/MyComponent.types";
-
-export default class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps & MyComponentProps> {
-    get componentId(): string {return "MyModule:MyComponent";}
-}
-`;
-    expect(data).toBe(expectedComponentText);
-});
-
-test('created component flare without component types should have expected output', () => {
-    // Need module and component to properly test
-    componentCommand(moduleComponentId, false, true, false, true);
-
-    let data = getFileData(flareFilePath);
-
-    let expectedComponentText = `\
-import * as ReactFlares from 'react-flares';
-
-export default class MyComponentFlare extends ReactFlares.ComponentFlare<ReactFlares.ComponentFlareProps> {
-    get componentId(): string {return "MyModule:MyComponent";}
-}
 `;
     expect(data).toBe(expectedComponentText);
 });
