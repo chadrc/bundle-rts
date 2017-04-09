@@ -1,7 +1,15 @@
 const path = require("path");
 
 exports = module.exports = class FlareComponentResolverPlugin {
+    constructor(options) {
+        if (!options) options = {};
+        this.active = options.active === true;
+    }
+
     apply(compiler) {
+        if (!this.active) {
+            return;
+        }
         let componentRegex = /.(module|component)(.tsx?)?$/;
         let relativeImportRegex = /\.\.?\//;
         let resolve = (result, fs, cb) => {
