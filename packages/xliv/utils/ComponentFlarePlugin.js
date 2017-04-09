@@ -1,6 +1,6 @@
 const path = require("path");
 
-exports = module.exports = class FlareComponentResolverPlugin {
+exports = module.exports = class ComponentFlarePlugin {
     constructor(options) {
         if (!options) options = {};
         this.active = options.active === true;
