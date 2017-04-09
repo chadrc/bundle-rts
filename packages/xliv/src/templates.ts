@@ -36,8 +36,8 @@ export default class ${componentName}View implements View {
 `;
 }
 
-export function makeComponentFlareFile(componentName: string, moduleName: string, noTypes: boolean, rootModuleComp: boolean): string {
-    let extraImport = rootModuleComp ? "" : `components/${componentName}/`;
+export function makeComponentFlareFile(componentName: string, componentPath: string, moduleName: string, noTypes: boolean, rootModuleComp: boolean): string {
+    let extraImport = rootModuleComp ? "" : `components/${componentPath}/`;
     let typesImport = noTypes ? "" : `\nimport {${componentName}Props} from "modules/${moduleName}/${extraImport}${componentName}.types";`;
     let componentProps = noTypes ? "" : ` & ${componentName}Props`;
     return `\

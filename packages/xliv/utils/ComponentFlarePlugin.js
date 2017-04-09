@@ -17,20 +17,35 @@ exports = module.exports = class FlareComponentResolverPlugin {
                     cb(result.request);
                     return;
                 }
-                let moduleName = "";
-                let pathParts =result.request.split(path.sep);
-                let modIndex = pathParts.indexOf("modules") + 1;
-                if (modIndex !== -1 && modIndex < pathParts.length) {
-                    moduleName = pathParts[modIndex];
+
+                let pathParts = result.request.split(path.sep);
+
+                // Can't do anything with path
+                if (pathParts.length < 2) {
+                    cb(result.request);
+                    return;
                 }
 
-                let noComp = result.request.replace(/\.(module|component)/, "");
-                let componentName = path.basename(noComp, path.extname(noComp));
+                let modIndex = pathParts.indexOf("modules") + 1;
+                if (modIndex === -1 || modIndex >= pathParts.length) {
+                    cb(result.request);
+                    return;
+                }
+
+                let moduleName = pathParts[modIndex];
+
+                // minus 2 to target the folder
+                let compIndex = pathParts.length - 2;
+                let componentName = pathParts[compIndex];
+
+                let modComp = componentName === moduleName;
+
+                let componentPath = pathParts.slice(modIndex+2, pathParts.length-1).join(path.sep);
 
                 let newRequest = `gen/flares/${componentName}.flare.ts`;
                 fs.mkdirp("app/gen/flares", () => {
                     fs.writeFile(`app/gen/flares/${componentName}.flare.ts`,
-                        makeComponentFlareFile(componentName, moduleName, false, false),
+                        makeComponentFlareFile(componentName, componentPath, moduleName, false, modComp),
                         {},
                         () => {
                             cb(newRequest);
