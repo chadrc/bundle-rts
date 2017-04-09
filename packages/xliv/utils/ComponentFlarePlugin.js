@@ -1,3 +1,4 @@
+const path = require("path");
 
 exports = module.exports = class FlareComponentResolverPlugin {
     apply(compiler) {
