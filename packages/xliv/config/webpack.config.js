@@ -77,7 +77,7 @@ module.exports = {
     },
 
     plugins: [
-        new FlareComponentResolverPlugin({
+        new ComponentFlarePlugin({
             active: isProduction
         }),
         new webpack.HotModuleReplacementPlugin(),
