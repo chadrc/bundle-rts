@@ -40,7 +40,7 @@ exports = module.exports = class FlareComponentResolverPlugin {
 
                 let modComp = componentName === moduleName;
 
-                let componentPath = pathParts.slice(modIndex+2, pathParts.length-1).join(path.sep);
+                let componentPath = pathParts.slice(modIndex+1, pathParts.length-1).join(path.sep);
 
                 let newRequest = `gen/flares/${componentName}.flare.ts`;
                 fs.mkdirp("app/gen/flares", () => {
