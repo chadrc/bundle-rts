@@ -109,7 +109,7 @@ export function createComponent(componentName: string,
     } else {
         localDir = `/app/modules/${moduleName}/`;
         if (placeInComponentsFolder) {
-            localDir += `components/${componentPath}${componentName}/`;
+            localDir += `${componentPath}${componentName}/`;
         }
         localDir += componentName;
     }

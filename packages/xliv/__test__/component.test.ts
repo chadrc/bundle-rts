@@ -22,20 +22,20 @@ const viewFilePath =                `/app/components/${componentName}/${viewFile
 const typesFilePath =               `/app/components/${componentName}/${typesFile}`;
 const stylesFilePath =              `/app/components/${componentName}/${stylesFile}`;
 
-const moduleComponentFilePath =     `/app/modules/${moduleName}/components/${componentName}/${componentFile}`;
-const moduleViewFilePath =          `/app/modules/${moduleName}/components/${componentName}/${viewFile}`;
-const moduleTypesFilePath =         `/app/modules/${moduleName}/components/${componentName}/${typesFile}`;
-const moduleStylesFilePath =        `/app/modules/${moduleName}/components/${componentName}/${stylesFile}`;
+const moduleComponentFilePath =     `/app/modules/${moduleName}/${componentName}/${componentFile}`;
+const moduleViewFilePath =          `/app/modules/${moduleName}/${componentName}/${viewFile}`;
+const moduleTypesFilePath =         `/app/modules/${moduleName}/${componentName}/${typesFile}`;
+const moduleStylesFilePath =        `/app/modules/${moduleName}/${componentName}/${stylesFile}`;
 
 const subComponentFilePath =        `/app/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
 const subViewFilePath =             `/app/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
 const subTypesFilePath =            `/app/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
 const subStylesFilePath =           `/app/components/${componentName}/${subComponentName}/${subComponentName}.scss`;
 
-const moduleSubComponentFilePath =  `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
-const moduleSubViewFilePath =       `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
-const moduleSubTypesFilePath =      `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
-const moduleSubStylesFilePath =     `/app/modules/${moduleName}/components/${componentName}/${subComponentName}/${subComponentName}.scss`;
+const moduleSubComponentFilePath =  `/app/modules/${moduleName}/${componentName}/${subComponentName}/${subComponentName}.component.ts`;
+const moduleSubViewFilePath =       `/app/modules/${moduleName}/${componentName}/${subComponentName}/${subComponentName}.view.tsx`;
+const moduleSubTypesFilePath =      `/app/modules/${moduleName}/${componentName}/${subComponentName}/${subComponentName}.types.ts`;
+const moduleSubStylesFilePath =     `/app/modules/${moduleName}/${componentName}/${subComponentName}/${subComponentName}.scss`;
 
 
 test('creates a component with component, view and types files', () => {
