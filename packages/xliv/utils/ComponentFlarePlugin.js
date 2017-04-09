@@ -1,4 +1,5 @@
 const path = require("path");
+const makeComponentFlareFile = require("xliv/src/templates").makeComponentFlareFile;
 
 exports = module.exports = class ComponentFlarePlugin {
     constructor(options) {
