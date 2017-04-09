@@ -26,6 +26,7 @@ test('expose webpack config should match output', () => {
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const EnvFileResolverPlugin = require("env-file-resolver-plugin");
+const ComponentFlarePlugin = require("xliv/utils/ComponentFlarePlugin");
 const xliv = require("xliv/utils");
 const webpack = require("webpack");
 const path = require("path");
@@ -101,6 +102,9 @@ module.exports = {
     },
 
     plugins: [
+        new ComponentFlarePlugin({
+            active: isProduction
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new CheckerPlugin(),
@@ -135,6 +139,7 @@ test('expose webpack config should match output', () => {
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const EnvFileResolverPlugin = require("env-file-resolver-plugin");
+const ComponentFlarePlugin = require("xliv/utils/ComponentFlarePlugin");
 const xliv = require("xliv/utils");
 const webpack = require("webpack");
 const path = require("path");
@@ -210,6 +215,9 @@ module.exports = {
     },
 
     plugins: [
+        new ComponentFlarePlugin({
+            active: isProduction
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new CheckerPlugin(),
