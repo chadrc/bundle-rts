@@ -1,6 +1,6 @@
 {
   "name": "xliv",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
@@ -58,10 +58,10 @@
     "webpack-dev-server": "^2.4.2"
   },
   "devDependencies": {
-    "jest": "^19.0.2",
-    "ts-jest": "^19.0.1",
+    "@types/glob": "^5.0.30",
     "@types/jest": "^19.2.2",
-    "@types/glob": "^5.0.30"
+    "jest": "^19.0.2",
+    "ts-jest": "^19.0.1"
   },
   "jest": {
     "transform": {
