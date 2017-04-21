@@ -11,15 +11,17 @@ console.log("Environment: " + process.env.NODE_ENV);
 
 let isProduction = process.env.NODE_ENV === "production";
 
-let entries = xliv.addModuleEntries({
+let entries = {
     app: "./index.tsx",
     vendor: ["react", "react-dom", "react-flares"]
-});
+};
 
 if (!isProduction) {
     entries.patch = 'react-hot-loader/patch';
     entries.client = 'webpack-dev-server/client?http://8080';
     entries.hot = 'webpack/hot/only-dev-server';
+} else {
+    entries = xliv.addModuleEntries(entries);
 }
 
 module.exports = {
