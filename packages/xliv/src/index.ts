@@ -79,9 +79,13 @@ if (args.isEmpty) {
                 break;
 
             case "start":
-                let startEnv = args.production ? "production" : "development";
+                let startEnv = "development";
                 if (args.env) {
                     startEnv = args.env;
+                    if (startEnv === "production") {
+                        console.error("The start command is no supported in a production environment.");
+                        break;
+                    }
                 }
                 execute("webpack-dev-server", startEnv, makeWebpackArgs(args.argv), (code) => {
                     console.log(`start exited with code ${code}`);
