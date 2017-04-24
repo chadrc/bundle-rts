@@ -1,6 +1,6 @@
 {
   "name": "xliv",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Packaging framework with Webpack for ReactJs with TypeScript",
   "main": "index.js",
   "scripts": {
@@ -48,7 +48,7 @@
     "node-sass": "^4.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-flares": "^2.0.0",
+    "react-flares": "^2.0.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.0",
