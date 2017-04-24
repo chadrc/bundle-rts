@@ -1,7 +1,7 @@
 
 export function makeTypesFile(componentName: string): string {
     return `\
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "xliv/types";
 
 export interface ${componentName}Props extends Props {
 }
@@ -22,7 +22,7 @@ export function makeViewFile(componentName: string, noTypes: boolean): string {
     let dataImport = noTypes ? "" : `\nimport {${componentName}Data} from "./${componentName}.types";`;
     return `\
 import * as React from "react";
-import {${dataName}View} from "react-flares";${dataImport}
+import {${dataName}View} from "xliv/types";${dataImport}
 
 export default class ${componentName}View implements View {
     make(component: ${typesBase}Data): JSX.Element {
@@ -59,7 +59,7 @@ export function makeComponentFile(componentName: string,
     let styleImport = noStyles ? "" : `\n\nimport "./${componentName}.scss";`;
     let typesBase = noTypes ? "" : componentName;
     let typesImport = noTypes ?
-        `"react-flares"`
+        `"xliv/types"`
         :
         `"./${componentName}.types"`;
     let viewImport = noView ? "" : `\nimport ${componentName}View from "./${componentName}.view";`;

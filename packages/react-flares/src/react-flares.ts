@@ -118,29 +118,11 @@ namespace ReactFlares {
         return components[name];
     }
 
-    export interface Props {
-        className?: string,
-        children?: any[]
-    }
-
-    export interface State {
-
-    }
-
-    export interface Data {
-        props: Props,
-        state: State
-    }
-
-    export interface View {
-        make(self: any): JSX.Element;
-    }
-
-    export interface ComponentFlareProps extends Props {
+    export interface ComponentFlareProps {
         componentId?: string
     }
 
-    export interface ComponentFlareState extends State {
+    export interface ComponentFlareState {
         component: {new(...args: any[]): React.Component<any, any>}
     }
 

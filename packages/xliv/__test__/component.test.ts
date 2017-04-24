@@ -188,7 +188,7 @@ test('created component with view and without types should have expected output'
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "xliv/types";
 import MyComponentView from "./MyComponent.view";
 
 import "./MyComponent.scss";
@@ -247,7 +247,7 @@ test("created component without view and without types should have expected outp
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "xliv/types";
 
 import "./MyComponent.scss";
 
@@ -278,7 +278,7 @@ test("created component without view, types, nor styles should have expected out
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "xliv/types";
 
 export default class MyComponent extends React.Component<Props, State> implements Data {
 
@@ -307,7 +307,7 @@ test("created component's view with types should have expected output", () => {
 
     let expectedComponentText = `\
 import * as React from "react";
-import {View} from "react-flares";
+import {View} from "xliv/types";
 import {MyComponentData} from "./MyComponent.types";
 
 export default class MyComponentView implements View {
@@ -330,7 +330,7 @@ test("created component's view without types should have expected output", () =>
 
     let expectedComponentText = `\
 import * as React from "react";
-import {Data, View} from "react-flares";
+import {Data, View} from "xliv/types";
 
 export default class MyComponentView implements View {
     make(component: Data): JSX.Element {
@@ -351,7 +351,7 @@ test("create component's types should have expected output", () => {
     let data = getFileData(typesFilePath);
 
     let expectedComponentText = `\
-import {Data, Props, State} from "react-flares";
+import {Data, Props, State} from "xliv/types";
 
 export interface MyComponentProps extends Props {
 }
