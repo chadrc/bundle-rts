@@ -10,6 +10,6 @@
     "ci-publish": "lerna publish --canary --yes --skip-git"
   },
   "devDependencies": {
-    "lerna": "^2.0.0-rc.1"
+    "lerna": "^2.0.0-rc.3"
   }
 }
