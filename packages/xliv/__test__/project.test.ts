@@ -120,7 +120,7 @@ test('created index.html file should match output', () => {
 });
 
 test('created index.tsx file should match output', () => {
-    projectCommand("MyProject", "1.0", false, false, false, false);
+    projectCommand("My Project", "1.0", false, false, false, false);
 
     let data = getFileData(indexTsxFilePath);
 
@@ -134,7 +134,7 @@ import MyProject from "modules/MyProject/MyProject.module";
 
 import "index.html";
 
-const APP_NAME: string = "MyProject";
+const APP_NAME: string = "My Project";
 
 const render = (Component: any) => {
     ReactDom.render(

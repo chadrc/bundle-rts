@@ -89,7 +89,8 @@ export default class ${componentName} extends React.Component<${typesBase}Props,
 }
 
 export function makeIndexTSXFile(appName: string, noComp: boolean): string {
-    let flareImport = noComp ? "" : `\nimport ${appName} from "modules/${appName}/${appName}.module";`;
+    let moduleName = appName.replace(/ /g, "");
+    let flareImport = noComp ? "" : `\nimport ${moduleName} from "modules/${moduleName}/${moduleName}.module";`;
     let eleRender = noComp ? `\
             <section>
                 {APP_NAME} - Ready
@@ -124,11 +125,11 @@ ${eleRender}
     );
 };
 
-render(${appName});
+render(${moduleName});
 
 ${instructions}${commentMarks}if (module.hot) {
-${commentMarks}    module.hot.accept('./modules/${appName}/${appName}.module', () => {
-${commentMarks}        const next: any = require('./modules/${appName}/${appName}.module');
+${commentMarks}    module.hot.accept('./modules/${moduleName}/${moduleName}.module', () => {
+${commentMarks}        const next: any = require('./modules/${moduleName}/${moduleName}.module');
 ${commentMarks}        render(next.default);
 ${commentMarks}    });
 ${commentMarks}}
