@@ -9,7 +9,8 @@
   "license": "ISC",
   "dependencies": {
     "xliv": "file:../xliv",
-    "env-file-resolver-plugin": "file:../env-file-resolver-plugin"
+    "env-file-resolver-plugin": "file:../env-file-resolver-plugin",
+    "react-flares": "file:../react-flares"
   },
   "devDependencies": {}
 }
