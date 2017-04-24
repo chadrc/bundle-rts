@@ -135,16 +135,17 @@ ${commentMarks}}
 }
 
 export function makeProdIndexTsxFile(appName: string, noComp: boolean): string {
-    let flareImport = noComp ? "" : `\nimport ${appName} from "modules/${appName}/${appName}.module";`;
+    let moduleName = appName.replace(/ /g, "");
+    let flareImport = noComp ? "" : `\nimport ${moduleName} from "modules/${moduleName}/${moduleName}.module";`;
     let eleRender = noComp ? `\
     <section>
         {APP_NAME} - Ready
     </section>`
         :
         `\
-    <${appName}>
+    <${moduleName}>
         {APP_NAME} - Ready
-    </${appName}>`;
+    </${moduleName}>`;
     return `\
 import * as React from "react";
 import * as ReactDom from "react-dom";${flareImport}

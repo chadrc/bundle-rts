@@ -224,6 +224,30 @@ ReactDom.render(
     expect(data).toBe(expectedComponentText);
 });
 
+test('project name with spaces created index.production.tsx file should match output', () => {
+    projectCommand("My Project", "1.0", false, false, false, false);
+
+    let data = getFileData(prodIndexTsxFilePath);
+
+    let expectedComponentText = `\
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import MyProject from "modules/MyProject/MyProject.module";
+
+import "index.html";
+
+const APP_NAME: string = "My Project";
+
+ReactDom.render(
+    <MyProject>
+        {APP_NAME} - Ready
+    </MyProject>
+    , document.getElementById("content")
+);
+`;
+    expect(data).toBe(expectedComponentText);
+});
+
 test('created index.production.tsx file without initial module should match output', () => {
     projectCommand("MyProject", "1.0", true, false, false, false);
 
